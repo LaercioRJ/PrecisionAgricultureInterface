@@ -1,0 +1,40 @@
+mat-toolbar{
+    background-color: #10AD01;
+    width: 100%;
+    z-index: 3;
+    position: relative;
+}
+.title{
+    color: white
+}
+.title:hover{
+    cursor: pointer;
+}
+@media only screen and (max-width: 1920px){
+    .title {
+        font-size: x-large;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .title {
+        font-size: large;
+    }
+}
+.buttonsPosition{
+    margin-left: auto;
+}
+.homeButton{
+    font-size: large;
+    color: white;
+    border: solid;
+    border-color: white;
+    border-width: 0.1vw;
+}
+.tutorialButton{
+    font-size: large;
+    margin-left: 1vw;
+    border-color: white;
+    border: solid;
+    border-width: 0.1vw;
+    color: white;
+}

@@ -1,1 +1,20 @@
+<mat-toolbar [class.mat-elevation-z3]="true">
+    <span (click) = "goBackFirstPage()" class="title">
+        Agricultura de Precisão Aplicada
+    </span>
+
+    <div class="buttonsPosition">
+        <button mat-button (click) = "goBackFirstPage()" matTooltip="Voltar para a página inicial" class="homeButton">
+            <span class="material-icons">
+                home
+            </span>
+        </button>
+
+        <button mat-button matTooltip="Dúvidas? Veja nosso tutorial!" class="tutorialButton">
+            <span class="material-icons">
+                help_outline
+            </span>
+        </button>
+    </div>
+</mat-toolbar>
 <router-outlet></router-outlet>
