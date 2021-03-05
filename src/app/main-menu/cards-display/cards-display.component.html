@@ -1,1 +1,25 @@
-<p>cards-display works!</p>
+<mat-sidenav-container>
+    <mat-sidenav mode="side" class="actionSidenav" [class.mat-elevation-z5]="true" opened>
+        <div matRipple matTooltip="Adicionar layer através de arquivo .txt ou .csv" class="iconContainer">
+            <span class="material-icons">
+                add_circle_outline
+            </span>
+        </div>
+        <mat-divider></mat-divider>
+        <div matRipple matTooltip="Comparar de 2 a 5 layers em mapa" class="iconContainer">
+            <span class="material-icons">
+                layers
+            </span>
+            <mat-divider></mat-divider>
+        </div>
+        <div matRipple matTooltip="Autotoria e licença" class="iconContainer">
+            <span class="material-icons">
+                info
+            </span>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

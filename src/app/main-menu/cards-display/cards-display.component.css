@@ -1,0 +1,26 @@
+.mat-sidenav-content{
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 91vh;
+    background-color: white;
+}
+.actionSidenav{
+    text-align: center;
+    width: 60px;
+    z-index: 5;
+    background-color: rgb(230, 230, 230);
+}
+.material-icons{
+    font-size: 50px;
+}
+.iconContainer {
+    width: 100%;
+    color: #0fb100d3;
+    user-select: none;
+}
+.iconContainer:hover{
+    cursor: pointer;
+    color: #16e903;
+}
