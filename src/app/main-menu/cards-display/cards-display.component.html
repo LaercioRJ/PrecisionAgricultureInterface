@@ -1,6 +1,7 @@
 <mat-sidenav-container>
     <mat-sidenav mode="side" class="actionSidenav" [class.mat-elevation-z5]="true" opened>
-        <div matRipple matTooltip="Adicionar layer através de arquivo .txt ou .csv" class="iconContainer">
+        <div matRipple [matMenuTriggerFor]="layerTypeMenu" matTooltip="Adicionar layer através de arquivo .txt ou .csv"
+        class="iconContainer">
             <span class="material-icons">
                 add_circle_outline
             </span>
@@ -23,3 +24,18 @@
 
     </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-menu #layerTypeMenu="matMenu">
+    <button (click) = "fileInputSP.click()" mat-menu-item>
+        <span>Adicionar layer de Pontos Amostrais</span>
+    </button>
+
+    <input #fileInputSP id="fileInput" type="file" (change) = "recieveLayerFile($event, 0)" accept=".txt,.csv" style="display: none;">
+    
+    <button (click) = "fileInputZM.click()" mat-menu-item>
+        <span>Adicionar layer de Zona de Manejo</span>
+    </button>
+
+    <input #fileInputZM id="fileInput" type="file" (change) = "recieveLayerFile($event, 1)" accept=".txt,.csv" style="display: none;">
+
+</mat-menu>

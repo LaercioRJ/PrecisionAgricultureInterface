@@ -1,15 +1,5 @@
-import { DatasetValue } from './datasetValue';
+import { Layer } from './layer';
 
-export class ZmLayer {
-    latitudeHeader: string;
-    longitudeHeader: string;
-    dataHeader: string;
-    datasetLength: number;
-    dataset: DatasetValue[] = [];
-    constructor(latitudeHeader: string, longitudeHeader: string, dataHeader: string, datasetLength: number) {
-        this.latitudeHeader = latitudeHeader;
-        this.longitudeHeader = longitudeHeader;
-        this.dataHeader = dataHeader;
-        this.datasetLength = datasetLength;
-    }
+export class ZmLayer extends Layer {
+    rectificationMethod = '';
 }
