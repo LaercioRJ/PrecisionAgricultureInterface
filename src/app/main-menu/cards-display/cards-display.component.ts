@@ -18,13 +18,13 @@ export class CardsDisplayComponent implements OnInit {
   displayedLayers: Layer[] = [];
 
   ngOnInit(): void {
-    this.displayedLayers = this.layerStorage.getLayersNoSampling();
+    this.displayedLayers = this.layerStorage.getLayers();
   }
 
   recieveLayerFile(event: any, layerType: number): void {
     if (event.target.files && event.target.files[0]) {
       this.layerImporting.fileToLayer(event.target.files[0], layerType);
-      this.displayedLayers = this.layerStorage.getLayersNoSampling();
+      this.displayedLayers = this.layerStorage.getLayers();
     } else {
     }
   }

@@ -1,0 +1,102 @@
+.title{
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    font-size: x-large;
+}
+
+mat-toolbar{
+    height: 15%;
+    width: 100%;
+    position: relative;
+    z-index: 3;
+    background-image: linear-gradient(#0d9700, #10b601);
+}
+
+.layerCard{
+    margin-left: 5%;
+    margin-top: 5vh;
+    flex-wrap: wrap;
+    float: left;
+    background-color: rgb(242, 252, 255);
+    transition: all 0.4s;
+    border: solid;
+    border-color: black;
+}
+
+.layerCard:hover{
+    cursor: pointer;
+    transition: all 0.4s;
+}
+
+@media only screen and (max-width: 1920px) {
+    .layerCard:hover{
+        transform: scale(1.1);
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .layerCard:hover{
+        transform: scale(1.05);
+    }
+}
+
+@media only screen and (max-height: 800px) {
+    .layerCard {
+        height: 32vh;
+    }
+}
+
+@media only screen and (max-height: 650px) {
+    .layerCard {
+        height: 43vh;
+    }
+}
+
+@media only screen and (max-height: 500px) {
+    .layerCard {
+        height: 55vh;
+    }
+}
+
+@media only screen and (max-height: 400px) {
+    .layerCard {
+        height: 70vh;
+    }
+}
+
+@media only screen and (max-width: 1700px) {
+    .layerCard {
+        width: 18%;
+    }
+}
+
+@media only screen and (max-width: 1400px) {
+    .layerCard {
+        width: 27%;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .layerCard {
+        width: 42%;
+    }
+}
+
+@media only screen and (max-width: 600px)  {
+    .layerCard {
+        width: 85%;
+    }
+}
+
+.layerCard:active{
+    cursor: pointer;
+    transform: scale(1.0);
+    transition: all 0.2s;
+}
+
+.map{
+    width: 100%;
+    height: 85%;
+    position: relative;
+}

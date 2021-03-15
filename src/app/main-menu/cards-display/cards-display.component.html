@@ -21,7 +21,9 @@
         </div>
     </mat-sidenav>
     <mat-sidenav-content>
-
+        <div *ngFor="let displayedLayer of displayedLayers; let i = index">
+            <app-layer-card [layer] = "this.displayedLayers[i]"  layerId =  {{i}}></app-layer-card>
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
 
