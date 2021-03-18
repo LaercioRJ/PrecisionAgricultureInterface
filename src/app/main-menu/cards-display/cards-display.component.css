@@ -24,3 +24,71 @@
     cursor: pointer;
     color: #16e903;
 }
+.cardSidenav{
+    text-align: center;
+    z-index: 3;
+    width: 160px;
+    background-color: white;
+}
+@media only screen and (max-width: 1920px) {
+    .cardSidenav{
+        width: 160px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .cardSidenav{
+        width: 140px;
+    }
+}
+.cardSidenavTitleContainer{
+    height: 1%;
+    margin-bottom: 0;
+}
+.cardSidenavTitle{
+    font-size: large;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20%;
+    text-decoration: underline;
+}
+.cardOptionsButton{
+    font-size: medium;
+    width: 100%;
+    text-align: left;
+    height: 6%;
+    margin-bottom: 1%;
+}
+.cardOptionsButton::before{
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: #0fb100d3;
+    height: 100%;
+    top: 0;
+    opacity: 0;
+    left: 0;
+    transform: scaleY(0);
+    transition: all 0.3s;
+}
+.cardOptionsButton:hover::before{
+    opacity: 1;
+    transform: scaleY(1);
+}
+.cardOptionsButton::after{
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: #0fb100d3;
+    height: 100%;
+    top: 0;
+    opacity: 0;
+    right: 0;
+    transform: scaleY(0);
+    transition: all 0.4s;
+}
+.cardOptionsButton:hover::after{
+    opacity: 1;
+    transform: scaleY(1);
+}

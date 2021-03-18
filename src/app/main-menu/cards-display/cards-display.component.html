@@ -21,9 +21,74 @@
         </div>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div *ngFor="let displayedLayer of displayedLayers; let i = index">
-            <app-layer-card [layer] = "this.displayedLayers[i]"  layerId =  {{i}}></app-layer-card>
-        </div>
+        <mat-sidenav-container>
+            <mat-sidenav #cardSidenav [class.mat-elevation-z3]="true" mode="side" class="cardSidenav" closed>
+                <mat-toolbar class="cardSidenavTitleContainer">
+                    <span class="cardSidenavTitle">
+                        {{selectedLayerName}}
+                    </span>
+                </mat-toolbar>
+                <br>
+                <button class="cardOptionsButton" [matMenuTriggerFor] = "layerExhibitMenu" mat-button>
+                    <span style="font-size: 25px;" class="material-icons">
+                        search
+                    </span>
+                    Visualizar
+                </button>
+                <button *ngIf="selectedLayerType === 0" class="cardOptionsButton" mat-button>
+                    <span style="font-size: 25px;" class="material-icons">
+                        miscellaneous_services
+                    </span>
+                    Adicionar Contorno
+                </button>
+                <button *ngIf="selectedLayerType === 0" class="cardOptionsButton" mat-button>
+                    <span style="font-size: 25px;" class="material-icons">
+                        miscellaneous_services
+                    </span>
+                    Interpolação
+                </button>
+                <button *ngIf="selectedLayerType === 1" class="cardOptionsButton" mat-button>
+                    <span style="font-size: 25px;" class="material-icons">
+                        miscellaneous_services
+                    </span>
+                    Retificação
+                </button>
+                <button class="cardOptionsButton" mat-button>
+                    <span style="font-size: 25px;" class="material-icons">
+                        get_app
+                    </span>
+                    Download
+                </button>
+                <button class="cardOptionsButton" mat-button>
+                    <span style="font-size: 25px;" class="material-icons">
+                        delete
+                    </span>
+                    Excluir
+                </button>
+
+                <mat-menu #layerExhibitMenu = "matMenu">
+                    <button mat-menu-item>
+                        <mat-icon style="font-size: 25px;" class="material-icons">
+                            map
+                        </mat-icon>
+                        Visualizar em Mapa
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon style="font-size: 25px;" class="material-icons">
+                            table_rows
+                        </mat-icon>
+                        Visualizar em Tabela
+                    </button>
+                </mat-menu>
+            </mat-sidenav>
+
+            <mat-sidenav-content>
+                <div *ngFor="let displayedLayer of displayedLayers; let i = index">
+                    <app-layer-card (click) = "selectLayer(i, cardSidenav)" [layer] = "this.displayedLayers[i]"
+                      layerId =  {{i}}></app-layer-card>
+                </div>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
     </mat-sidenav-content>
 </mat-sidenav-container>
 

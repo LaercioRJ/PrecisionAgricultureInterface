@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 
 import { LayerImportingService } from '../../services/layer-importing.service';
 import { LayerStorageService } from '../../services/layer-storage.service';
 
 import { Layer } from '../../classes/layer';
+import { SamplingLayer } from '../../classes/samplingLayer';
 
 @Component({
   selector: 'app-cards-display',
@@ -16,6 +18,10 @@ export class CardsDisplayComponent implements OnInit {
               private layerStorage: LayerStorageService) { }
 
   displayedLayers: Layer[] = [];
+  selectedLayerIndex = -1;
+  selectedLayerName = '';
+  selectedLayerType = 0;
+  /*Sampling Points Layer = 0; Management Zone Layer = 1 */
 
   ngOnInit(): void {
     this.displayedLayers = this.layerStorage.getLayers();
@@ -27,6 +33,30 @@ export class CardsDisplayComponent implements OnInit {
       this.displayedLayers = this.layerStorage.getLayers();
     } else {
     }
+  }
+
+  selectLayer(layerIndex: number, sidenav: MatSidenav): void {
+    if (this.selectedLayerIndex === -1) {
+      this.changeSelectedLayer(layerIndex);
+      sidenav.open();
+    } else {
+      if (this.selectedLayerIndex === layerIndex) {
+        this.selectedLayerIndex = -1;
+        sidenav.close();
+      } else {
+        this.changeSelectedLayer(layerIndex);
+      }
+    }
+  }
+
+  changeSelectedLayer(newLayerIndex: number): void {
+    if (this.displayedLayers[newLayerIndex] instanceof SamplingLayer) {
+      this.selectedLayerType = 0;
+    } else {
+      this.selectedLayerType = 1;
+    }
+    this.selectedLayerIndex = newLayerIndex;
+    this.selectedLayerName = this.displayedLayers[newLayerIndex].name;
   }
 
 }
