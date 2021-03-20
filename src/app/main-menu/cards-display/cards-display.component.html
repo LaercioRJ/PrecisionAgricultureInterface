@@ -35,7 +35,7 @@
                     </span>
                     Visualizar
                 </button>
-                <button *ngIf="selectedLayerType === 0" class="cardOptionsButton" mat-button>
+                <button *ngIf="selectedLayerType === 0" matTooltip="Adicionar um contorno para a layer" class="cardOptionsButton" mat-button>
                     <span style="font-size: 25px;" class="material-icons">
                         add
                     </span>
@@ -45,13 +45,20 @@
                     <span style="font-size: 25px;" class="material-icons">
                         miscellaneous_services
                     </span>
-                    Interpolação
+                    Interpolar
                 </button>
                 <button *ngIf="selectedLayerType === 1" class="cardOptionsButton" mat-button>
                     <span style="font-size: 25px;" class="material-icons">
                         miscellaneous_services
                     </span>
-                    Retificação
+                    Retificar
+                </button>
+                <button *ngIf="selectedLayerType === 0" matTooltip="Classifica a área em zonas de manejo" class="cardOptionsButton"
+                 mat-button>
+                    <span style="font-size: 25px;" class="material-icons">
+                        format_shapes
+                    </span>
+                    Classificar ZM
                 </button>
                 <button [matMenuTriggerFor] = "DataTypeMenu" class="cardOptionsButton" mat-button>
                     <span style="font-size: 25px;" class="material-icons">
@@ -65,6 +72,12 @@
                     </span>
                     Excluir
                 </button>
+
+                <mat-divider class="cardSidenavDivider"></mat-divider>
+                <span class="cardDataTile">Dados</span>
+                <br>
+                <br>
+                <span style="font-size: large; text-align: left;" matBadge="4" matBadgeOverlap="false">Pontos</span>
 
                 <mat-menu #layerExhibitMenu = "matMenu">
                     <button mat-menu-item>
@@ -82,7 +95,7 @@
                 </mat-menu>
 
                 <mat-menu #DataTypeMenu = "matMenu">
-                    <button [matMenuTriggerFor] = "FileTypeMenu" mat-menu-item>
+                    <button [matMenuTriggerFor] = "FileTypeMenuLayer" mat-menu-item>
                         <mat-icon style="font-size: 25px;" class="material-icons">
                             view_comfy
                         </mat-icon>
@@ -93,7 +106,7 @@
                             Zonas de Manejo
                         </span>
                     </button>
-                    <button [matMenuTriggerFor] = "FileTypeMenu" *ngIf="selectedLayerType === 0" mat-menu-item>
+                    <button [matMenuTriggerFor] = "FileTypeMenuContourn" *ngIf="selectedLayerType === 0" mat-menu-item>
                         <mat-icon style="font-size: 25px;" class="material-icons">
                             select_all
                         </mat-icon>
@@ -101,14 +114,29 @@
                     </button>
                 </mat-menu>
 
-                <mat-menu #FileTypeMenu = "matMenu">
+                <mat-menu #FileTypeMenuLayer = "matMenu">
+                    <button (click) = "exportLayer('.txt')" mat-menu-item>
+                        <mat-icon style="font-size: 25px;" class="material-icons">
+                            text_snippet
+                        </mat-icon>
+                        .txt
+                    </button>
+                    <button (click) = "exportLayer('.csv')" mat-menu-item>
+                        <mat-icon style="font-size: 25px;" class="material-icons">
+                            table_view
+                        </mat-icon>
+                        .csv
+                    </button>
+                </mat-menu>
+
+                <mat-menu #FileTypeMenuContourn = "matMenu">
                     <button mat-menu-item>
                         <mat-icon style="font-size: 25px;" class="material-icons">
                             text_snippet
                         </mat-icon>
                         .txt
                     </button>
-                    <button *ngIf="selectedLayerType === 0" mat-menu-item>
+                    <button mat-menu-item>
                         <mat-icon style="font-size: 25px;" class="material-icons">
                             table_view
                         </mat-icon>

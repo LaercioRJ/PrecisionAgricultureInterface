@@ -14,9 +14,9 @@ import { ZmLayer } from '../classes/zmLayer';
 export class LayerImportingService {
 
   private fileName = '';
-  private latitudeHeader = '';
-  private longitudeHeader = '';
-  private dataHeader = '';
+  private latitudeHeader = 'Latitude';
+  private longitudeHeader = 'Longitude';
+  private dataHeader = 'Classe';
   private dataset: DatasetValue[] = [];
 
   constructor(private integerValidation: IntegerValidationService,

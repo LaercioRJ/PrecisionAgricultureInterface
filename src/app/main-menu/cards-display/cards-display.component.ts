@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
+import { LayerExportingService } from '../../services/layer-exporting.service';
 import { LayerImportingService } from '../../services/layer-importing.service';
 import { LayerStorageService } from '../../services/layer-storage.service';
 
@@ -14,7 +15,8 @@ import { SamplingLayer } from '../../classes/samplingLayer';
 })
 export class CardsDisplayComponent implements OnInit {
 
-  constructor(private layerImporting: LayerImportingService,
+  constructor(private layerExporting: LayerExportingService,
+              private layerImporting: LayerImportingService,
               private layerStorage: LayerStorageService) { }
 
   displayedLayers: Layer[] = [];
@@ -57,6 +59,14 @@ export class CardsDisplayComponent implements OnInit {
     }
     this.selectedLayerIndex = newLayerIndex;
     this.selectedLayerName = this.displayedLayers[newLayerIndex].name;
+  }
+
+  exportLayer(fileType: string, ): void {
+    this.layerExporting.layerToFile(this.selectedLayerIndex, fileType);
+  }
+
+  exportContourn(fileType: string): void {
+
   }
 
 }

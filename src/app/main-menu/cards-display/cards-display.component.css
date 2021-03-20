@@ -92,3 +92,12 @@
     opacity: 1;
     transform: scaleY(1);
 }
+.cardDataTile{
+    font-size: large;
+}
+.cardSidenavDivider{
+    margin-bottom: 1vh;
+    border-top-style: solid;
+    border-top-width: 2px;
+    color: black;
+}
