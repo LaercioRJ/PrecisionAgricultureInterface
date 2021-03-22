@@ -8,12 +8,14 @@ import { MaterialModule } from './material-module';
 import { CardsDisplayComponent } from './main-menu/cards-display/cards-display.component';
 import { LayerCardComponent } from './main-menu/layer-card/layer-card.component';
 import { TopBarComponent } from './main-menu/top-bar/top-bar.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     TopBarComponent,
     CardsDisplayComponent,
-    LayerCardComponent
+    LayerCardComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     AppRoutingModule,

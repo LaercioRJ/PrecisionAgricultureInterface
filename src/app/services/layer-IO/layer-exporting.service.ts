@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { LayerStorageService } from '../services/layer-storage.service';
+import { LayerStorageService } from '../layer-storage.service';
 
-import { Layer } from '../classes/layer';
+import { Layer } from '../../classes/layer';
 
 @Injectable({
   providedIn: 'root'

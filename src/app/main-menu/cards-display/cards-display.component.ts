@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { LayerExportingService } from '../../services/layer-exporting.service';
-import { LayerImportingService } from '../../services/layer-importing.service';
+import { LayerExportingService } from '../../services/layer-IO/layer-exporting.service';
+import { LayerImportingService } from '../../services/layer-IO/layer-importing.service';
 import { LayerStorageService } from '../../services/layer-storage.service';
+import { MessageDeliveryService } from '../../services/message-delivery.service';
 
 import { Layer } from '../../classes/layer';
 import { SamplingLayer } from '../../classes/samplingLayer';
+
+import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { getHeight } from 'ol/extent';
 
 @Component({
   selector: 'app-cards-display',
@@ -17,7 +22,9 @@ export class CardsDisplayComponent implements OnInit {
 
   constructor(private layerExporting: LayerExportingService,
               private layerImporting: LayerImportingService,
-              private layerStorage: LayerStorageService) { }
+              private layerStorage: LayerStorageService,
+              private matDialog: MatDialog,
+              private messageDelivery: MessageDeliveryService) { }
 
   displayedLayers: Layer[] = [];
   selectedLayerIndex = -1;
@@ -67,6 +74,31 @@ export class CardsDisplayComponent implements OnInit {
 
   exportContourn(fileType: string): void {
 
+  }
+
+  deleteLayer(sidenav: MatSidenav): void{
+    const deleteMessage = 'Tem certeza que deseja excluir a layer '.concat(this.selectedLayerName);
+    const deleteDialogReference = this.matDialog.open(ConfirmationDialogComponent, {
+      width: '330px',
+      height: '150px',
+      disableClose: true,
+      data: {message: deleteMessage}
+    });
+
+    // tslint:disable-next-line: deprecation
+    deleteDialogReference.afterClosed().subscribe(userChoice => {
+      if (userChoice.answer === 1) {
+        this.layerStorage.deleteLayer(this.selectedLayerIndex);
+        this.displayedLayers = this.layerStorage.getLayers();
+        sidenav.close();
+        this.selectedLayerIndex = -1;
+        this.messageDelivery.showMessage('A layer '.concat(this.selectedLayerName).concat(' foi excluída com sucesso'), 2400);
+        this.selectedLayerName = '';
+      }
+      if (userChoice.answer === 0) {
+        this.messageDelivery.showMessage('A exclusão foi cancelada.', 2400);
+      }
+    });
   }
 
 }

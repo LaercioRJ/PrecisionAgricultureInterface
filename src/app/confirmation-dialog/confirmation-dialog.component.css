@@ -1,0 +1,25 @@
+.dialogBody{
+    text-align: center;
+    overflow: hidden;
+}
+.message{
+    font-size: large;
+}
+.denyButton{
+    margin-left: 1vw;
+    background-color: #0fb100d3;
+    color: white;
+}
+.acceptButton{
+    background-color: #0fb100d3;
+    color: white;
+}
+.acceptButton:hover{
+    background-color: #10be00d3;
+}
+.denyButton:hover{
+    background-color: #10be00d3;
+}
+.buttonsPosition{
+    margin-top: 20px;
+}

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { IntegerValidationService } from '../services/integer-validation.service';
-import { MessageDeliveryService } from '../services/message-delivery.service';
-import { LayerStorageService } from '../services/layer-storage.service';
+import { IntegerValidationService } from '../integer-validation.service';
+import { MessageDeliveryService } from '../message-delivery.service';
+import { LayerStorageService } from '../layer-storage.service';
 
-import { DatasetValue } from '../classes/datasetValue';
-import { SamplingLayer } from '../classes/samplingLayer';
-import { ZmLayer } from '../classes/zmLayer';
+import { DatasetValue } from '../../classes/datasetValue';
+import { SamplingLayer } from '../../classes/samplingLayer';
+import { ZmLayer } from '../../classes/zmLayer';
 
 @Injectable({
   providedIn: 'root'

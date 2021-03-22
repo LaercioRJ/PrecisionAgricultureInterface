@@ -39,4 +39,8 @@ export class LayerStorageService {
     }
     return copiedLayer;
   }
+
+  deleteLayer(layerIndex: number): void {
+    this.storedLayers.splice(layerIndex, 1);
+  }
 }
