@@ -28,7 +28,7 @@ export class LayerImportingService {
       layerType = 1 -> management zone layer*/
     this.dataset = [];
     this.confirmFileType(file.name);
-    this.getName(file.name);
+    this.getFileName(file.name);
     this.getFileContentAndStore(file, layerType);
   }
 
@@ -40,8 +40,8 @@ export class LayerImportingService {
     }
   }
 
-  private getName(fileName: string): void {
-    this.fileName = fileName.slice(0, this.getName.length - 5);
+  private getFileName(fileName: string): void {
+    this.fileName = fileName.slice(0, this.getFileName.length - 5);
   }
 
   private getFileContentAndStore(file: File, layerType: number): void {

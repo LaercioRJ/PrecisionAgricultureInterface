@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { Contourn } from '../classes/contourn';
 import { DatasetValue } from '../classes/datasetValue';
 import { Layer } from '../classes/layer';
 import { SamplingLayer } from '../classes/samplingLayer';
@@ -42,5 +43,10 @@ export class LayerStorageService {
 
   deleteLayer(layerIndex: number): void {
     this.storedLayers.splice(layerIndex, 1);
+  }
+
+  addcontourn(contourn: Contourn, layerIndex: number): void {
+    (this.storedLayers[layerIndex] as SamplingLayer).contourn = contourn;
+    console.log((this.storedLayers[layerIndex] as SamplingLayer).contourn);
   }
 }

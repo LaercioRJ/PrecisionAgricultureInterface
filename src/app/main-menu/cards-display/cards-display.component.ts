@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 
+import { ContournImportingService } from '../../services/contourn-IO/contourn-importing.service';
 import { LayerExportingService } from '../../services/layer-IO/layer-exporting.service';
 import { LayerImportingService } from '../../services/layer-IO/layer-importing.service';
 import { LayerStorageService } from '../../services/layer-storage.service';
@@ -11,7 +12,6 @@ import { Layer } from '../../classes/layer';
 import { SamplingLayer } from '../../classes/samplingLayer';
 
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
-import { getHeight } from 'ol/extent';
 
 @Component({
   selector: 'app-cards-display',
@@ -20,7 +20,8 @@ import { getHeight } from 'ol/extent';
 })
 export class CardsDisplayComponent implements OnInit {
 
-  constructor(private layerExporting: LayerExportingService,
+  constructor(private contournImporting: ContournImportingService,
+              private layerExporting: LayerExportingService,
               private layerImporting: LayerImportingService,
               private layerStorage: LayerStorageService,
               private matDialog: MatDialog,
@@ -30,6 +31,7 @@ export class CardsDisplayComponent implements OnInit {
   selectedLayerIndex = -1;
   selectedLayerName = '';
   selectedLayerType = 0;
+  hasContourn = false;
   /*Sampling Points Layer = 0; Management Zone Layer = 1 */
 
   ngOnInit(): void {
@@ -44,6 +46,15 @@ export class CardsDisplayComponent implements OnInit {
     }
   }
 
+  recieveContournFile(event: any): void {
+    console.log('importando contorno');
+    if (event.target.files && event.target.files[0]) {
+      this.contournImporting.addContournToLayer(event.target.files[0], this.selectedLayerIndex);
+      this.hasContourn = true;
+    } else {
+    }
+  }
+
   selectLayer(layerIndex: number, sidenav: MatSidenav): void {
     if (this.selectedLayerIndex === -1) {
       this.changeSelectedLayer(layerIndex);
@@ -51,6 +62,8 @@ export class CardsDisplayComponent implements OnInit {
     } else {
       if (this.selectedLayerIndex === layerIndex) {
         this.selectedLayerIndex = -1;
+        this.selectedLayerName = '';
+        this.hasContourn = false;
         sidenav.close();
       } else {
         this.changeSelectedLayer(layerIndex);
@@ -61,8 +74,14 @@ export class CardsDisplayComponent implements OnInit {
   changeSelectedLayer(newLayerIndex: number): void {
     if (this.displayedLayers[newLayerIndex] instanceof SamplingLayer) {
       this.selectedLayerType = 0;
+      if ((this.displayedLayers[newLayerIndex] as SamplingLayer).contourn !== undefined) {
+        this.hasContourn = true;
+      } else {
+        this.hasContourn = false;
+      }
     } else {
       this.selectedLayerType = 1;
+      this.hasContourn = false;
     }
     this.selectedLayerIndex = newLayerIndex;
     this.selectedLayerName = this.displayedLayers[newLayerIndex].name;

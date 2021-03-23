@@ -19,6 +19,21 @@
             </span>
             <mat-divider></mat-divider>
         </div>
+
+        <mat-menu #layerTypeMenu="matMenu">
+            <button (click) = "fileInputSP.click()" mat-menu-item>
+                <span>Adicionar layer de Pontos Amostrais</span>
+            </button>
+        
+            <input #fileInputSP style="display: none;" type="file" (change) = "recieveLayerFile($event, 0)" accept=".txt,.csv">
+            
+            <button (click) = "fileInputZM.click()" mat-menu-item>
+                <span>Adicionar layer de Zona de Manejo</span>
+            </button>
+        
+            <input #fileInputZM style="display: none;" type="file" (change) = "recieveLayerFile($event, 1)" accept=".txt,.csv">
+        
+        </mat-menu>
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-sidenav-container>
@@ -35,18 +50,22 @@
                     </span>
                     Visualizar
                 </button>
-                <button *ngIf="selectedLayerType === 0" matTooltip="Adicionar um contorno para a layer" class="cardOptionsButton" mat-button>
+                <button *ngIf="selectedLayerType === 0" (click) = "fileInputContourn.click()" matTooltip="Adicionar um contorno para a layer"
+                 class="cardOptionsButton" mat-button>
                     <span style="font-size: 25px;" class="material-icons">
                         add
                     </span>
                     Ad. Contorno
                 </button>
-                <button *ngIf="selectedLayerType === 0" class="cardOptionsButton" mat-button>
-                    <span style="font-size: 25px;" class="material-icons">
-                        miscellaneous_services
-                    </span>
-                    Interpolar
-                </button>
+                <input #fileInputContourn style="display: none;" type="file" (change) = "recieveContournFile($event)" accept=".txt,.csv">
+                <div matTooltip="É necessário de um contorno para realizar a interpolação" [matTooltipDisabled]="hasContourn">
+                    <button *ngIf="selectedLayerType === 0" [disabled] = "!hasContourn" class="cardOptionsButton" mat-button>
+                        <span style="font-size: 25px;" class="material-icons">
+                            miscellaneous_services
+                        </span>
+                        Interpolar
+                    </button>
+                </div>
                 <button *ngIf="selectedLayerType === 1" class="cardOptionsButton" mat-button>
                     <span style="font-size: 25px;" class="material-icons">
                         miscellaneous_services
@@ -74,10 +93,10 @@
                 </button>
 
                 <mat-divider class="cardSidenavDivider"></mat-divider>
-                <span class="cardDataTile">Dados</span>
+                <!--<span class="cardDataTile">Dados</span>
                 <br>
                 <br>
-                <span style="font-size: large; text-align: left;" matBadge="4" matBadgeOverlap="false">Pontos</span>
+                <span style="font-size: large; text-align: left;" matBadge="4" matBadgeOverlap="false">Pontos</span>-->
 
                 <mat-menu #layerExhibitMenu = "matMenu">
                     <button mat-menu-item>
@@ -106,12 +125,15 @@
                             Zonas de Manejo
                         </span>
                     </button>
-                    <button [matMenuTriggerFor] = "FileTypeMenuContourn" *ngIf="selectedLayerType === 0" mat-menu-item>
-                        <mat-icon style="font-size: 25px;" class="material-icons">
-                            select_all
-                        </mat-icon>
-                        Contorno
-                    </button>
+                    <div matTooltip="Nenhum contorno foi importado para esta layer" [matTooltipDisabled]="hasContourn">
+                        <button [matMenuTriggerFor] = "FileTypeMenuContourn" [disabled] = "!hasContourn" *ngIf="selectedLayerType === 0"
+                         mat-menu-item>
+                            <mat-icon style="font-size: 25px;" class="material-icons">
+                                select_all
+                            </mat-icon>
+                            Contorno
+                        </button>
+                    </div>
                 </mat-menu>
 
                 <mat-menu #FileTypeMenuLayer = "matMenu">
@@ -154,18 +176,3 @@
         </mat-sidenav-container>
     </mat-sidenav-content>
 </mat-sidenav-container>
-
-<mat-menu #layerTypeMenu="matMenu">
-    <button (click) = "fileInputSP.click()" mat-menu-item>
-        <span>Adicionar layer de Pontos Amostrais</span>
-    </button>
-
-    <input #fileInputSP id="fileInput" type="file" (change) = "recieveLayerFile($event, 0)" accept=".txt,.csv" style="display: none;">
-    
-    <button (click) = "fileInputZM.click()" mat-menu-item>
-        <span>Adicionar layer de Zona de Manejo</span>
-    </button>
-
-    <input #fileInputZM id="fileInput" type="file" (change) = "recieveLayerFile($event, 1)" accept=".txt,.csv" style="display: none;">
-
-</mat-menu>
