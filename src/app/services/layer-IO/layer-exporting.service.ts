@@ -14,7 +14,7 @@ export class LayerExportingService {
   layerToFile(layerIndex: number, fileType: string): void {
     const layer = this.layerStorage.getLayer(layerIndex);
     const fileContent = this.convertLayerToString(layer);
-    const file = this.createFile(layer, fileContent, fileType);
+    const file = this.createFile(layer.name, fileContent, fileType);
     this.downloadFile(file);
   }
 
@@ -44,10 +44,10 @@ export class LayerExportingService {
     return fileContent;
   }
 
-  private createFile(layer: Layer, content: any, fileType: string): HTMLAnchorElement {
+  private createFile(layerName: string, content: any, fileType: string): HTMLAnchorElement {
     const file = document.createElement('a');
     file.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-    file.setAttribute('download', layer.name.concat(fileType));
+    file.setAttribute('download', layerName.concat(fileType));
     file.style.display = 'none';
     return file;
   }

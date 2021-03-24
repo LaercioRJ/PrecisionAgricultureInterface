@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { ContournImportingService } from '../../services/contourn-IO/contourn-importing.service';
+import { ContournExportingService } from '../../services/contourn-IO/contourn-exporting.service';
 import { LayerExportingService } from '../../services/layer-IO/layer-exporting.service';
 import { LayerImportingService } from '../../services/layer-IO/layer-importing.service';
 import { LayerStorageService } from '../../services/layer-storage.service';
@@ -21,6 +22,7 @@ import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmat
 export class CardsDisplayComponent implements OnInit {
 
   constructor(private contournImporting: ContournImportingService,
+              private contournExporting: ContournExportingService,
               private layerExporting: LayerExportingService,
               private layerImporting: LayerImportingService,
               private layerStorage: LayerStorageService,
@@ -92,7 +94,7 @@ export class CardsDisplayComponent implements OnInit {
   }
 
   exportContourn(fileType: string): void {
-
+    this.contournExporting.contournToFile(this.selectedLayerIndex, fileType);
   }
 
   deleteLayer(sidenav: MatSidenav): void{

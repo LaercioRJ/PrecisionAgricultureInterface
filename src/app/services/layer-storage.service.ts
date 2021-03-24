@@ -49,4 +49,15 @@ export class LayerStorageService {
     (this.storedLayers[layerIndex] as SamplingLayer).contourn = contourn;
     console.log((this.storedLayers[layerIndex] as SamplingLayer).contourn);
   }
+
+  getLayerContourn(layerIndex: number): Contourn {
+    let copiedContourn;
+    const originalContourn = (this.storedLayers[layerIndex] as SamplingLayer).contourn;
+    copiedContourn = new Contourn(originalContourn.fileName, originalContourn.latitudeHeader, originalContourn.longitudeHeader);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < originalContourn.coordinates.length; i++) {
+      copiedContourn.coordinates.push(originalContourn.coordinates[i]);
+    }
+    return copiedContourn;
+  }
 }

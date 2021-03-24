@@ -152,13 +152,13 @@
                 </mat-menu>
 
                 <mat-menu #FileTypeMenuContourn = "matMenu">
-                    <button mat-menu-item>
+                    <button (click) = "exportContourn('.txt')" mat-menu-item>
                         <mat-icon style="font-size: 25px;" class="material-icons">
                             text_snippet
                         </mat-icon>
                         .txt
                     </button>
-                    <button mat-menu-item>
+                    <button (click) = "exportContourn('.csv')" mat-menu-item>
                         <mat-icon style="font-size: 25px;" class="material-icons">
                             table_view
                         </mat-icon>
