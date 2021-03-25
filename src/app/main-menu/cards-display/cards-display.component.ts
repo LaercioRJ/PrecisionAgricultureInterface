@@ -64,9 +64,9 @@ export class CardsDisplayComponent implements OnInit {
     } else {
       if (this.selectedLayerIndex === layerIndex) {
         this.selectedLayerIndex = -1;
-        this.selectedLayerName = '';
         this.hasContourn = false;
         sidenav.close();
+        this.selectedLayerName = '';
       } else {
         this.changeSelectedLayer(layerIndex);
       }

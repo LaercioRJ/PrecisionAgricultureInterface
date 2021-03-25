@@ -30,17 +30,6 @@
     width: 160px;
     background-color: white;
 }
-@media only screen and (max-width: 1920px) {
-    .cardSidenav{
-        width: 160px;
-    }
-}
-
-@media only screen and (max-width: 700px) {
-    .cardSidenav{
-        width: 140px;
-    }
-}
 .cardSidenavTitleContainer{
     height: 1%;
     margin-bottom: 0;
@@ -57,7 +46,7 @@
     font-size: medium;
     width: 100%;
     text-align: left;
-    height: 6%;
+    height: 33px;
     margin-bottom: 1%;
 }
 .cardOptionsButton::before{

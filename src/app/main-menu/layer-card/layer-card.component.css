@@ -16,6 +16,7 @@ mat-toolbar{
 .layerCard{
     margin-left: 5%;
     margin-top: 5vh;
+    height: 220px;
     flex-wrap: wrap;
     float: left;
     background-color: rgb(242, 252, 255);
@@ -41,30 +42,6 @@ mat-toolbar{
     }
 }
 
-@media only screen and (max-height: 800px) {
-    .layerCard {
-        height: 32vh;
-    }
-}
-
-@media only screen and (max-height: 650px) {
-    .layerCard {
-        height: 43vh;
-    }
-}
-
-@media only screen and (max-height: 500px) {
-    .layerCard {
-        height: 55vh;
-    }
-}
-
-@media only screen and (max-height: 400px) {
-    .layerCard {
-        height: 70vh;
-    }
-}
-
 @media only screen and (max-width: 1700px) {
     .layerCard {
         width: 18%;
@@ -83,7 +60,7 @@ mat-toolbar{
     }
 }
 
-@media only screen and (max-width: 600px)  {
+@media only screen and (max-width: 700px)  {
     .layerCard {
         width: 85%;
     }
