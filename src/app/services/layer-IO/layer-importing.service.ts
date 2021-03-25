@@ -7,6 +7,7 @@ import { LayerStorageService } from '../layer-storage.service';
 import { DatasetValue } from '../../classes/datasetValue';
 import { SamplingLayer } from '../../classes/samplingLayer';
 import { ZmLayer } from '../../classes/zmLayer';
+import { getMatFormFieldPlaceholderConflictError } from '@angular/material/form-field';
 
 @Injectable({
   providedIn: 'root'
@@ -71,35 +72,51 @@ export class LayerImportingService {
     let lineValues: string[];
     fileLines = fileContent.split(/\n/);
     for (; haveHeaders < fileLines.length; haveHeaders++) {
+      this.validateComaSeparation(fileLines[haveHeaders], haveHeaders);
       lineValues = fileLines[haveHeaders].split(',');
-      this.validateNumberFields(lineValues);
+      this.validateNumberFields(lineValues, haveHeaders + 1);
       if (layerType === 1) {
-        this.validateZMClasses(Number(lineValues[2]));
+        this.validateZMClasses(Number(lineValues[2]), haveHeaders + 1);
       }
       this.dataset.push(new DatasetValue(Number(lineValues[0]), Number(lineValues[1]), Number(lineValues[2])));
     }
     this.storeLayer(layerType);
   }
 
-  private validateNumberFields(values: string[]): void {
+  private validateComaSeparation(fileLine: string, lineIndex: number): void {
+    const lineFirstHalf = fileLine.slice(0, fileLine.indexOf(',') + 1);
+    const lineSecondHalf = fileLine.slice(fileLine.indexOf(',') + 1, fileLine.lastIndexOf(',') + 1);
+    if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(',')) || (lineFirstHalf.indexOf('.') === -1 )) {
+      this.messageDelivery.showMessage('Erro: Os dados não estão separados por vírgulas. Linha: '.concat(String(lineIndex)), 2700);
+      throw new Error('Fields are not correctly formated.');
+    }
+    if ((lineSecondHalf.indexOf('.') > lineSecondHalf.indexOf(',')) || (lineSecondHalf.indexOf('.') === -1)) {
+      this.messageDelivery.showMessage('Erro: Os dados não estão separados por vírgulas. Linha: '.concat(String(lineIndex)), 2700);
+      throw new Error('Fields are not correctly formated.');
+    }
+  }
+
+  private validateNumberFields(values: string[], lineIndex: number): void {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < values.length; i++) {
       if (isNaN(Number(values[i]))) {
-        this.messageDelivery.showMessage('Erro: há letras nos campos de coordenadas ou atributo.', 2500);
-        throw new Error('Invalid data.');
+        this.messageDelivery.showMessage('Erro: Há letras nos campos de coordenadas ou atributo. Linha: '.concat(String(lineIndex)), 2700);
+        throw new Error('String on number fields.');
       }
     }
   }
 
-  private validateZMClasses(data: number): void {
+  private validateZMClasses(data: number, lineIndex: number): void {
     const isInteger = this.integerValidation.isInteger(data);
     if (isInteger === false) {
-      this.messageDelivery.showMessage('Erro: As classes de uma layer de ZM devem ser valores inteiros.', 2500);
-      throw new Error('Invalid data.');
+      this.messageDelivery.showMessage('Erro: As classes de uma layer de ZM devem ser valores inteiros. Linha: '.concat(String(lineIndex))
+       , 2700);
+      throw new Error('Floating point on zm class.');
     }
     if ((data < 1) || (data > 10)) {
-      this.messageDelivery.showMessage('Erro: As classes de uma layer de ZM vão de 1 até 10 apenas.', 2500);
-      throw new Error('Invalid data.');
+      this.messageDelivery.showMessage('Erro: As classes de uma layer de ZM vão de 1 até 10 apenas. Linha: '.concat(String(lineIndex))
+       , 2700);
+      throw new Error('Zm class out of bounds.');
     }
   }
 
