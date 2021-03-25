@@ -87,12 +87,10 @@ export class LayerImportingService {
     const lineFirstHalf = fileLine.slice(0, fileLine.indexOf(',') + 1);
     const lineSecondHalf = fileLine.slice(fileLine.indexOf(',') + 1, fileLine.lastIndexOf(',') + 1);
     if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(',')) || (lineFirstHalf.indexOf('.') === -1 )) {
-      this.messageDelivery.showMessage('Erro: Os dados não estão separados por vírgulas. Linha: '.concat(String(lineIndex)), 2700);
-      throw new Error('Fields are not correctly formated.');
+      this.fileReadingErrorMessage(lineIndex);
     }
     if ((lineSecondHalf.indexOf('.') > lineSecondHalf.indexOf(',')) || (lineSecondHalf.indexOf('.') === -1)) {
-      this.messageDelivery.showMessage('Erro: Os dados não estão separados por vírgulas. Linha: '.concat(String(lineIndex)), 2700);
-      throw new Error('Fields are not correctly formated.');
+      this.fileReadingErrorMessage(lineIndex);
     }
   }
 
@@ -100,8 +98,7 @@ export class LayerImportingService {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < values.length; i++) {
       if (isNaN(Number(values[i]))) {
-        this.messageDelivery.showMessage('Erro: Há letras nos campos de coordenadas ou atributo. Linha: '.concat(String(lineIndex)), 2700);
-        throw new Error('String on number fields.');
+        this.fileReadingErrorMessage(lineIndex);
       }
     }
   }
@@ -109,15 +106,16 @@ export class LayerImportingService {
   private validateZMClasses(data: number, lineIndex: number): void {
     const isInteger = this.integerValidation.isInteger(data);
     if (isInteger === false) {
-      this.messageDelivery.showMessage('Erro: As classes de uma layer de ZM devem ser valores inteiros. Linha: '.concat(String(lineIndex))
-       , 2700);
-      throw new Error('Floating point on zm class.');
+      this.fileReadingErrorMessage(lineIndex);
     }
     if ((data < 1) || (data > 10)) {
-      this.messageDelivery.showMessage('Erro: As classes de uma layer de ZM vão de 1 até 10 apenas. Linha: '.concat(String(lineIndex))
-       , 2700);
-      throw new Error('Zm class out of bounds.');
+      this.fileReadingErrorMessage(lineIndex);
     }
+  }
+
+  private fileReadingErrorMessage(lineIndex: number): void {
+    this.messageDelivery.showMessage('Erro: Há problemas no preenchimento do arquivo de layer. Linha: '.concat(String(lineIndex)), 2700);
+    throw new Error('Problem while reading layer file.');
   }
 
   private storeLayer(layerType: number): void {

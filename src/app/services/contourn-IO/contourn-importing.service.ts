@@ -63,21 +63,37 @@ export class ContournImportingService {
     let lineValues: string[];
     fileLines = fileContent.split(/\n/);
     for (; haveHeaders < fileLines.length; haveHeaders++) {
+      this.validateComaSeparation(fileLines[haveHeaders], haveHeaders + 1);
       lineValues = fileLines[haveHeaders].split(',');
-      this.validateNumberFields(lineValues);
+      this.validateNumberFields(lineValues, haveHeaders);
       this.coordinates.push([Number(lineValues[0]), Number(lineValues[1])]);
     }
     this.addContourn(layerIndex);
   }
 
-  private validateNumberFields(values: string[]): void {
+  private validateComaSeparation(fileLine: string, lineIndex: number): void {
+    const lineFirstHalf = fileLine.slice(0, fileLine.indexOf(',') + 1);
+    const lineSecondHalf = fileLine.slice(fileLine.indexOf(',') + 1, fileLine.length);
+    if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(',')) || (lineFirstHalf.indexOf('.') === -1 )) {
+      this.fileReadingErrorMessage(lineIndex);
+    }
+    if ((lineSecondHalf.indexOf(',') !== 1) || (lineSecondHalf.indexOf('.') === -1)) {
+      this.fileReadingErrorMessage(lineIndex);
+    }
+  }
+
+  private validateNumberFields(values: string[], lineIndex: number): void {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < values.length; i++) {
       if (isNaN(Number(values[i]))) {
-        this.messageDelivery.showMessage('Erro: há letras nos campos de coordenadas.', 2500);
-        throw new Error('Invalid data.');
+        this.fileReadingErrorMessage(lineIndex);
       }
     }
+  }
+
+  private fileReadingErrorMessage(lineIndex: number): void {
+    this.messageDelivery.showMessage('Erro: Há problemas no preenchimento do arquivo de contorno. Linha: '.concat(String(lineIndex)), 2700);
+    throw new Error('Problem while reading contourn file.');
   }
 
   private addContourn(layerIndex: number): void {
