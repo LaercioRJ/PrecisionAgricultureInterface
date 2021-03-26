@@ -1,9 +1,15 @@
-<div [class.mat-elevation-z6]="true" class="layerCard">
-    <mat-toolbar [class.mat-elevation-z3]="true">
+<div [class.mat-elevation-z6]="true" class="layerCard"  matBadge={{layerDatasetLengthDisplay}}
+     matBadgePosition="below" matBadgeOverlap="false">
+    <div [class.mat-elevation-z4]="true" class="topBar">
+        <div style = "height: 3%;"></div>
         <span class="title">
             {{this.layer.name}}
         </span>
-    </mat-toolbar>
+        <br>
+        <span class="layerTypeText">
+            Layer de Zonas de manejo
+        </span>
+    </div>
 
     <div class="map" id="map"></div>
 </div>

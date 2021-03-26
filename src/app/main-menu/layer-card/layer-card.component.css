@@ -5,18 +5,24 @@
     font-size: x-large;
 }
 
-mat-toolbar{
-    height: 15%;
+.topBar{
+    height: 17%;
     width: 100%;
     position: relative;
-    z-index: 3;
-    background-image: linear-gradient(#0d9700, #10b601);
+    z-index: 4;
+    background-image: linear-gradient(#0d9700, #12c002);
+    text-align: center;
+}
+
+.layerTypeText{
+    font-size: small;
+    color: whitesmoke;
 }
 
 .layerCard{
     margin-left: 5%;
     margin-top: 5vh;
-    height: 220px;
+    height: 250px;
     flex-wrap: wrap;
     float: left;
     background-color: rgb(242, 252, 255);
@@ -74,6 +80,14 @@ mat-toolbar{
 
 .map{
     width: 100%;
-    height: 85%;
+    height: 83%;
     position: relative;
+}
+.mat-badge-content {
+    width: 75px;
+    height: auto; 
+    line-height: 40px;
+    background-color: #0e9b01;
+    color: whitesmoke;
+    z-index: 9;
 }
