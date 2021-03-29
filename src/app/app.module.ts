@@ -9,13 +9,15 @@ import { CardsDisplayComponent } from './main-menu/cards-display/cards-display.c
 import { LayerCardComponent } from './main-menu/layer-card/layer-card.component';
 import { TopBarComponent } from './main-menu/top-bar/top-bar.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { TablePageComponent } from './layer-visualization/table/table-page/table-page.component';
 
 @NgModule({
   declarations: [
     TopBarComponent,
     CardsDisplayComponent,
     LayerCardComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    TablePageComponent
   ],
   imports: [
     AppRoutingModule,

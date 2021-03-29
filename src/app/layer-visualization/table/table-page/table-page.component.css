@@ -1,0 +1,20 @@
+.pageCard{
+    background-color: whitesmoke;
+    width: 65%;
+    margin-left: 17.5%;
+    margin-top: 12px;
+}
+.pageTitle{
+    font-size: x-large;
+}
+.layerDataPosition{
+    text-align: center;
+    margin-top: 20px;
+}
+.layerDataInput{
+    text-align: center;
+}
+.layerDataSpacing{
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { ContournImportingService } from '../../services/contourn-IO/contourn-importing.service';
@@ -27,7 +28,8 @@ export class CardsDisplayComponent implements OnInit {
               private layerImporting: LayerImportingService,
               private layerStorage: LayerStorageService,
               private matDialog: MatDialog,
-              private messageDelivery: MessageDeliveryService) { }
+              private messageDelivery: MessageDeliveryService,
+              private router: Router) { }
 
   displayedLayers: Layer[] = [];
   selectedLayerIndex = -1;
@@ -121,6 +123,10 @@ export class CardsDisplayComponent implements OnInit {
         this.messageDelivery.showMessage('A exclusão foi cancelada.', 2400);
       }
     });
+  }
+
+  visualizeLayerOnTable(): void {
+    this.router.navigateByUrl('table-visualization/'.concat(String(this.selectedLayerIndex)));
   }
 
 }

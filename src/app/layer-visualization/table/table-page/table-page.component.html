@@ -1,0 +1,20 @@
+<mat-card class="pageCard">
+    <mat-card-header>
+        <mat-card-title class='pageTitle'>Visualizar em tabela: {{layer.name}}</mat-card-title>
+    </mat-card-header>
+    <div class="layerDataPosition">
+        <mat-form-field class="layerDataSpacing" appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input class="layerDataInput" matInput value="{{layer.name}}" readonly>
+        </mat-form-field>
+        <mat-form-field class="layerDataSpacing" appearance="outline">
+            <mat-label>N° de pontos</mat-label>
+            <input class="layerDataInput" matInput value="{{layer.datasetLength}}" readonly>
+        </mat-form-field>
+        <mat-form-field class="layerDataSpacing" appearance="outline">
+            <mat-label>Tipo de Layer</mat-label>
+            <input class="layerDataInput" matInput value="{{layerType}}" readonly>
+        </mat-form-field>
+    </div>
+</mat-card>
+
