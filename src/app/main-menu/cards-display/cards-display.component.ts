@@ -50,13 +50,9 @@ export class CardsDisplayComponent implements OnInit {
 
   recieveContournFile(event: any): void {
     if (event.target.files && event.target.files[0]) {
-      try {
-        this.contournImporting.addContournToLayer(event.target.files[0], this.selectedLayerIndex);
-        if ((this.displayedLayers[this.selectedLayerIndex] as SamplingLayer).contourn !== undefined) {
-          this.hasContourn = true;
-        }
-      } catch (e) {
-        console.log(e);
+      this.contournImporting.addContournToLayer(event.target.files[0], this.selectedLayerIndex);
+      if ((this.displayedLayers[this.selectedLayerIndex] as SamplingLayer).contourn !== undefined) {
+        this.hasContourn = true;
       }
     } else {
     }

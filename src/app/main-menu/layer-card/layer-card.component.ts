@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Layer } from '../../classes/layer';
+import { SamplingLayer } from '../../classes/samplingLayer';
 
 import { MappingService } from '../../services/mapping.service';
 
@@ -14,17 +15,25 @@ export class LayerCardComponent implements OnInit {
   @Input() layer!: Layer;
 
   layerDatasetLengthDisplay = '';
+  layerType = 'Layer de Zona de Manejo';
 
   constructor(private mapping: MappingService) { }
 
   ngOnInit(): void {
     this.layerDatasetLengthDisplay = String(this.layer.datasetLength).concat(' pontos');
+    this.confirmLayerType();
     const mapClass = 'map'.concat(this.layerId);
     this.changeMapDivClass(mapClass);
     this.mapping.RenderSimpleMap(this.layer.dataset[0].coordinates[0], this.layer.dataset[0].coordinates[1], mapClass);
   }
 
-  changeMapDivClass(newClass: string): void {
+  private confirmLayerType(): void {
+    if (this.layer instanceof SamplingLayer) {
+      this.layerType = 'Layer de Pontos Amostrais';
+    }
+  }
+
+  private changeMapDivClass(newClass: string): void {
     const mapDiv = document.getElementById('map');
     if (mapDiv !== null) {
       mapDiv.id = newClass;
