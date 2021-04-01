@@ -10,6 +10,8 @@ import { LayerCardComponent } from './main-menu/layer-card/layer-card.component'
 import { TopBarComponent } from './main-menu/top-bar/top-bar.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { TablePageComponent } from './layer-visualization/table/table-page/table-page.component';
+import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-layer-info/zm-layer-info.component';
+import { SpLayerInfoComponent } from './layer-visualization/table/layer-info/sp-layer-info/sp-layer-info.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { TablePageComponent } from './layer-visualization/table/table-page/table
     CardsDisplayComponent,
     LayerCardComponent,
     ConfirmationDialogComponent,
-    TablePageComponent
+    TablePageComponent,
+    ZmLayerInfoComponent,
+    SpLayerInfoComponent,
   ],
   imports: [
     AppRoutingModule,

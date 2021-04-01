@@ -16,5 +16,11 @@
             <input class="layerDataInput" matInput value="{{layerType}}" readonly>
         </mat-form-field>
     </div>
+    <div *ngIf="layerType === 'Zona de Manejo'" class="layerDataPosition">
+        <app-zm-layer-info [layer] = "this.layer"></app-zm-layer-info>
+    </div>
+    <div *ngIf="layerType === 'Pontos Amostrais'" class="layerDataPosition">
+        <app-sp-layer-info [layer] = "this.layer"></app-sp-layer-info>
+    </div>
 </mat-card>
 

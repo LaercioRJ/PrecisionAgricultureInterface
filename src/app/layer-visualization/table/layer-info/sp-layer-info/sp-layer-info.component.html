@@ -1,0 +1,57 @@
+<div *ngIf="interpolationType === 'IDW'">
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Tipo de Interpolação</mat-label>
+        <input class="layerDataInput" matInput value="IDW" readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Expoente</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.idwExpoent}} readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Raio</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.radius}} readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Vizinhos</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.neighbors}} readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Pixel X</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.pixelX}} readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Pixel Y</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.pixelY}} readonly>
+    </mat-form-field>
+</div>
+
+<div *ngIf="interpolationType === 'Krigagem'">
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Tipo de Interpolação</mat-label>
+        <input class="layerDataInput" matInput value="Krigagem" readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Modelo</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.krigingModel}} readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Método</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.krigingMethod}} readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Partial Sill</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.partialSill}} readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Range</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.range}} readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Pixel X</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.pixelX}} readonly>
+    </mat-form-field>
+    <mat-form-field class="layerDataSpacing" appearance="outline">
+        <mat-label>Pixel Y</mat-label>
+        <input class="layerDataInput" matInput value={{typedSPLayer.pixelY}} readonly>
+    </mat-form-field>
+</div>

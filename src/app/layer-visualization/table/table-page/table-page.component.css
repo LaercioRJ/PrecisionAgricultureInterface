@@ -4,12 +4,14 @@
     margin-left: 17.5%;
     margin-top: 12px;
 }
+.mat-card-header{
+    margin-bottom: 22px;
+}
 .pageTitle{
     font-size: x-large;
 }
 .layerDataPosition{
     text-align: center;
-    margin-top: 20px;
 }
 .layerDataInput{
     text-align: center;
