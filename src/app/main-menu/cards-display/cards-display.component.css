@@ -17,12 +17,14 @@
 }
 .iconContainer {
     width: 100%;
-    color: #0fb100d3;
+    /*color: #0fb100d3;*/
+    color: #43A047;
     user-select: none;
 }
 .iconContainer:hover{
     cursor: pointer;
-    color: #16e903;
+    /*color: #16e903;*/
+    color: #64DD17;
 }
 .cardSidenav{
     text-align: center;
@@ -53,7 +55,7 @@
     content: '';
     position: absolute;
     width: 2px;
-    background-color: #0fb100d3;
+    background-color: #5bc519;
     height: 100%;
     top: 0;
     opacity: 0;
@@ -69,7 +71,7 @@
     content: '';
     position: absolute;
     width: 2px;
-    background-color: #0fb100d3;
+    background-color: #5bc519;
     height: 100%;
     top: 0;
     opacity: 0;

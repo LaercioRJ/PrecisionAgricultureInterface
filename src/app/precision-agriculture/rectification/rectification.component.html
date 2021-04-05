@@ -1,1 +1,76 @@
-<p>rectification works!</p>
+<mat-card class="mainMatCard">
+    <mat-card-header>
+        <mat-card-title class="mainTitle">Retificação: {{layer.name}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div></div>
+        <mat-card class="parameterCard">
+            <mat-card-header>
+                <mat-card-title class="parameterTitle">Tamanho da janela:</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-radio-group [(ngModel)] = "selectedKernelSize">
+                    <mat-radio-button *ngFor="let kernelSize of kernelSizes" [value] = 'kernelSize'>
+                        {{kernelSize}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="parameterCard">
+            <mat-card-header>
+                <mat-card-title class="parameterTitle">Formato da janela:</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-radio-group [(ngModel)] = "selectedKernelFormat">
+                    <mat-radio-button *ngFor="let kernelFormat of kernelFormats" [value] = 'kernelFormat'>
+                        {{kernelFormat}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="parameterCard">
+            <mat-card-header>
+                <mat-card-title class="parameterTitle">Filtros de Retificação:</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-radio-group [(ngModel)] = "selectedRectificationMethod">
+                    <mat-radio-button *ngFor="let rectificationMethod of rectificationMethods" [value] = 'rectificationMethod'>
+                        {{rectificationMethod}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="parameterCard">
+            <mat-card-header>
+                <mat-card-title class="parameterTitle">Número de Iterações:</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-radio-group [(ngModel)] = "selectedIteration">
+                    <mat-radio-button *ngFor="let iteration of iterations" [value] = 'iteration'>
+                        {{iteration}}
+                    </mat-radio-button>
+                    <mat-radio-button value = "7">Outro:</mat-radio-button>
+                </mat-radio-group>
+            </mat-card-content>
+        </mat-card>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button class="mainButton" mat-raised-button color = "primary">
+            <span class="material-icons">
+                miscellaneous_services
+            </span>
+            Executar Retificação
+        </button>
+    </mat-card-actions>
+    <mat-progress-bar [ngStyle]="{display: loadBarState}" mode = "indeterminate"></mat-progress-bar>
+</mat-card>
+<br>
