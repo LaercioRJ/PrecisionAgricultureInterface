@@ -1,0 +1,19 @@
+.tablesTab{
+    width: 80%;
+    margin-left: 10%;
+    background-color: #11c900d3;
+}
+.mat-tab-label{
+    color: white;
+}
+.tabContent{
+    width: 100%;
+    height: 300px;
+    background-color: whitesmoke;
+}
+.mat-slide-localization{
+    text-align: right;
+}
+table{
+    width: 100%;
+}

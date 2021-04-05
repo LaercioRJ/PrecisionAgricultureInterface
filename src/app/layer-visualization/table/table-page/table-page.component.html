@@ -4,7 +4,7 @@
     </mat-card-header>
     <div class="layerDataPosition">
         <mat-form-field class="layerDataSpacing" appearance="outline">
-            <mat-label>Nome</mat-label>
+            <mat-label>Nome da Área</mat-label>
             <input class="layerDataInput" matInput value="{{layer.name}}" readonly>
         </mat-form-field>
         <mat-form-field class="layerDataSpacing" appearance="outline">
@@ -21,6 +21,7 @@
     </div>
     <div *ngIf="layerType === 'Pontos Amostrais'" class="layerDataPosition">
         <app-sp-layer-info [layer] = "this.layer"></app-sp-layer-info>
+        <app-sp-table [layer] = "this.layer"></app-sp-table>
     </div>
 </mat-card>
 

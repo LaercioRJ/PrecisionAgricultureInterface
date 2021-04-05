@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { LayerStorageService } from '../../../services/layer-storage.service';
+
+import { SpTableComponent } from '../data-tables/sp-table/sp-table.component';
 
 import { Layer } from '../../../classes/layer';
 import { ZmLayer } from '../../../classes/zmLayer';

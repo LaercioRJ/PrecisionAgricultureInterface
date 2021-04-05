@@ -14,6 +14,7 @@ import { Layer } from '../../classes/layer';
 import { SamplingLayer } from '../../classes/samplingLayer';
 
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-cards-display',
@@ -92,14 +93,6 @@ export class CardsDisplayComponent implements OnInit {
     this.selectedLayerName = this.displayedLayers[newLayerIndex].name;
   }
 
-  exportLayer(fileType: string, ): void {
-    this.layerExporting.layerToFile(this.selectedLayerIndex, fileType);
-  }
-
-  exportContourn(fileType: string): void {
-    this.contournExporting.contournToFile(this.selectedLayerIndex, fileType);
-  }
-
   deleteLayer(sidenav: MatSidenav): void{
     const deleteMessage = 'Tem certeza que deseja excluir a layer '.concat(this.selectedLayerName);
     const deleteDialogReference = this.matDialog.open(ConfirmationDialogComponent, {
@@ -123,6 +116,18 @@ export class CardsDisplayComponent implements OnInit {
         this.messageDelivery.showMessage('A exclusão foi cancelada.', 2400);
       }
     });
+  }
+
+  exportLayer(fileType: string, ): void {
+    this.layerExporting.layerToFile(this.selectedLayerIndex, fileType);
+  }
+
+  exportContourn(fileType: string): void {
+    this.contournExporting.contournToFile(this.selectedLayerIndex, fileType);
+  }
+
+  rectifyLayer(): void {
+    this.router.navigateByUrl('rectification/'.concat(String(this.selectedLayerIndex)));
   }
 
   visualizeLayerOnTable(): void {

@@ -12,6 +12,9 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { TablePageComponent } from './layer-visualization/table/table-page/table-page.component';
 import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-layer-info/zm-layer-info.component';
 import { SpLayerInfoComponent } from './layer-visualization/table/layer-info/sp-layer-info/sp-layer-info.component';
+import { SpTableComponent } from './layer-visualization/table/data-tables/sp-table/sp-table.component';
+import { MzTableComponent } from './layer-visualization/table/data-tables/mz-table/mz-table.component';
+import { RectificationComponent } from './precision-agriculture/rectification/rectification.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { SpLayerInfoComponent } from './layer-visualization/table/layer-info/sp-
     TablePageComponent,
     ZmLayerInfoComponent,
     SpLayerInfoComponent,
+    SpTableComponent,
+    MzTableComponent,
+    RectificationComponent,
   ],
   imports: [
     AppRoutingModule,

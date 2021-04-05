@@ -17,10 +17,6 @@ export class ZmLayerInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.typedZmLayer = (this.layer as ZmLayer);
-    this.typedZmLayer.iterations = 5;
-    this.typedZmLayer.kernelFormat = 'Retangular';
-    this.typedZmLayer.kernelSize = '5X5';
-    this.typedZmLayer.rectificationMethod = 'Aberto';
   }
 
 }
