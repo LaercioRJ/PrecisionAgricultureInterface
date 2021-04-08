@@ -22,15 +22,13 @@ export class TablePageComponent implements OnInit {
   layerType!: string;
 
   ngOnInit(): void {
-    // tslint:disable-next-line: deprecation
-    this.activatedRoute.paramMap.subscribe(parameters => {
-      this.layer = this.layerStorage.getLayer(Number(parameters.get('layerIndex')));
-      if (this.layer instanceof ZmLayer) {
-        this.layerType = 'Zona de Manejo';
-      } else {
-        this.layerType = 'Pontos Amostrais';
-      }
-    });
+    const layerIndex = this.activatedRoute.snapshot.paramMap.get('layerIndex');
+    this.layer = this.layerStorage.getLayer(Number(layerIndex));
+    if (this.layer instanceof ZmLayer) {
+      this.layerType = 'Zona de Manejo';
+    } else {
+      this.layerType = 'Pontos Amostrais';
+    }
   }
 
 }

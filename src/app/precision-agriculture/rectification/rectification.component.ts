@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Layer } from '../../classes/layer';
 
 import { LayerStorageService } from '../../services/layer-storage.service';
+import { MessageDeliveryService } from '../../services/message-delivery.service';
+import { ServerConnectionService } from '../server-connection.service';
 
 @Component({
   selector: 'app-rectification',
@@ -27,21 +29,35 @@ export class RectificationComponent implements OnInit {
 
   loadBarState = 'none';
 
-  constructor(private layerStorage: LayerStorageService,
-              private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute,
+              private layerStorage: LayerStorageService,
+              private messageDelivery: MessageDeliveryService,
+              private serverConnection: ServerConnectionService) { }
 
   ngOnInit(): void {
-    // tslint:disable-next-line: deprecation
-    this.activatedRoute.paramMap.subscribe(parameters => {
-      this.layer = this.layerStorage.getLayer(Number(parameters.get('layerIndex')));
-    });
+    const layerIndex = this.activatedRoute.snapshot.paramMap.get('layerIndex');
+    this.layer = this.layerStorage.getLayer(Number(layerIndex));
+  }
+
+  validateIterationNumber(): void {
+    const inputValue = this.customIteration;
+    if ((parseFloat(String(inputValue)) === parseInt(String(inputValue), 10)) && inputValue > 6 && inputValue <= 25) {
+      this.customIterationPreviousValue = this.customIteration;
+    } else {
+      if (!(parseFloat(String(inputValue)) === parseInt(String(inputValue), 10))) {
+        this.messageDelivery.showMessage('Por favor, utilize apenas valores inteiros', 2100);
+      } else {
+        this.messageDelivery.showMessage('Por favor, utilize apenas valores entre 7 e 25', 2100);
+      }
+      this.customIteration = this.customIterationPreviousValue;
+    }
   }
 
   executeRectification(): void {
-    let kFormat: string;
-    let kSize: number;
-    let rMethod: string;
-    let iteration: number;
+    let kFormat = '';
+    let kSize = 0;
+    let rMethod = '';
+    let iteration = 0;
     this.loadBarState = 'block';
 
     switch (this.selectedKernelFormat) {
@@ -94,6 +110,12 @@ export class RectificationComponent implements OnInit {
     } else {
       iteration = Number(this.selectedIteration);
     }
+
+    this.serverConnection.consumeRectification(kFormat, kSize, rMethod, iteration, this.layer.dataset).toPromise().then( result => {
+      this.loadBarState = 'none';
+      console.log(JSON.parse(JSON.stringify(result)).body);
+    });
   }
 
 }
+

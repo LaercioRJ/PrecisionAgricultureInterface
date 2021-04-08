@@ -2,6 +2,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material-module';
 import { NgModule } from '@angular/core';
 
@@ -36,6 +37,7 @@ import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     MaterialModule
   ],
   providers: [],
