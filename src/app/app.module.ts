@@ -1,13 +1,15 @@
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material-module';
 import { NgModule } from '@angular/core';
 
 import { CardsDisplayComponent } from './main-menu/cards-display/cards-display.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { IDWComponent } from './precision-agriculture/interpolation/IDW/idw/idw.component';
+import { InterpolationSwitchComponent } from './precision-agriculture/interpolation/interpolation-switch/interpolation-switch.component';
 import { LayerCardComponent } from './main-menu/layer-card/layer-card.component';
 import { MzTableComponent } from './layer-visualization/table/data-tables/mz-table/mz-table.component';
 import { RectificationComponent } from './precision-agriculture/rectification/rectification.component';
@@ -16,6 +18,8 @@ import { SpTableComponent } from './layer-visualization/table/data-tables/sp-tab
 import { TablePageComponent } from './layer-visualization/table/table-page/table-page.component';
 import { TopBarComponent } from './main-menu/top-bar/top-bar.component';
 import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-layer-info/zm-layer-info.component';
+import { IdwSelectorComponent } from './precision-agriculture/interpolation/IDW/idw-selector/idw-selector.component';
+
 
 
 
@@ -23,6 +27,9 @@ import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-
   declarations: [
     CardsDisplayComponent,
     ConfirmationDialogComponent,
+    IDWComponent,
+    IdwSelectorComponent,
+    InterpolationSwitchComponent,
     LayerCardComponent,
     MzTableComponent,
     RectificationComponent,
@@ -38,7 +45,8 @@ import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [ TopBarComponent ]

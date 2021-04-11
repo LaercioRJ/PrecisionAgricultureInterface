@@ -44,6 +44,7 @@ export class ContournImportingService {
       const content = reader.result as string;
       const haveHeaders = this.extractHeaders(content.split(/\n/)[0]);
       this.extractCoordinates(haveHeaders, content, layerIndex);
+      this.addContourn(layerIndex);
     };
   }
 
@@ -68,7 +69,6 @@ export class ContournImportingService {
       this.validateNumberFields(lineValues, haveHeaders);
       this.coordinates.push([Number(lineValues[0]), Number(lineValues[1])]);
     }
-    this.addContourn(layerIndex);
   }
 
   private validateComaSeparation(fileLine: string, lineIndex: number): void {
@@ -77,7 +77,7 @@ export class ContournImportingService {
     if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(',')) || (lineFirstHalf.indexOf('.') === -1 )) {
       this.fileReadingErrorMessage(lineIndex);
     }
-    if ((lineSecondHalf.indexOf(',') !== 1) || (lineSecondHalf.indexOf('.') === -1)) {
+    if ((lineSecondHalf.indexOf(',') !== -1) || (lineSecondHalf.indexOf('.') === -1)) {
       this.fileReadingErrorMessage(lineIndex);
     }
   }
@@ -100,6 +100,7 @@ export class ContournImportingService {
     const contourn = new Contourn(this.fileName, this.latitudeHeader, this.longitudeHeader);
     contourn.coordinates = this.coordinates;
     this.layerStorage.addcontourn(contourn, layerIndex);
+    this.coordinates = [];
     this.messageDelivery.showMessage('Contorno adicionado com sucesso!', 2500);
   }
 }

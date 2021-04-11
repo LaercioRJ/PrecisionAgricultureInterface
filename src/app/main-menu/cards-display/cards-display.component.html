@@ -59,7 +59,7 @@
                 </button>
                 <input #fileInputContourn style="display: none;" type="file" (change) = "recieveContournFile($event)" accept=".txt,.csv">
                 <div matTooltip="É necessário de um contorno para realizar a interpolação" [matTooltipDisabled]="hasContourn">
-                    <button *ngIf="selectedLayerType === 0" [disabled] = "!hasContourn" class="cardOptionsButton" mat-button>
+                    <button (click) = "interpolateLayer()" *ngIf="selectedLayerType === 0" class="cardOptionsButton" mat-button>
                         <span style="font-size: 25px;" class="material-icons">
                             miscellaneous_services
                         </span>

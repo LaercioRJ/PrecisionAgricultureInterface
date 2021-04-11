@@ -14,7 +14,7 @@ import { Layer } from '../../classes/layer';
 import { SamplingLayer } from '../../classes/samplingLayer';
 
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
-import { ThrowStmt } from '@angular/compiler';
+import { ThisReceiver, ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-cards-display',
@@ -54,10 +54,10 @@ export class CardsDisplayComponent implements OnInit {
   recieveContournFile(event: any): void {
     if (event.target.files && event.target.files[0]) {
       this.contournImporting.addContournToLayer(event.target.files[0], this.selectedLayerIndex);
+      /*this.displayedLayers[this.selectedLayerIndex] = this.layerStorage.getLayer(this.selectedLayerIndex);
       if ((this.displayedLayers[this.selectedLayerIndex] as SamplingLayer).contourn !== undefined) {
         this.hasContourn = true;
-      }
-    } else {
+      }*/
     }
   }
 
@@ -124,6 +124,10 @@ export class CardsDisplayComponent implements OnInit {
 
   exportContourn(fileType: string): void {
     this.contournExporting.contournToFile(this.selectedLayerIndex, fileType);
+  }
+
+  interpolateLayer(): void {
+    this.router.navigateByUrl('interpolation/'.concat(String(this.selectedLayerIndex)));
   }
 
   rectifyLayer(): void {

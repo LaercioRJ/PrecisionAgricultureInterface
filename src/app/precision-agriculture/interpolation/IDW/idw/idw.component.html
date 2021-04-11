@@ -1,0 +1,91 @@
+<div class="mainContent">
+    <span class="title">Interpolação por IDW: {{selectedLayer.name}}</span>
+
+    <form class="idwForm" [formGroup]="idwForm">
+        <mat-card class="secondaryMatCard">
+            <mat-card-header>
+                <mat-card-title>Tamanho dos pixels (metros)</mat-card-title>
+            </mat-card-header>
+
+            <div class="secondaryCardContent">
+                <mat-form-field class="inputMargin">
+                    <mat-label>Pixel X</mat-label>
+                    <input matInput formControlName="pixelX" type="number" />
+                    <mat-error *ngIf="this.idwForm.get('pixelX')?.getError('min') || this.idwForm.get('pixelX')?.getError('max')">
+                        Utilize valores de 1 a 10
+                    </mat-error>
+                    <mat-error *ngIf="this.idwForm.get('pixelX')?.getError('decimalError')">
+                        Utilize apenas números inteiros
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Pixel Y</mat-label>
+                    <input matInput formControlName="pixelY" type="number" />
+                    <mat-error *ngIf="this.idwForm.get('pixelY')?.getError('min') || this.idwForm.get('pixelY')?.getError('max')">
+                        Utilize valores de 1 a 10
+                    </mat-error>
+                    <mat-error *ngIf="this.idwForm.get('pixelY')?.getError('decimalError')">
+                        Utilize apenas números inteiros
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+        <mat-card class="secondaryMatCard">
+            <mat-card-header>
+                <mat-card-title>Expoente</mat-card-title>
+            </mat-card-header>
+
+            <div>
+                <mat-form-field>
+                    <input matInput formControlName="exponent" type="number" />
+                    <mat-error *ngIf="this.idwForm.get('exponent')?.getError('min') || this.idwForm.get('exponent')?.getError('max')">
+                        Utilize valores de 0.5 a 10
+                    </mat-error>
+                </mat-form-field>
+                <button matTooltip="Seleção automática" mat-icon-button>
+                    <span class="material-icons">
+                        miscellaneous_services
+                    </span>
+                </button>
+            </div>
+        </mat-card>
+
+        <mat-card class="secondaryMatCard">
+            <mat-card-header>
+                <mat-card-title>Área (metros)</mat-card-title>
+            </mat-card-header>
+
+            <div class="secondaryCardContent">
+                <mat-radio-group formControlName="selectedArea" name = "areas">
+                    <mat-radio-button (change) = "disableRadioButton('radius')" value = "radius">
+                        <mat-form-field class="inputMargin">
+                            <mat-label>Raio</mat-label>
+                            <input matInput formControlName="radius" type="number" />
+                            <mat-error *ngIf="this.idwForm.get('radius')?.getError('min') || this.idwForm.get('radius')?.getError('max')">
+                                Utilize valores de 1 a 100
+                            </mat-error>
+                            <mat-error *ngIf="this.idwForm.get('radius')?.getError('decimalError')">
+                                Utilize apenas números inteiros
+                            </mat-error>
+                        </mat-form-field>
+                    </mat-radio-button>
+
+                    <mat-radio-button (change) = "disableRadioButton('neighbors')" value = "neighbors">
+                        <mat-form-field>
+                            <mat-label>Número de Vizinhos</mat-label>
+                            <input matInput formControlName="neighbors" type = "number" />
+                            <mat-error *ngIf="this.idwForm.get('neighbors')?.getError('min') ||
+                              this.idwForm.get('neighbors')?.getError('max')">
+                                Utilize valores de 1 a 50
+                            </mat-error>
+                            <mat-error *ngIf="this.idwForm.get('neighbors')?.getError('decimalError')">
+                                Utilize apenas números inteiros
+                            </mat-error>
+                        </mat-form-field>
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </mat-card>
+    </form>
+</div>

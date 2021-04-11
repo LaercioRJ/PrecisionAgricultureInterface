@@ -1,0 +1,26 @@
+.mainContent{
+    margin-top: 18px;
+}
+.title{
+    font-size: x-large;
+    margin-left: 1vw;
+}
+.idwForm{
+    text-align: center;
+    margin-top: 23px;
+}
+.secondaryMatCard{
+    background-color: white;
+    width: 60%;
+    margin-left: 20%;
+    margin-bottom: 14px;
+}
+.secondaryCardContent{
+    margin-top: 14px;
+}
+.inputMargin{
+    margin-right: 3vw;
+}
+input{
+    text-align: center;
+}
