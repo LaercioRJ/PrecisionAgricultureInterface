@@ -1,0 +1,61 @@
+.mainContent{
+    margin-top: 18px;
+}
+.title{
+    margin-left: 1vw;
+}
+@media only screen and (max-width: 1920px) {
+    .title {
+        font-size: x-large;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .title {
+        font-size: large;
+    }
+}
+.mat-horizontal-stepper{
+    text-align: center;
+}
+.smallInputSet{
+    margin-bottom: 14px;
+    width: 70%;
+    margin-left: 17%;
+    text-align: center;
+}
+.smallInputCard{
+    background-color: whitesmoke;
+    display: inline-block;
+    width: 39.3%;
+    text-align: center;
+}
+.secondaryMatCardLarge{
+    width: 60%;
+    background-color: whitesmoke;
+    margin-left: 20%;
+    margin-bottom: 2vh;
+}
+input{
+    text-align: center;
+}
+mat-form-field{
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
+}
+.automaticButtonSpacing{
+    margin-left: 1.5vw;
+    margin-bottom: 10px;
+}
+.krigingForm{
+    margin-top: 18px;
+}
+.secondaryCardContent{
+    margin-top: 18px;
+    text-align: center;
+}
+.mainButtonPosition{
+    text-align: center;
+}
+.mat-progress-bar{
+    margin-top: 7px;
+}

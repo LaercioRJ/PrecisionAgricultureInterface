@@ -2,8 +2,17 @@
     margin-top: 18px;
 }
 .title{
-    font-size: x-large;
     margin-left: 1vw;
+}
+@media only screen and (max-width: 1920px) {
+    .title {
+        font-size: x-large;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .title {
+        font-size: large;
+    }
 }
 .idwForm{
     text-align: center;
@@ -18,9 +27,27 @@
 .secondaryCardContent{
     margin-top: 14px;
 }
-.inputMargin{
-    margin-right: 3vw;
-}
 input{
     text-align: center;
+}
+mat-form-field{
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
+}
+.mat-icon-button{
+    color: white;
+    background-color: #388E3C;
+    margin-left: 1vw;
+}
+.mat-icon-button:hover{
+    background-color: #64DD17;
+}
+.mainButtonPosition{
+    text-align: center;
+}
+.mainButton{
+    font-size: 150%;
+}
+.mat-progress-bar{
+    margin-top: 7px;
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IDWComponent } from '../IDW/idw/idw.component';
+import { KrigingComponent } from '../Kriging/kriging/kriging.component';
 
 import { Layer } from '../../../classes/layer';
 

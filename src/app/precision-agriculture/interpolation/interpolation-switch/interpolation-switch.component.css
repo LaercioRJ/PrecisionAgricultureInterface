@@ -4,3 +4,21 @@
     width: 60%;
     margin-left: 20%;
 }
+@media only screen and (max-width: 1920px) {
+    .mainMatCard {
+        width: 60%;
+        margin-left: 20%;
+    }
+}
+@media only screen and (max-width: 900px) {
+    .mainMatCard {
+        width: 80%;
+        margin-left: 10%;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .mainMatCard {
+        width: 90%;
+        margin-left: 3%;
+    }
+}

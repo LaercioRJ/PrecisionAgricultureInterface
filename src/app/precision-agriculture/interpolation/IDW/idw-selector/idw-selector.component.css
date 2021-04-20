@@ -1,0 +1,39 @@
+.dialog{
+    background-color: whitesmoke;
+    width: 100%;
+}
+.title{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: larger;
+}
+.selectorForm{
+    text-align: center;
+    margin-top: 21px;
+}
+.parameterCards{
+    width: 70%;
+    margin-left: 15%;
+    background-color: white;
+    margin-bottom: 16px;
+}
+.mat-form-field{
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+input{
+    text-align: center;
+}
+.parameterCardContent{
+    margin-top: 16px;
+}
+.actionButton{
+    font-size: 150%;
+}
+.cancelButton{
+    font-size: 150%;
+    margin-left: 1vw;
+}
+.mat-progress-bar{
+    margin-top: 7px;
+}

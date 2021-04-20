@@ -1,0 +1,187 @@
+<div class="mainContent">
+    <span class="title">Interpolação por Krigagem: {{selectedLayer.name}}</span>
+    <br>
+    <br>
+    
+    <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+        <mat-step>
+            <ng-template matStepLabel>Seleção de Parâmetros</ng-template>
+            <form class="krigingForm" [formGroup]="krigingSelectorForm">
+                <div class="smallInputSet">
+                    <mat-card class="smallInputCard">
+                        <mat-card-header>
+                            <mat-card-title>Cutoff (%)</mat-card-title>
+                        </mat-card-header>
+                        <mat-form-field>
+                            <input matInput formControlName="cutoff" type="number">
+                            <mat-error *ngIf="this.krigingSelectorForm.get('cutoff')?.getError('min') ||
+                             this.krigingSelectorForm.get('cutoff')?.getError('max')">
+                                Utilize valores de 10 a 100
+                            </mat-error>
+                            <mat-error *ngIf="this.krigingSelectorForm.get('cutoff')?.getError('decimalError')">
+                                Utilize apenas números inteiros
+                            </mat-error>
+                        </mat-form-field>
+                    </mat-card>
+
+                    <mat-card class="smallInputCard">
+                        <mat-card-header>
+                            <mat-card-title>N° de Pares</mat-card-title>
+                        </mat-card-header>
+                        <mat-form-field>
+                            <input matInput formControlName="pairs" type="number">
+                            <mat-error *ngIf="this.krigingSelectorForm.get('pairs')?.getError('min') ||
+                             this.krigingSelectorForm.get('pairs')?.getError('max')">
+                                Utilize valores de 2 a 50
+                            </mat-error>
+                            <mat-error *ngIf="this.krigingSelectorForm.get('pairs')?.getError('decimalError')">
+                                Utilize apenas números inteiros
+                            </mat-error>
+                        </mat-form-field>
+                    </mat-card>
+                </div>
+
+                <mat-card class="secondaryMatCardLarge">
+                    <mat-card-header>
+                        <mat-card-title>Quantidade de Lags</mat-card-title>
+                    </mat-card-header>
+                    <div class="secondaryCardContent">
+                        <mat-radio-group formControlName="selectedLagType" name = "lagTypes">
+                            <mat-radio-button class="automaticButtonSpacing" (change) = "disableRadioInput('automatic')"
+                             value = "automatic">
+                                Automático
+                            </mat-radio-button>
+
+                            <mat-radio-button (change) = "disableRadioInput('custom')" value = "custom">
+                                <mat-form-field>
+                                    <mat-label>Personalizado</mat-label>
+                                    <input matInput formControlName="amountLags" type="number" />
+                                    <mat-error *ngIf="this.krigingSelectorForm.get('amountLags')?.getError('min') ||
+                                     this.krigingSelectorForm.get('amountLags')?.getError('max')">
+                                        Utilize valores de 5 a 15
+                                    </mat-error>
+                                    <mat-error *ngIf="this.krigingSelectorForm.get('amountLags')?.getError('decimalError')">
+                                        Utilize apenas números inteiros
+                                    </mat-error>
+                                </mat-form-field>
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </mat-card>
+
+                <mat-card class="secondaryMatCardLarge">
+                    <mat-card-header>
+                        <mat-card-title>Quantidade de valores a serem testados</mat-card-title>
+                    </mat-card-header>
+                    <div class="secondaryCardContent">
+                        <mat-form-field>
+                            <mat-label>Partial Sill</mat-label>
+                            <input matInput formControlName="partialSillIntervals" type="number">
+                            <mat-error *ngIf="this.krigingSelectorForm.get('partialSillIntervals')?.getError('min') ||
+                             this.krigingSelectorForm.get('partialSillIntervals')?.getError('max')">
+                                Utilize valores de 2 a 100
+                            </mat-error>
+                            <mat-error *ngIf="this.krigingSelectorForm.get('partialSillIntervals')?.getError('decimalError')">
+                                Utilize apenas números inteiros
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Range</mat-label>
+                            <input matInput formControlName="rangeIntervals" type="number">
+                            <mat-error *ngIf="this.krigingSelectorForm.get('rangeIntervals')?.getError('min') ||
+                             this.krigingSelectorForm.get('rangeIntervals')?.getError('max')">
+                                Utilize valores de 2 a 100
+                            </mat-error>
+                            <mat-error *ngIf="this.krigingSelectorForm.get('rangeIntervals')?.getError('decimalError')">
+                                Utilize apenas números inteiros
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-card>
+            </form>
+            <div class="mainButtonPosition">
+                <button mat-raised-button [disabled] = "this.krigingSelectorForm.invalid" color = "primary"
+                    (click) = "executeInterpolatorSelector(stepper)">
+                    Calcular Parâmetros
+                </button>
+                <mat-progress-bar [ngStyle]="{display: loadBarStateParameters}" mode="indeterminate"></mat-progress-bar>
+            </div>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Interpolação por Krigagem</ng-template>
+            <form class="krigingForm">
+                <mat-card class="secondaryMatCardLarge">
+                    <mat-card-header>
+                        <mat-card-title>Tamanho dos Pixeis</mat-card-title>
+                    </mat-card-header>
+                    <div class="secondaryCardContent">
+                        <mat-form-field>
+                            <mat-label>Pixel X</mat-label>
+                            <input matInput formControlName="sizePixelX" type="number">
+                            <mat-error *ngIf="this.krigingForm.get('sizePixelX')?.getError('min') ||
+                             this.krigingForm.get('sizePixelX')?.getError('max')">
+                                Utilize valores de 1 a 10
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Pixel Y</mat-label>
+                            <input matInput formControlName="sizePixelY" type="number">
+                            <mat-error *ngIf="this.krigingForm.get('sizePixelY')?.getError('min') ||
+                             this.krigingForm.get('sizePixelY')?.getError('max')">
+                                Utilize valores de 1 a 10
+                            </mat-error>
+                            <mat-error *ngIf="this.krigingForm.get('sizePixelY')?.getError('decimalError')">
+                                Utilize apenas números inteiros
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-card>
+
+                <div class="mainButtonPosition">
+                    <button mat-raised-button [disabled] = "this.krigingForm.invalid" color = "primary">
+                        Executar Interpolação
+                    </button>
+                    <mat-progress-bar [ngStyle]="{display: loadBarStateKriging}" mode="indeterminate"></mat-progress-bar>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Semivariograma (Opcional)</ng-template>
+            <form class="krigingForm">
+                <mat-card class="secondaryMatCardLarge">
+                    <mat-card-header>
+                        <mat-card-title>Identificação</mat-card-title>
+                    </mat-card-header>
+                    <div class="secondaryCardContent">
+                        <mat-form-field>
+                            <mat-label>Eixo X</mat-label>
+                            <input matInput formControlName="xAxis" type="text">
+                            <mat-error *ngIf="this.semivariogramForm.get('xAxis')?.getError('required')">
+                                Este campo precisa ser preenchido
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Eixo y</mat-label>
+                            <input matInput formControlName="yAxis" type="text">
+                            <mat-error *ngIf="this.semivariogramForm.get('yAxis')?.getError('required')">
+                                Este campo precisa ser preenchido
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-card>
+
+                <div class="mainButtonPosition">
+                    <button mat-raised-button [disabled] = "this.semivariogramForm.invalid" color = "primary">
+                        Criar Semivariograma
+                    </button>
+                    <mat-progress-bar [ngStyle]="{display: loadBarStateSemivariogram}" mode="indeterminate"></mat-progress-bar>
+                </div>
+            </form>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>

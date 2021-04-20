@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { DatasetValue } from '../classes/datasetValue';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,53 @@ export class ServerConnectionService {
       kernelFormat: kFormat,
       iterations: iteration,
       dataset: zmPoints
+    },
+    {
+      headers: this.httpHeaders,
+      responseType: 'json',
+      observe: 'response'
+    });
+  }
+
+  consumeIdwInterpolation(exponentIdw: number, neighborsIdw: number, radiusIdw: number, pixelX: number, pixelY: number,
+                          layerDataset: DatasetValue[], layerContourn: number[][]): Observable<object> {
+    const url = 'https://adb.md.utfpr.edu.br/api/interpolation/idw';
+
+    this.httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json'
+    });
+
+    return this.httpClient.post(url, {
+      exponent: exponentIdw,
+      neighbors: neighborsIdw,
+      radius: radiusIdw,
+      sizePixelX: pixelX,
+      sizePixelY: pixelY,
+      dataset: layerDataset,
+      contourn: layerContourn
+    },
+    {
+      headers: this.httpHeaders,
+      responseType: 'json',
+      observe: 'response'
+    });
+  }
+
+  consumeIdwInterpolatorSelection(minExponent: number, maxExponent: number, exponentStep: number, minNeighbors: number,
+                                  maxNeighbors: number, layerDataset: DatasetValue[]): Observable<object> {
+    const url = 'https://adb.md.utfpr.edu.br/api/interpolation/isi/idw';
+
+    this.httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json'
+    });
+
+    return this.httpClient.post(url, {
+      minimunExponent: minExponent,
+      maximunExponent: maxExponent,
+      stepExponent: exponentStep,
+      minimunNeighbors: minNeighbors,
+      maximunNeighbors: maxNeighbors,
+      dataset: layerDataset
     },
     {
       headers: this.httpHeaders,

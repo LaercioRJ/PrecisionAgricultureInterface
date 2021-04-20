@@ -43,9 +43,9 @@
                         Utilize valores de 0.5 a 10
                     </mat-error>
                 </mat-form-field>
-                <button matTooltip="Seleção automática" mat-icon-button>
+                <button (click) = "openSelectorDialog()" color = "primary" matTooltip="Seleção automática" mat-icon-button>
                     <span class="material-icons">
-                        miscellaneous_services
+                        plagiarism
                     </span>
                 </button>
             </div>
@@ -87,5 +87,14 @@
                 </mat-radio-group>
             </div>
         </mat-card>
+        <div class="mainButtonPosition">
+            <button (click) = "executeIdwInterpolation()" class="mainButton" mat-raised-button color = "primary">
+                Executar Interpolação
+                <span class="material-icons">
+                    miscellaneous_services
+                </span>
+            </button>
+        </div>
+        <mat-progress-bar [ngStyle]="{display: loadBarState}" mode="indeterminate"></mat-progress-bar>
     </form>
 </div>

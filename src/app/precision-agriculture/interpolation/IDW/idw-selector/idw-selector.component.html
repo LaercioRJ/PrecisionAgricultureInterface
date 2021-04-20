@@ -1,1 +1,88 @@
-<p>idw-selector works!</p>
+<div class="dialog">
+    <div *ngIf="researched === 0">
+        <mat-toolbar color = "primary">
+            <span class="title">Seletor de expoente IDW</span>
+        </mat-toolbar>
+        <form class="selectorForm" [formGroup]="idwSelectorForm">
+            <mat-card class="parameterCards">
+                <mat-card-header>
+                    <mat-card-title>Amplitude Expoente</mat-card-title>
+                </mat-card-header>
+
+                <div class="parameterCardContent">
+                    <mat-form-field>
+                        <mat-label>Menor Expoente</mat-label>
+                        <input matInput formControlName="minExponent" type="number">
+                        <mat-error *ngIf="this.idwSelectorForm.get('minExpoent')?.getError('min') ||
+                         this.idwSelectorForm.get('minExpoent')?.getError('max')">
+                            Utilize valores de 0.5 a 10
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Maior Expoente</mat-label>
+                        <input matInput formControlName="maxExponent" type="number">
+                        <mat-error *ngIf="this.idwSelectorForm.get('maxExpoent')?.getError('min') ||
+                         this.idwSelectorForm.get('maxExpoent')?.getError('max')">
+                            Utilize valores de 0.5 a 10
+                        </mat-error>
+                    </mat-form-field>  
+                </div>
+            </mat-card>
+
+            <mat-card class="parameterCards">
+                <mat-card-header>
+                    <mat-card-title>Intervalo Expoente</mat-card-title>
+                </mat-card-header>
+
+                <div class="parameterCardContent">
+                    <mat-form-field>
+                        <input matInput formControlName="stepExponent" type="number">
+                        <mat-error *ngIf="this.idwSelectorForm.get('stepExpoent')?.getError('min') ||
+                         this.idwSelectorForm.get('stepExpoent')?.getError('max')">
+                            Utilize valores de 0.5 a 10
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+
+            <mat-card class = "parameterCards">
+                <mat-card-header>
+                    <mat-card-title>Intervalo Expoente</mat-card-title>
+                </mat-card-header>
+
+                <div class="parameterCardContent">
+                    <mat-form-field>
+                        <mat-label>Número Mínimo de Vizinhos</mat-label>
+                        <input matInput formControlName="minNeighbor" type="number">
+                        <mat-error *ngIf="this.idwSelectorForm.get('minNeighbor')?.getError('min') ||
+                         this.idwSelectorForm.get('minNeighbor')?.getError('max')">
+                            Utilize valores de 1 a 50
+                        </mat-error>
+                        <mat-error *ngIf="this.idwSelectorForm.get('minNeighbor')?.getError('decimalError')">
+                            Utilize apenas números inteiros
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Número Máximo de Vizinhos</mat-label>
+                        <input matInput formControlName="maxNeighbor" type="number">
+                        <mat-error *ngIf="this.idwSelectorForm.get('maxNeighbor')?.getError('min') ||
+                         this.idwSelectorForm.get('maxNeighbor')?.getError('max')">
+                            Utilize valores de 1 a 50
+                        </mat-error>
+                        <mat-error *ngIf="this.idwSelectorForm.get('maxNeighbor')?.getError('decimalError')">
+                            Utilize apenas números inteiros
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <button class="actionButton" mat-raised-button [disabled] = "this.idwSelectorForm.invalid" color = "primary">
+                Buscar Expoente
+            </button>
+            <button (click) = "closeDialog()" class="cancelButton" mat-flat-button color = primary>
+                Cancelar
+            </button>
+            <mat-progress-bar [ngStyle]="{display: loadBarState}" mode="indeterminate"></mat-progress-bar>
+        </form>
+    </div>
+    <br>
+</div>
