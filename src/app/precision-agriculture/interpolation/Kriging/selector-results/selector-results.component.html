@@ -1,1 +1,62 @@
-<p>selector-results works!</p>
+<div class="dialog">
+    <mat-toolbar color = "primary">
+        <span class="title">Parâmetros Calculados</span>
+    </mat-toolbar>
+    <table mat-table [dataSource] = "dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef = "ISI">
+            <th mat-header-cell class="tableHeader" *matHeaderCellDef>ISI</th>
+            <td mat-cell class="tableCell" *matCellDef = "let element">
+                {{element.isi}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "Método">
+            <th mat-header-cell class="tableHeader" *matHeaderCellDef>Método</th>
+            <td mat-cell class="tableCell" *matCellDef = "let element">
+                {{element.method}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "Modelo">
+            <th mat-header-cell class="tableHeader" *matHeaderCellDef>Modelo</th>
+            <td mat-cell class="tableCell" *matCellDef = "let element">
+                {{element.model}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "Nugget E.">
+            <th mat-header-cell class="tableHeader" *matHeaderCellDef>Nugget E.</th>
+            <td mat-cell class="tableCell" *matCellDef = "let element">
+                {{element.nuggetEffect}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "Range">
+            <th mat-header-cell class="tableHeader" *matHeaderCellDef>Range</th>
+            <td mat-cell class="tableCell" *matCellDef = "let element">
+                {{element.range}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "Partial Sill">
+            <th mat-header-cell class="tableHeader" *matHeaderCellDef>Partial Sill</th>
+            <td mat-cell class="tableCell" *matCellDef = "let element">
+                {{element.partialSill}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef = "Selecionar">
+            <th mat-header-cell class="tableHeader" *matHeaderCellDef>Selecionar</th>
+            <td mat-cell class="tableCell" *matCellDef = "let element; let i = index">
+                <button (click) = "selectResult(i)" mat-icon-button class="iconButton">
+                    <span class="material-icons">
+                        task_alt
+                    </span>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+        <tr mat-row *matRowDef = "let row; columns: displayedColumns"></tr>
+    </table>
+</div>

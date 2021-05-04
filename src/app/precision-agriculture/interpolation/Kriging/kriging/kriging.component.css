@@ -18,16 +18,35 @@
     text-align: center;
 }
 .smallInputSet{
-    margin-bottom: 14px;
     width: 70%;
     margin-left: 17%;
     text-align: center;
+}
+@media only screen and (max-width: 1170px) {
+    .smallInputSet {
+        margin-left: 18.5%;
+    }
 }
 .smallInputCard{
     background-color: whitesmoke;
     display: inline-block;
     width: 39.3%;
     text-align: center;
+    margin-left: 0.4vw;
+    margin-right: 0.4vw;
+    margin-bottom: 14px;
+}
+@media only screen and (max-width: 1300px) {
+    .smallInputCard {
+        text-align: left;
+    }
+}
+@media only screen and (max-width: 1170px) {
+    .smallInputCard {
+        width: 85%;
+        display: flexbox;
+        text-align: center;
+    }
 }
 .secondaryMatCardLarge{
     width: 60%;
@@ -42,9 +61,11 @@ mat-form-field{
     margin-left: 1.5vw;
     margin-right: 1.5vw;
 }
-.automaticButtonSpacing{
-    margin-left: 1.5vw;
-    margin-bottom: 10px;
+.automaticButton{
+    margin-right: 1.5vw;
+    font-size: 120%;
+    margin-bottom: 14px;
+    display: inline-block;
 }
 .krigingForm{
     margin-top: 18px;

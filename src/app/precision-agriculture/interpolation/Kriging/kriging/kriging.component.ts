@@ -1,11 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 
 import { Layer } from '../../../../classes/layer';
 
 import { MessageDeliveryService } from '../../../../services/message-delivery.service';
 import { ServerConnectionService } from '../../../server-connection.service';
+
+import { SelectorResultsComponent } from '../selector-results/selector-results.component';
 
 @Component({
   selector: 'app-kriging',
@@ -39,7 +42,8 @@ export class KrigingComponent implements OnInit {
   });
   loadBarStateSemivariogram = 'none';
 
-  constructor(private messageDelivery: MessageDeliveryService,
+  constructor(private matDialog: MatDialog,
+              private messageDelivery: MessageDeliveryService,
               private serverConnection: ServerConnectionService) { }
 
   ngOnInit(): void {
@@ -56,6 +60,27 @@ export class KrigingComponent implements OnInit {
   }
 
   executeInterpolatorSelector(stepper: MatStepper): void {
+    this.loadBarStateParameters = 'block';
+    let finalAmountLags = 0;
+    if (this.krigingSelectorForm.get('selectedLagType')?.value !== 'automatic') {
+      finalAmountLags = this.krigingSelectorForm.get('amountLags')?.value;
+    }
+    const cutoff = this.krigingSelectorForm.get('cutoff')?.value;
+    const pairs = this.krigingSelectorForm.get('pairs')?.value;
+    const rangeIntervals = this.krigingSelectorForm.get('rangeIntervals')?.value;
+    const partialSillIntervals = this.krigingSelectorForm.get('partialSillIntervals')?.value;
+    this.serverConnection.consumeKrigingInterpolationSelection(finalAmountLags, cutoff, pairs, rangeIntervals, partialSillIntervals,
+      this.selectedLayer.dataset).toPromise().then(result => {
+        this.loadBarStateParameters = 'none';
+        this.showSelectorResults(JSON.parse(JSON.stringify(result)).body);
+      });
+  }
 
+  showSelectorResults(results: any): void {
+    const selectorResultRef = this.matDialog.open(SelectorResultsComponent, {
+      width: '1150px',
+      disableClose: true,
+      data: { results }
+    });
   }
 }

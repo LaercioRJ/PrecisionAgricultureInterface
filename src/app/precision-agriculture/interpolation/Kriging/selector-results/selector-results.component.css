@@ -1,0 +1,39 @@
+.title{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: larger;
+}
+table{
+    width: 100%;
+    margin-top: 14px;
+}
+.tableHeader{
+    font-size: large;
+    text-align: center;
+}
+@media only screen and (max-width: 700px){
+    .tableHeader {
+        font-size: small;
+    }
+}
+.tableCell{
+    width: 14.28%;
+    text-align: center;
+    font-size: medium;
+}
+@media only screen and (max-width: 700px){
+    .tableCell {
+        font-size: small;
+    }
+}
+.iconButton{
+    color: white;
+    background-color: #64DD17;
+}
+.iconButton:hover{
+    background-color: #57c214;
+}
+.dialog{
+    background-color: whitesmoke;
+    max-height: 90vh;
+}

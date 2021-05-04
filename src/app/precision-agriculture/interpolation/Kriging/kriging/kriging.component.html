@@ -47,10 +47,12 @@
                     </mat-card-header>
                     <div class="secondaryCardContent">
                         <mat-radio-group formControlName="selectedLagType" name = "lagTypes">
-                            <mat-radio-button class="automaticButtonSpacing" (change) = "disableRadioInput('automatic')"
-                             value = "automatic">
-                                Automático
-                            </mat-radio-button>
+                            <div class="automaticButton">
+                                <mat-radio-button (change) = "disableRadioInput('automatic')"
+                                 value = "automatic">
+                                    Automático
+                                </mat-radio-button>
+                            </div>
 
                             <mat-radio-button (change) = "disableRadioInput('custom')" value = "custom">
                                 <mat-form-field>
@@ -111,7 +113,7 @@
 
         <mat-step>
             <ng-template matStepLabel>Interpolação por Krigagem</ng-template>
-            <form class="krigingForm">
+            <form class="krigingForm" [formGroup]="krigingForm">
                 <mat-card class="secondaryMatCardLarge">
                     <mat-card-header>
                         <mat-card-title>Tamanho dos Pixeis</mat-card-title>
@@ -151,7 +153,7 @@
 
         <mat-step>
             <ng-template matStepLabel>Semivariograma (Opcional)</ng-template>
-            <form class="krigingForm">
+            <form class="krigingForm" [formGroup]="semivariogramForm">
                 <mat-card class="secondaryMatCardLarge">
                     <mat-card-header>
                         <mat-card-title>Identificação</mat-card-title>
@@ -174,6 +176,40 @@
                         </mat-form-field>
                     </div>
                 </mat-card>
+
+                <div class="smallInputSet">
+                    <mat-card class="smallInputCard">
+                        <mat-card-header>
+                            <mat-card-title>Largura</mat-card-title>
+                        </mat-card-header>
+                        <mat-form-field>
+                            <input matInput formControlName="semivariogramWidth" type="number">
+                            <mat-error *ngIf="this.semivariogramForm.get('semivariogramWidth')?.getError('min') ||
+                             this.semivariogramForm.get('semivariogramWidth')?.getError('max')">
+                                Utilize valores de 500 a 1000
+                            </mat-error>
+                            <mat-error *ngIf="this.semivariogramForm.get('semivariogramWidth')?.getError('decimalError')">
+                                Utilize apenas números inteiros
+                            </mat-error>
+                        </mat-form-field>
+                    </mat-card>
+
+                    <mat-card class="smallInputCard">
+                        <mat-card-header>
+                            <mat-card-title>Altura</mat-card-title>
+                        </mat-card-header>
+                        <mat-form-field>
+                            <input matInput formControlName="semivariogramHeight" type="number">
+                            <mat-error *ngIf="this.semivariogramForm.get('semivariogramHeight')?.getError('min') ||
+                             this.semivariogramForm.get('ssemivariogramHeight')?.getError('max')">
+                                Utilize valores de 500 a 1000
+                            </mat-error>
+                            <mat-error *ngIf="this.semivariogramForm.get('semivariogramHeight')?.getError('decimalError')">
+                                Utilize apenas números inteiros
+                            </mat-error>
+                        </mat-form-field>
+                    </mat-card>
+                </div>
 
                 <div class="mainButtonPosition">
                     <button mat-raised-button [disabled] = "this.semivariogramForm.invalid" color = "primary">

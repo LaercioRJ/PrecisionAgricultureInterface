@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Layer } from '../../../../classes/layer';
+import { SamplingLayer } from '../../../../classes/samplingLayer';
 
 import { MessageDeliveryService } from '../../../../services/message-delivery.service';
 import { ServerConnectionService } from '../../../server-connection.service';
@@ -37,7 +38,6 @@ export class IDWComponent implements OnInit {
   openSelectorDialog(): void {
     const selectorDialogRef = this.matDialog.open(IdwSelectorComponent, {
       width: '900px',
-      height: '600px',
       disableClose: true,
       data: { layer: this.selectedLayer }
     });
@@ -58,6 +58,10 @@ export class IDWComponent implements OnInit {
     const pixelX = this.idwForm.get('pixelX')?.value;
     const pixelY = this.idwForm.get('pixelY')?.value;
     this.loadBarState = 'block';
+    this.serverConnection.consumeIdwInterpolation(exponent, neighbors, radius, pixelX, pixelY, this.selectedLayer.dataset,
+      (this.selectedLayer as SamplingLayer).contourn.coordinates).toPromise().then( result => {
+        this.loadBarState = 'none';
+      });
   }
 
   disableRadioButton(changedInput: string): void {
