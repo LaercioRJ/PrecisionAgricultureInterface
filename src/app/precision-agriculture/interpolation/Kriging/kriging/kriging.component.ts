@@ -3,12 +3,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 
+import { KrigingSelectorResult } from '../../../../classes/krigingSelectorResult';
 import { Layer } from '../../../../classes/layer';
 
 import { MessageDeliveryService } from '../../../../services/message-delivery.service';
 import { ServerConnectionService } from '../../../server-connection.service';
 
 import { SelectorResultsComponent } from '../selector-results/selector-results.component';
+import { SemivariogramResultsComponent } from '../semivariogram-results/semivariogram-results.component';
 
 @Component({
   selector: 'app-kriging',
@@ -27,6 +29,7 @@ export class KrigingComponent implements OnInit {
     selectedLagType: new FormControl({disabled: false, value: 'automatic'})
   });
   loadBarStateParameters = 'none';
+  parametersWereSelected = false;
 
   krigingForm = new FormGroup({
     sizePixelX: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(10)]),
@@ -41,6 +44,8 @@ export class KrigingComponent implements OnInit {
     semivariogramHeight: new FormControl({disabled: false, value: 750}, [Validators.min(500), Validators.max(1000)])
   });
   loadBarStateSemivariogram = 'none';
+
+  krigingSelectorResults: KrigingSelectorResult[] = [];
 
   constructor(private matDialog: MatDialog,
               private messageDelivery: MessageDeliveryService,
@@ -72,15 +77,64 @@ export class KrigingComponent implements OnInit {
     this.serverConnection.consumeKrigingInterpolationSelection(finalAmountLags, cutoff, pairs, rangeIntervals, partialSillIntervals,
       this.selectedLayer.dataset).toPromise().then(result => {
         this.loadBarStateParameters = 'none';
-        this.showSelectorResults(JSON.parse(JSON.stringify(result)).body);
+        this.parametersWereSelected = true;
+        this.showSelectorResults(JSON.parse(JSON.stringify(result)).body, stepper);
       });
   }
 
-  showSelectorResults(results: any): void {
+  showSelectorResults(results: any, stepper: MatStepper): void {
     const selectorResultRef = this.matDialog.open(SelectorResultsComponent, {
       width: '1150px',
       disableClose: true,
       data: { results }
+    });
+
+    // tslint:disable-next-line: deprecation
+    selectorResultRef.afterClosed().subscribe(selectedParameters => {
+      this.addTableData(selectedParameters);
+      stepper.next();
+      this.messageDelivery.showMessage('Parâmetros escolhidos com sucesso.', 2500);
+    });
+  }
+
+  addTableData(tableData: any): void {
+    if (this.krigingSelectorResults.length === 1) {
+      this.krigingSelectorResults.pop();
+    }
+    this.krigingSelectorResults.push({isi: tableData.data.isi, method: tableData.data.method, model: tableData.data.model,
+      nuggetEffect: tableData.data.nuggetEffect, range: tableData.data.range, partialSill: tableData.data.partialSill});
+  }
+
+  executeKrigingInterpolation(): void {
+    this.loadBarStateKriging = 'block';
+    const sizePixelX = this.krigingForm.get('sizePixelX')?.value;
+    const sizePixelY = this.krigingForm.get('sizePixelY')?.value;
+    this.serverConnection.consumeKrigingInterpolation(this.krigingSelectorResults[0].model, this.krigingSelectorResults[0].nuggetEffect,
+     this.krigingSelectorResults[0].method, this.krigingSelectorResults[0].range, this.krigingSelectorResults[0].partialSill,
+     sizePixelX, sizePixelY).toPromise().then(result => {
+      this.loadBarStateKriging = 'none';
+    });
+  }
+
+  getSemivariogram(): void {
+    this.loadBarStateSemivariogram = 'block';
+    const xAxis = this.semivariogramForm.get('xAxis')?.value;
+    const yAxis = this.semivariogramForm.get('yAxis')?.value;
+    const semivariogramWidth = this.semivariogramForm.get('semivariogramWidth')?.value;
+    const semivariogramHeight = this.semivariogramForm.get('semivariogramHeight')?.value;
+    this.serverConnection.consumeSemivariogram(xAxis, yAxis, semivariogramWidth, semivariogramHeight, this.krigingSelectorResults[0].model,
+      this.krigingSelectorResults[0].nuggetEffect, this.krigingSelectorResults[0].method, this.krigingSelectorResults[0].partialSill,
+      this.krigingSelectorResults[0].range).toPromise().then(result => {
+        this.showSemivariogramResults((result.body as Blob), xAxis);
+      });
+  }
+
+  showSemivariogramResults(semivariogramImage: Blob, graphicWidth: number): void {
+    const dialogWidth = (graphicWidth + 100).toString();
+    this.loadBarStateSemivariogram = 'none';
+    const semivariogramResultRef = this.matDialog.open(SemivariogramResultsComponent, {
+      width: dialogWidth,
+      data: { semivariogramImage }
     });
   }
 }

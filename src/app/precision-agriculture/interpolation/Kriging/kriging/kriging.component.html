@@ -4,7 +4,7 @@
     <br>
     
     <mat-horizontal-stepper linear #stepper labelPosition="bottom">
-        <mat-step>
+        <mat-step [completed] = "parametersWereSelected">
             <ng-template matStepLabel>Seleção de Parâmetros</ng-template>
             <form class="krigingForm" [formGroup]="krigingSelectorForm">
                 <div class="smallInputSet">
@@ -114,6 +114,7 @@
         <mat-step>
             <ng-template matStepLabel>Interpolação por Krigagem</ng-template>
             <form class="krigingForm" [formGroup]="krigingForm">
+                <app-kriging-parameters-table [tableContent] = "krigingSelectorResults"></app-kriging-parameters-table>
                 <mat-card class="secondaryMatCardLarge">
                     <mat-card-header>
                         <mat-card-title>Tamanho dos Pixeis</mat-card-title>
@@ -143,7 +144,8 @@
                 </mat-card>
 
                 <div class="mainButtonPosition">
-                    <button mat-raised-button [disabled] = "this.krigingForm.invalid" color = "primary">
+                    <button (click) = "executeKrigingInterpolation()" mat-raised-button [disabled] = "this.krigingForm.invalid"
+                     color = "primary">
                         Executar Interpolação
                     </button>
                     <mat-progress-bar [ngStyle]="{display: loadBarStateKriging}" mode="indeterminate"></mat-progress-bar>
@@ -154,6 +156,7 @@
         <mat-step>
             <ng-template matStepLabel>Semivariograma (Opcional)</ng-template>
             <form class="krigingForm" [formGroup]="semivariogramForm">
+                <app-kriging-parameters-table [tableContent] = "krigingSelectorResults"></app-kriging-parameters-table>
                 <mat-card class="secondaryMatCardLarge">
                     <mat-card-header>
                         <mat-card-title>Identificação</mat-card-title>
@@ -212,7 +215,8 @@
                 </div>
 
                 <div class="mainButtonPosition">
-                    <button mat-raised-button [disabled] = "this.semivariogramForm.invalid" color = "primary">
+                    <button mat-raised-button (click) = "getSemivariogram()" [disabled] = "this.semivariogramForm.invalid"
+                     color = "primary">
                         Criar Semivariograma
                     </button>
                     <mat-progress-bar [ngStyle]="{display: loadBarStateSemivariogram}" mode="indeterminate"></mat-progress-bar>

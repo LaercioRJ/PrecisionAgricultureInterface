@@ -2,14 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
-export interface InterpolatorSelectorResult {
-  isi: number;
-  method: string;
-  model: string;
-  nuggetEffect: number;
-  range: number;
-  partialSill: number;
-}
+import { KrigingSelectorResult } from '../../../../classes/krigingSelectorResult';
 
 @Component({
   selector: 'app-selector-results',
@@ -19,8 +12,8 @@ export interface InterpolatorSelectorResult {
 export class SelectorResultsComponent implements OnInit {
 
   displayedColumns = ['ISI', 'Método', 'Modelo', 'Nugget E.', 'Range', 'Partial Sill', 'Selecionar'];
-  dataSource = new MatTableDataSource<InterpolatorSelectorResult>();
-  convertedData: InterpolatorSelectorResult[] = [];
+  dataSource = new MatTableDataSource<KrigingSelectorResult>();
+  convertedData: KrigingSelectorResult[] = [];
 
   constructor(private selectorDialogRef: MatDialogRef<SelectorResultsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -46,8 +39,8 @@ export class SelectorResultsComponent implements OnInit {
     return Math.round((numberToRound + Number.EPSILON) * 1000) / 1000;
   }
 
-  sortResultsByIsi(): InterpolatorSelectorResult[] {
-    const sortedResult: InterpolatorSelectorResult[] = [];
+  sortResultsByIsi(): KrigingSelectorResult[] {
+    const sortedResult: KrigingSelectorResult[] = [];
     const loopLength = this.convertedData.length;
     for (let i = 0; i < loopLength; i++) {
       let smallerIsi = this.convertedData[0];

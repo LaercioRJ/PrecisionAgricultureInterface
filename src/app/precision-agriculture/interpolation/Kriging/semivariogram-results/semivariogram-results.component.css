@@ -1,0 +1,16 @@
+.title{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: larger;
+}
+.dialog{
+    text-align: center;
+    max-height: 90vh;
+}
+.image{
+    text-align: center;
+    margin-top: 14px;
+}
+button{
+    margin-bottom: 7px;
+}
