@@ -1,3 +1,23 @@
 table{
     width: 100%;
+    margin-bottom: 18px;
+}
+.tableCell{
+    width: 16.7%;
+    text-align: center;
+    font-size: medium;
+}
+@media only screen and (max-width: 1000px) {
+    .tableCell {
+        font-size: small;
+    }
+}
+.tableHeader{
+    text-align: center;
+    font-size: large;
+}
+@media only screen and (max-width: 1000px) {
+    .tableHeader {
+        font-size: medium;
+    }
 }

@@ -8,9 +8,14 @@
     max-height: 90vh;
 }
 .image{
-    text-align: center;
     margin-top: 14px;
+    text-align: center;
 }
 button{
     margin-bottom: 7px;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+}
+.buttonsPosition{
+    text-align: center;
 }

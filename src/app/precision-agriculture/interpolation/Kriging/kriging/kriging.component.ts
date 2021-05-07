@@ -45,7 +45,8 @@ export class KrigingComponent implements OnInit {
   });
   loadBarStateSemivariogram = 'none';
 
-  krigingSelectorResults: KrigingSelectorResult[] = [];
+  krigingSelectorResults: KrigingSelectorResult = new KrigingSelectorResult(1, 'dummy', 'values', 1, 1, 1);
+  // The values above are placeholders, and used because this variable cannot be null on render time
 
   constructor(private matDialog: MatDialog,
               private messageDelivery: MessageDeliveryService,
@@ -98,10 +99,7 @@ export class KrigingComponent implements OnInit {
   }
 
   addTableData(tableData: any): void {
-    if (this.krigingSelectorResults.length === 1) {
-      this.krigingSelectorResults.pop();
-    }
-    this.krigingSelectorResults.push({isi: tableData.data.isi, method: tableData.data.method, model: tableData.data.model,
+    this.krigingSelectorResults = ({isi: tableData.data.isi, method: tableData.data.method, model: tableData.data.model,
       nuggetEffect: tableData.data.nuggetEffect, range: tableData.data.range, partialSill: tableData.data.partialSill});
   }
 
@@ -109,8 +107,8 @@ export class KrigingComponent implements OnInit {
     this.loadBarStateKriging = 'block';
     const sizePixelX = this.krigingForm.get('sizePixelX')?.value;
     const sizePixelY = this.krigingForm.get('sizePixelY')?.value;
-    this.serverConnection.consumeKrigingInterpolation(this.krigingSelectorResults[0].model, this.krigingSelectorResults[0].nuggetEffect,
-     this.krigingSelectorResults[0].method, this.krigingSelectorResults[0].range, this.krigingSelectorResults[0].partialSill,
+    this.serverConnection.consumeKrigingInterpolation(this.krigingSelectorResults.model, this.krigingSelectorResults.nuggetEffect,
+     this.krigingSelectorResults.method, this.krigingSelectorResults.range, this.krigingSelectorResults.partialSill,
      sizePixelX, sizePixelY).toPromise().then(result => {
       this.loadBarStateKriging = 'none';
     });
@@ -122,9 +120,9 @@ export class KrigingComponent implements OnInit {
     const yAxis = this.semivariogramForm.get('yAxis')?.value;
     const semivariogramWidth = this.semivariogramForm.get('semivariogramWidth')?.value;
     const semivariogramHeight = this.semivariogramForm.get('semivariogramHeight')?.value;
-    this.serverConnection.consumeSemivariogram(xAxis, yAxis, semivariogramWidth, semivariogramHeight, this.krigingSelectorResults[0].model,
-      this.krigingSelectorResults[0].nuggetEffect, this.krigingSelectorResults[0].method, this.krigingSelectorResults[0].partialSill,
-      this.krigingSelectorResults[0].range).toPromise().then(result => {
+    this.serverConnection.consumeSemivariogram(xAxis, yAxis, semivariogramWidth, semivariogramHeight, this.krigingSelectorResults.model,
+      this.krigingSelectorResults.nuggetEffect, this.krigingSelectorResults.method, this.krigingSelectorResults.partialSill,
+      this.krigingSelectorResults.range).toPromise().then(result => {
         this.showSemivariogramResults((result.body as Blob), xAxis);
       });
   }

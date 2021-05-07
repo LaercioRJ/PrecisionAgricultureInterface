@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { KrigingSelectorResult } from '../../../../classes/krigingSelectorResult';
@@ -8,16 +8,16 @@ import { KrigingSelectorResult } from '../../../../classes/krigingSelectorResult
   templateUrl: './kriging-parameters-table.component.html',
   styleUrls: ['./kriging-parameters-table.component.css']
 })
-export class KrigingParametersTableComponent implements OnInit {
-  @Input() tableContent!: KrigingSelectorResult[];
+export class KrigingParametersTableComponent implements OnChanges {
+  @Input() tableContent!: KrigingSelectorResult;
 
   displayedColumns = ['isi', 'method', 'model', 'nuggetEffect', 'range', 'partialSill'];
   dataSource = new MatTableDataSource<KrigingSelectorResult>();
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.dataSource.data = this.tableContent;
+  ngOnChanges(): void {
+    this.dataSource.data = [this.tableContent];
   }
 
 }

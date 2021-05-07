@@ -1,42 +1,42 @@
 <table mat-table [dataSource] = "dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef = "isi">
-        <th mat-header-cell *matHeaderCellDef>isi</th>
-        <td mat-cell *matCellDef = "let element;">
+        <th mat-header-cell class="tableHeader" *matHeaderCellDef>Isi</th>
+        <td mat-cell class="tableCell" *matCellDef = "let element;">
             {{element.isi}}
         </td>
     </ng-container>
 
     <ng-container matColumnDef = "method">
-        <th mat-header-cell *matHeaderCellDef>método</th>
-        <td mat-cell *matCellDef = "let element;">
+        <th mat-header-cell class="tableHeader" *matHeaderCellDef>Método</th>
+        <td mat-cell class="tableCell" *matCellDef = "let element;">
             {{element.method}}
         </td>
     </ng-container>
 
     <ng-container matColumnDef = "model">
-        <th mat-header-cell *matHeaderCellDef>Modelo</th>
-        <td mat-cell *matCellDef = "let element;">
+        <th mat-header-cell class="tableHeader" *matHeaderCellDef>Modelo</th>
+        <td mat-cell class="tableCell" *matCellDef = "let element;">
             {{element.model}}
         </td>
     </ng-container>
 
     <ng-container matColumnDef = "nuggetEffect">
-        <th mat-header-cell *matHeaderCellDef>Nugget E.</th>
-        <td mat-cell *matCellDef = "let element;">
+        <th mat-header-cell class="tableHeader" *matHeaderCellDef>Nugget E.</th>
+        <td mat-cell class="tableCell" *matCellDef = "let element;">
             {{element.nuggetEffect}}
         </td>
     </ng-container>
 
     <ng-container matColumnDef = "range">
-        <th mat-header-cell *matHeaderCellDef>range</th>
-        <td mat-cell *matCellDef = "let element;">
+        <th mat-header-cell class="tableHeader" *matHeaderCellDef>Range</th>
+        <td mat-cell class="tableCell" *matCellDef = "let element;">
             {{element.range}}
         </td>
     </ng-container>
 
     <ng-container matColumnDef = "partialSill">
-        <th mat-header-cell *matHeaderCellDef>partialSill</th>
-        <td mat-cell *matCellDef = "let element;">
+        <th mat-header-cell class="tableHeader" *matHeaderCellDef>Partial Sill</th>
+        <td mat-cell class="tableCell" *matCellDef = "let element;">
             {{element.partialSill}}
         </td>
     </ng-container>
