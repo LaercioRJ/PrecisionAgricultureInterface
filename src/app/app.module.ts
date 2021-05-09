@@ -13,6 +13,7 @@ import { IdwSelectorComponent } from './precision-agriculture/interpolation/IDW/
 import { InterpolationSwitchComponent } from './precision-agriculture/interpolation/interpolation-switch/interpolation-switch.component';
 import { KrigingComponent } from './precision-agriculture/interpolation/Kriging/kriging/kriging.component';
 import { KrigingParametersTableComponent } from './precision-agriculture/interpolation/Kriging/kriging-parameters-table/kriging-parameters-table.component';
+import { SaveServerResultsComponent } from './precision-agriculture/save-server-results/save-server-results.component';
 import { SelectorResultsComponent } from './precision-agriculture/interpolation/Kriging/selector-results/selector-results.component';
 import { LayerCardComponent } from './main-menu/layer-card/layer-card.component';
 import { MzTableComponent } from './layer-visualization/table/data-tables/mz-table/mz-table.component';
@@ -39,6 +40,7 @@ import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-
     LayerCardComponent,
     MzTableComponent,
     RectificationComponent,
+    SaveServerResultsComponent,
     SelectorResultsComponent,
     SemivariogramResultsComponent,
     SpLayerInfoComponent,

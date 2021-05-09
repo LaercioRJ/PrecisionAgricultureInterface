@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Layer } from '../../classes/layer';
+import { ZmLayer } from '../../classes/zmLayer';
 
 import { LayerStorageService } from '../../services/layer-storage.service';
 import { MessageDeliveryService } from '../../services/message-delivery.service';
 import { ServerConnectionService } from '../server-connection.service';
+
+import { SaveServerResultsComponent } from '../save-server-results/save-server-results.component';
 
 @Component({
   selector: 'app-rectification',
@@ -31,12 +35,17 @@ export class RectificationComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private layerStorage: LayerStorageService,
+              private matDialog: MatDialog,
               private messageDelivery: MessageDeliveryService,
               private serverConnection: ServerConnectionService) { }
 
   ngOnInit(): void {
-    const layerIndex = this.activatedRoute.snapshot.paramMap.get('layerIndex');
+    const layerIndex = this.getLayerIndex();
     this.layer = this.layerStorage.getLayer(Number(layerIndex));
+  }
+
+  getLayerIndex(): number {
+    return Number(this.activatedRoute.snapshot.paramMap.get('layerIndex') as string);
   }
 
   validateIterationNumber(): void {
@@ -114,6 +123,15 @@ export class RectificationComponent implements OnInit {
     this.serverConnection.consumeRectification(kFormat, kSize, rMethod, iteration, this.layer.dataset).toPromise().then( result => {
       this.loadBarState = 'none';
       console.log(JSON.parse(JSON.stringify(result)).body);
+      this.layerStorage.updateZmLayerAdditionalData(this.getLayerIndex(), rMethod, kSize, kFormat, iteration);
+      this.saveServerResponse(this.getLayerIndex());
+    });
+  }
+
+  saveServerResponse(layerIndex: number): void {
+    const rectifiedDialog = this.matDialog.open(SaveServerResultsComponent, {
+      width: '350px',
+      data: { layerIndex }
     });
   }
 

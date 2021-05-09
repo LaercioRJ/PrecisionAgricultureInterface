@@ -60,4 +60,23 @@ export class LayerStorageService {
     }
     return copiedContourn;
   }
+
+  updateAllLayerDataset(layerIndex: number, newDataset: DatasetValue[]): void {
+    this.storedLayers[layerIndex].dataset = newDataset;
+  }
+
+  updateZmLayerAdditionalData(layerIndex: number, rectificationMethod: string, kernelSize: number, kernelFormat: string,
+                              iterations: number): void {
+    (this.storedLayers[layerIndex] as ZmLayer).rectificationMethod = rectificationMethod;
+    (this.storedLayers[layerIndex] as ZmLayer).kernelSize = kernelSize;
+    (this.storedLayers[layerIndex] as ZmLayer).kernelFormat = kernelFormat;
+    (this.storedLayers[layerIndex] as ZmLayer).iterations = iterations;
+  }
+
+  deleteZmLayerAdditionalData(layerIndex: number): void {
+    (this.storedLayers[layerIndex] as ZmLayer).rectificationMethod = '';
+    (this.storedLayers[layerIndex] as ZmLayer).kernelSize = 0;
+    (this.storedLayers[layerIndex] as ZmLayer).kernelFormat = '';
+    (this.storedLayers[layerIndex] as ZmLayer).iterations = 0;
+  }
 }
