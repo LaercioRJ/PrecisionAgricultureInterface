@@ -32,6 +32,10 @@ export class LayerStorageService {
     } else {
       copiedLayer = new ZmLayer(originalLayer.name, originalLayer.latitudeHeader, originalLayer.longitudeHeader,
         originalLayer.dataHeader, originalLayer.datasetLength);
+      copiedLayer.kernelFormat = (originalLayer as ZmLayer).kernelFormat;
+      copiedLayer.kernelSize = (originalLayer as ZmLayer).kernelSize;
+      copiedLayer.iterations = (originalLayer as ZmLayer).iterations;
+      copiedLayer.rectificationMethod = (originalLayer as ZmLayer).rectificationMethod;
     }
     let originalData;
     for (let i = 0; i < originalLayer.datasetLength; i++) {
@@ -59,6 +63,10 @@ export class LayerStorageService {
       copiedContourn.coordinates.push(originalContourn.coordinates[i]);
     }
     return copiedContourn;
+  }
+
+  getNumberOfStoredLayers(): number {
+    return this.storedLayers.length;
   }
 
   updateAllLayerDataset(layerIndex: number, newDataset: DatasetValue[]): void {

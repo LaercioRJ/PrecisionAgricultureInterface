@@ -62,18 +62,19 @@ export class SaveServerResultsComponent implements OnInit {
   }
 
   overwriteOriginalLayer(): void {
-    const dataset = this.serverDataConvertion.responseToDataset(this.data.response);
+    const dataset = this.serverDataConvertion.responseToDataset(this.data.serverResult);
     this.layerStorage.updateAllLayerDataset(this.data.layerIndex, dataset);
   }
 
   createNewLayer(): void {
-    const dataset = this.serverDataConvertion.responseToDataset(this.data.response);
+    const dataset = this.serverDataConvertion.responseToDataset(this.data.serverResult);
     const oldLayer = this.layerStorage.getLayer(this.data.layerIndex);
     let newLayer;
     if (oldLayer instanceof SamplingLayer) {
 
     } else {
-      newLayer = new ZmLayer(oldLayer.name, oldLayer.latitudeHeader, oldLayer.longitudeHeader, oldLayer.dataHeader, dataset.length);
+      const newLayerName = this.newLayerName.value;
+      newLayer = new ZmLayer(newLayerName, oldLayer.latitudeHeader, oldLayer.longitudeHeader, oldLayer.dataHeader, dataset.length);
       newLayer.iterations = (oldLayer as ZmLayer).iterations;
       newLayer.kernelFormat = (oldLayer as ZmLayer).kernelFormat;
       newLayer.kernelSize = (oldLayer as ZmLayer).kernelSize;

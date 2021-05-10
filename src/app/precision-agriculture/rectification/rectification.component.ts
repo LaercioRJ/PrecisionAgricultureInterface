@@ -122,16 +122,26 @@ export class RectificationComponent implements OnInit {
 
     this.serverConnection.consumeRectification(kFormat, kSize, rMethod, iteration, this.layer.dataset).toPromise().then( result => {
       this.loadBarState = 'none';
-      console.log(JSON.parse(JSON.stringify(result)).body);
+      const serverResult  = JSON.parse(JSON.stringify(result)).body;
       this.layerStorage.updateZmLayerAdditionalData(this.getLayerIndex(), rMethod, kSize, kFormat, iteration);
-      this.saveServerResponse(this.getLayerIndex());
+      this.saveServerResponse(this.getLayerIndex(), serverResult);
     });
   }
 
-  saveServerResponse(layerIndex: number): void {
-    const rectifiedDialog = this.matDialog.open(SaveServerResultsComponent, {
+  saveServerResponse(layerIndex: number, serverResult: any): void {
+    const saveResultsDialog = this.matDialog.open(SaveServerResultsComponent, {
       width: '350px',
-      data: { layerIndex }
+      disableClose: true,
+      data: { layerIndex, serverResult }
+    });
+
+    saveResultsDialog.afterClosed().subscribe(result => {
+      // returns if a new layer was created or if the consults results were deleted
+      if (result.deleteResults === true) {
+        this.messageDelivery.showMessage('Nenhum dado foi salvo.', 2100);
+      } else {
+        this.messageDelivery.showMessage('A layer foi retificada com sucesso.', 2100);
+      }
     });
   }
 

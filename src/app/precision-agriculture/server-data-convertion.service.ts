@@ -11,18 +11,18 @@ export class ServerDataConvertionService {
 
   datasetValues: DatasetValue[] = [];
 
-  responseToDataset(serverResponse: any): DatasetValue[] {
+  responseToDataset(serverResult: any): DatasetValue[] {
     this.datasetValues = [];
-    if (serverResponse[0].x === undefined) {
+    if (serverResult[0].x === undefined) {
       // tslint:disable-next-line: prefer-for-of
-      for (let i = 0; i < serverResponse.length; i++) {
-        this.datasetValues.push(new DatasetValue(serverResponse[i].coordinates[0], serverResponse[i].coordinates[1],
-          serverResponse[i].data));
+      for (let i = 0; i < serverResult.length; i++) {
+        this.datasetValues.push(new DatasetValue(serverResult[i].coordinates[0], serverResult[i].coordinates[1],
+          serverResult[i].data));
       }
     } else {
       // tslint:disable-next-line: prefer-for-of
-      for (let i = 0; i < serverResponse.length; i++) {
-        this.datasetValues.push(new DatasetValue(serverResponse[i].x, serverResponse[i].y, serverResponse[i].data));
+      for (let i = 0; i < serverResult.length; i++) {
+        this.datasetValues.push(new DatasetValue(serverResult[i].x, serverResult[i].y, serverResult[i].data));
       }
     }
     return this.datasetValues;
