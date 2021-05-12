@@ -14,7 +14,6 @@ import { Layer } from '../../classes/layer';
 import { SamplingLayer } from '../../classes/samplingLayer';
 
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
-import { ThisReceiver, ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-cards-display',
@@ -136,6 +135,10 @@ export class CardsDisplayComponent implements OnInit {
 
   visualizeLayerOnTable(): void {
     this.router.navigateByUrl('table-visualization/'.concat(String(this.selectedLayerIndex)));
+  }
+
+  visualizeLayerOnMap(): void {
+    this.router.navigateByUrl('single-layer-mapping/'.concat(String(this.selectedLayerIndex)));
   }
 
 }

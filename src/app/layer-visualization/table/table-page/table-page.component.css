@@ -4,6 +4,20 @@
     margin-left: 17.5%;
     margin-top: 12px;
 }
+@media only screen and (max-width: 1000px) {
+    .pageCard {
+        width: 75%;
+        margin-left: 12.5%;
+        margin-right: 12.5%;
+    }
+}
+@media only screen and (max-width: 650px) {
+    .pageCard {
+        width: 90%;
+        margin-left: 2.5%;
+        margin-right: 7.5%;
+    }
+}
 .mat-card-header{
     margin-bottom: 22px;
 }

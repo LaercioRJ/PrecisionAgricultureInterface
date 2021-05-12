@@ -14,12 +14,15 @@ export class SpTableComponent implements OnInit {
   @Input() layer!: Layer;
 
   tableDataSource = new MatTableDataSource<DatasetValue>();
-  tableDisplayedColumns!: string[];
+  displayedColumns!: string[];
 
   constructor() { }
 
   ngOnInit(): void {
-    this.tableDisplayedColumns = ['Identificador', this.layer.latitudeHeader, this.layer.longitudeHeader, this.layer.dataHeader];
+    this.displayedColumns = ['Identificador', this.layer.latitudeHeader, this.layer.longitudeHeader, this.layer.dataHeader];
+    for (let i = 0; i < 20; i++) {
+      this.tableDataSource.data.push(this.layer.dataset[i]);
+    }
   }
 
 }

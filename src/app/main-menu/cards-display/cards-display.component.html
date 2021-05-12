@@ -93,7 +93,7 @@
                 </button>
 
                 <mat-menu #layerExhibitMenu = "matMenu">
-                    <button mat-menu-item>
+                    <button (click) = "visualizeLayerOnMap()" mat-menu-item>
                         <mat-icon style="font-size: 25px;" class="material-icons">
                             map
                         </mat-icon>

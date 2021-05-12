@@ -15,6 +15,7 @@ import { KrigingComponent } from './precision-agriculture/interpolation/Kriging/
 import { KrigingParametersTableComponent } from './precision-agriculture/interpolation/Kriging/kriging-parameters-table/kriging-parameters-table.component';
 import { SaveServerResultsComponent } from './precision-agriculture/save-server-results/save-server-results.component';
 import { SelectorResultsComponent } from './precision-agriculture/interpolation/Kriging/selector-results/selector-results.component';
+import { SingleLayerMappingComponent } from './layer-visualization/map/single-layer-mapping/single-layer-mapping.component';
 import { LayerCardComponent } from './main-menu/layer-card/layer-card.component';
 import { MzTableComponent } from './layer-visualization/table/data-tables/mz-table/mz-table.component';
 import { RectificationComponent } from './precision-agriculture/rectification/rectification.component';
@@ -43,6 +44,7 @@ import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-
     SaveServerResultsComponent,
     SelectorResultsComponent,
     SemivariogramResultsComponent,
+    SingleLayerMappingComponent,
     SpLayerInfoComponent,
     SpTableComponent,
     TablePageComponent,
