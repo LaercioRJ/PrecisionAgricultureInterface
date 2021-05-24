@@ -1,14 +1,14 @@
-<mat-tab-group class="tablesTab" backgroundColor="primary" mat-align-tabs = "center">
+<mat-tab-group backgroundColor="primary" mat-align-tabs = "center" class="mat-elevation-z8">
     <mat-tab label="Pontos Amostrais">
       <div class="tabContent">
         <!--<div class="mat-slide-localization">
           <mat-slide-toggle>Editar Dados</mat-slide-toggle>
         </div>-->
-        <table mat-table [dataSource] = "tableDataSource" class="mat-elevation-z8">
+        <table mat-table [dataSource] = "datasetTableDataSource">
             <ng-container matColumnDef = Identificador>
                 <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>Identificador</th>
                 <td mat-cell class = "tableCell" *matCellDef = "let element; let i = index"> 
-                    {{i}}
+                    {{i + 1}}
                 </td>
             </ng-container>
             
@@ -33,14 +33,38 @@
                 </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
-            <tr mat-row *matRowDef = "let row; columns: displayedColumns"></tr>
+            <tr mat-header-row *matHeaderRowDef = "datasetDisplayedColumns"></tr>
+            <tr mat-row *matRowDef = "let row; columns: datasetDisplayedColumns"></tr>
         </table>
       </div>
     </mat-tab>
-    <mat-tab [disabled] = "true" label="Contorno">
-      <div class="mat-slide-localization">
-        <mat-slide-toggle>Editar Dados</mat-slide-toggle>
+    <mat-tab [disabled] = "!this.hasContourn" label="Contorno">
+      <div class="tabContent">
+        <table *ngIf="this.hasContourn" mat-table [dataSource] = "contournTableDataSource">
+          <ng-container matColumnDef = Identificador>
+              <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>Identificador</th>
+              <td mat-cell class = "tableCell" *matCellDef = "let element; let i = index"> 
+                  {{i + 1}}
+              </td>
+          </ng-container>
+          
+          <ng-container matColumnDef = {{contournLatitudeHeader}}>
+              <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>{{contournLatitudeHeader}}</th>
+              <td mat-cell class = "tableCell" *matCellDef = "let element"> 
+                  {{element[0]}}
+              </td>
+          </ng-container>
+
+          <ng-container matColumnDef = {{contournLongitudeHeader}}>
+              <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>{{contournLongitudeHeader}}</th>
+              <td mat-cell class = "tableCell" *matCellDef = "let element">
+                  {{element[1]}}
+              </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef = "contournDisplayedColumns"></tr>
+          <tr mat-row *matRowDef = "let row; columns: contournDisplayedColumns"></tr>
+        </table>
       </div>
     </mat-tab>
-  </mat-tab-group>
+</mat-tab-group>

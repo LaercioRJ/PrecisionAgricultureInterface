@@ -10,7 +10,7 @@
                 <div class="smallInputSet">
                     <mat-card class="smallInputCard">
                         <mat-card-header>
-                            <mat-card-title>Cutoff (%)</mat-card-title>
+                            <span class="secondaryCardTitle">Cutoff (%)</span>
                         </mat-card-header>
                         <mat-form-field>
                             <input matInput formControlName="cutoff" type="number">
@@ -26,7 +26,7 @@
 
                     <mat-card class="smallInputCard">
                         <mat-card-header>
-                            <mat-card-title>N° de Pares</mat-card-title>
+                            <span class="secondaryCardTitle">N° de Pares</span>
                         </mat-card-header>
                         <mat-form-field>
                             <input matInput formControlName="pairs" type="number">
@@ -43,7 +43,7 @@
 
                 <mat-card class="secondaryMatCardLarge">
                     <mat-card-header>
-                        <mat-card-title>Quantidade de Lags</mat-card-title>
+                        <span class="secondaryCardTitle">Quantidade de Lags</span>
                     </mat-card-header>
                     <div class="secondaryCardContent">
                         <mat-radio-group formControlName="selectedLagType" name = "lagTypes">
@@ -73,7 +73,7 @@
 
                 <mat-card class="secondaryMatCardLarge">
                     <mat-card-header>
-                        <mat-card-title>Quantidade de valores a serem testados</mat-card-title>
+                        <span class="secondaryCardTitle">Quantidade de valores a serem testados</span>
                     </mat-card-header>
                     <div class="secondaryCardContent">
                         <mat-form-field>
@@ -117,7 +117,7 @@
                 <app-kriging-parameters-table [tableContent] = "krigingSelectorResults"></app-kriging-parameters-table>
                 <mat-card class="secondaryMatCardLarge">
                     <mat-card-header>
-                        <mat-card-title>Tamanho dos Pixeis</mat-card-title>
+                        <span class="secondaryCardTitle">Tamanho dos pixeis</span>
                     </mat-card-header>
                     <div class="secondaryCardContent">
                         <mat-form-field>
@@ -159,7 +159,7 @@
                 <app-kriging-parameters-table [tableContent] = "krigingSelectorResults"></app-kriging-parameters-table>
                 <mat-card class="secondaryMatCardLarge">
                     <mat-card-header>
-                        <mat-card-title>Identificação</mat-card-title>
+                        <span class="secondaryCardTitle">Identificação</span>
                     </mat-card-header>
                     <div class="secondaryCardContent">
                         <mat-form-field>
@@ -183,7 +183,7 @@
                 <div class="smallInputSet">
                     <mat-card class="smallInputCard">
                         <mat-card-header>
-                            <mat-card-title>Largura</mat-card-title>
+                            <span class="secondaryCardTitle">Largura</span>
                         </mat-card-header>
                         <mat-form-field>
                             <input matInput formControlName="semivariogramWidth" type="number">
@@ -199,7 +199,7 @@
 
                     <mat-card class="smallInputCard">
                         <mat-card-header>
-                            <mat-card-title>Altura</mat-card-title>
+                            <span class="secondaryCardTitle">Altura</span>
                         </mat-card-header>
                         <mat-form-field>
                             <input matInput formControlName="semivariogramHeight" type="number">

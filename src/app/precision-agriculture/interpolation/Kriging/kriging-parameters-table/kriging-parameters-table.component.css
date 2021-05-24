@@ -1,6 +1,13 @@
 table{
-    width: 100%;
+    width: 64%;
     margin-bottom: 18px;
+    margin-left: 20%;
+}
+@media only screen and (max-width: 400px) {
+    table {
+        margin-left: 16%;
+        width: 70%;
+    }
 }
 .tableCell{
     width: 16.7%;
@@ -16,8 +23,13 @@ table{
     text-align: center;
     font-size: large;
 }
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1100px) {
     .tableHeader {
         font-size: medium;
+    }
+}
+@media only screen and (max-width: 950px) {
+    .tableHeader {
+        font-size: small;
     }
 }

@@ -1,1 +1,44 @@
-<p>mz-table works!</p>
+<mat-tab-group backgroundColor="primary" mat-align-tabs = "center" class="mat-elevation-z8">
+    <mat-tab label="Pontos de Zonas de Manejo">
+      <div class="tabContent">
+        <!--<div class="mat-slide-localization">
+          <mat-slide-toggle>Editar Dados</mat-slide-toggle>
+        </div>-->
+        <table mat-table [dataSource] = "datasetTableDataSource">
+            <ng-container matColumnDef = Identificador>
+                <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>Identificador</th>
+                <td mat-cell class = "tableCell" *matCellDef = "let element; let i = index"> 
+                    {{i + 1}}
+                </td>
+            </ng-container>
+            
+            <ng-container matColumnDef = {{layer.latitudeHeader}}>
+                <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>{{layer.latitudeHeader}}</th>
+                <td mat-cell class = "tableCell" *matCellDef = "let element"> 
+                    {{element.coordinates[0]}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef = {{layer.longitudeHeader}}>
+                <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>{{layer.longitudeHeader}}</th>
+                <td mat-cell class = "tableCell" *matCellDef = "let element">
+                    {{element.coordinates[1]}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef = {{layer.dataHeader}}>
+                <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>{{layer.dataHeader}}</th>
+                <td mat-cell class = "tableCell" *matCellDef = "let element; let i = index">  
+                  {{element.data}}
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef = "datasetDisplayedColumns"></tr>
+            <tr mat-row *matRowDef = "let row; columns: datasetDisplayedColumns"></tr>
+        </table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Cores">
+    </mat-tab>
+</mat-tab-group>
+

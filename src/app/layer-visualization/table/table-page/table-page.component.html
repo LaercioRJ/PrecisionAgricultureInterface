@@ -18,10 +18,12 @@
     </div>
     <div *ngIf="layerType === 'Zona de Manejo'" class="layerDataPosition">
         <app-zm-layer-info [layer] = "this.layer"></app-zm-layer-info>
+        <app-mz-table [layer] = "this.layer"></app-mz-table>
     </div>
     <div *ngIf="layerType === 'Pontos Amostrais'" class="layerDataPosition">
         <app-sp-layer-info [layer] = "this.layer"></app-sp-layer-info>
         <app-sp-table [layer] = "this.layer"></app-sp-table>
     </div>
 </mat-card>
+<br>
 

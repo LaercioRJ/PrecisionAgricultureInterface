@@ -29,6 +29,7 @@ export class LayerStorageService {
     if (originalLayer instanceof SamplingLayer) {
       copiedLayer = new SamplingLayer(originalLayer.name, originalLayer.latitudeHeader, originalLayer.longitudeHeader,
         originalLayer.dataHeader, originalLayer.datasetLength);
+      copiedLayer.contourn = (this.storedLayers[layerIndex] as SamplingLayer).contourn;
     } else {
       copiedLayer = new ZmLayer(originalLayer.name, originalLayer.latitudeHeader, originalLayer.longitudeHeader,
         originalLayer.dataHeader, originalLayer.datasetLength);
@@ -51,7 +52,6 @@ export class LayerStorageService {
 
   addcontourn(contourn: Contourn, layerIndex: number): void {
     (this.storedLayers[layerIndex] as SamplingLayer).contourn = contourn;
-    console.log((this.storedLayers[layerIndex] as SamplingLayer).contourn);
   }
 
   getLayerContourn(layerIndex: number): Contourn {
