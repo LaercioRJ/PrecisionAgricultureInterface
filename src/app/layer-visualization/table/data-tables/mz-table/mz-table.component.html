@@ -36,6 +36,15 @@
             <tr mat-header-row *matHeaderRowDef = "datasetDisplayedColumns"></tr>
             <tr mat-row *matRowDef = "let row; columns: datasetDisplayedColumns"></tr>
         </table>
+        <div class="tablePaginator">
+            Página {{actualTablePage}} de {{totalTablePages}}
+            <button mat-icon-button (click) = "tablePreviousPage()" color = "primary">
+                <span class="material-icons">west</span>
+            </button>
+            <button mat-icon-button style="margin-right: 6.5%;" (click) = "tableNextPage()" color = "primary">
+                <span class="material-icons">east</span>
+            </button>
+        </div>
       </div>
     </mat-tab>
     <mat-tab label="Cores">
