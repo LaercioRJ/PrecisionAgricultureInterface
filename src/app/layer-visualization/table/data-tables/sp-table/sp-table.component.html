@@ -36,6 +36,15 @@
             <tr mat-header-row *matHeaderRowDef = "datasetDisplayedColumns"></tr>
             <tr mat-row *matRowDef = "let row; columns: datasetDisplayedColumns"></tr>
         </table>
+        <div class="tablePaginator">
+            Página {{actualDatasetTablePage}} de {{totalDatasetTablePages}}
+            <button mat-icon-button color = "primary">
+                <span class="material-icons">west</span>
+            </button>
+            <button mat-icon-button style="margin-right: 6.5%;" color = "primary">
+                <span class="material-icons">east</span>
+            </button>
+        </div>
       </div>
     </mat-tab>
     <mat-tab [disabled] = "!this.hasContourn" label="Contorno">
@@ -65,6 +74,15 @@
           <tr mat-header-row *matHeaderRowDef = "contournDisplayedColumns"></tr>
           <tr mat-row *matRowDef = "let row; columns: contournDisplayedColumns"></tr>
         </table>
+        <div class="tablePaginator">
+            Página {{actualContournTablePage}} de {{totalContournTablePages}}
+            <button mat-icon-button color = "primary">
+                <span class="material-icons">west</span>
+            </button>
+            <button mat-icon-button style="margin-right: 6.5%;" color = "primary">
+                <span class="material-icons">east</span>
+            </button>
+        </div>
       </div>
     </mat-tab>
 </mat-tab-group>

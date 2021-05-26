@@ -45,3 +45,8 @@ table{
         font-size: small;
     }
 }
+.tablePaginator{
+    text-align: center;
+    color: black;
+    background-color: white;
+}

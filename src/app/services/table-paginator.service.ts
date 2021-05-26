@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { DatasetValue } from '../classes/datasetValue';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +7,7 @@ export class TablePaginatorService {
 
   constructor() { }
 
-  nextPage(pointsQuantity: number, pointsExhibited: number, exhibitionUpperIndex: number, tableContent: DatasetValue[]): DatasetValue[] {
+  nextPage(pointsQuantity: number, pointsExhibited: number, exhibitionUpperIndex: number, tableContent: any): any {
     const nextPagePoints = [];
     let actualPagePointsQuantity = pointsExhibited;
     if ((exhibitionUpperIndex + pointsExhibited) > pointsQuantity) {
@@ -21,8 +19,7 @@ export class TablePaginatorService {
     return nextPagePoints;
   }
 
-  previousPage(pointsQuantity: number, pointsExhibited: number, exhibitionUpperIndex: number, tableContent: DatasetValue[])
-  : DatasetValue[] {
+  previousPage(pointsQuantity: number, pointsExhibited: number, exhibitionUpperIndex: number, tableContent: any): any {
     const previousPagePoints = [];
     let newUpperIndex = 0;
     if ((exhibitionUpperIndex === pointsQuantity) && ((pointsQuantity % pointsExhibited) !== 0)) {

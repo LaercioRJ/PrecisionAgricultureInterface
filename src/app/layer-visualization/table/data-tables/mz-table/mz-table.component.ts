@@ -14,40 +14,41 @@ import { TablePaginatorService } from '../../../../services/table-paginator.serv
 export class MzTableComponent implements OnInit {
   @Input() layer!: Layer;
 
-  actualTablePage = 0;
+  actualTablePage = 1;
   datasetTableDataSource = new MatTableDataSource<DatasetValue>();
   datasetDisplayedColumns!: string[];
-  tableLowerIndex = 0;
-  tableUpperIndex = 20;
+  linesPerPage = 20;
+  tableLowerIndex = (this.linesPerPage * -1);
+  tableUpperIndex = 0;
   totalTablePages = 0;
 
   constructor(private tablePaginator: TablePaginatorService) { }
 
   ngOnInit(): void {
-    this.totalTablePages = this.tablePaginator.calculateTotalTablePages(this.layer.datasetLength, 20);
-    this.actualTablePage = this.tablePaginator.calculateActualTablePage(this.layer.datasetLength, 20, this.tableUpperIndex,
-      this.totalTablePages);
+    this.totalTablePages = this.tablePaginator.calculateTotalTablePages(this.layer.datasetLength, this.linesPerPage);
     this.datasetDisplayedColumns = ['Identificador', this.layer.latitudeHeader, this.layer.longitudeHeader, this.layer.dataHeader];
-    for (let i = 0; i < 20; i++) {
-      this.datasetTableDataSource.data.push(this.layer.dataset[i]);
-    }
+    this.tableNextPage();
   }
 
   tableNextPage(): void {
-    const nextPageData = this.tablePaginator.nextPage(this.layer.datasetLength, 20, this.tableUpperIndex, this.layer.dataset);
+    const nextPageData = this.tablePaginator.nextPage(this.layer.datasetLength, this.linesPerPage, this.tableUpperIndex,
+      this.layer.dataset);
     this.datasetTableDataSource.data = nextPageData;
-    this.tableLowerIndex = this.tableLowerIndex + 20;
+    this.tableLowerIndex = this.tableLowerIndex + this.linesPerPage;
     this.tableUpperIndex = this.tableUpperIndex + nextPageData.length;
-    this.actualTablePage = this.tablePaginator.calculateActualTablePage(this.layer.datasetLength, 20, this.tableUpperIndex,
-      this.totalTablePages);
+    this.actualTablePage = this.tablePaginator.calculateActualTablePage(this.layer.datasetLength, this.linesPerPage,
+      this.tableUpperIndex, this.totalTablePages);
   }
 
   tablePreviousPage(): void {
     const newUpperIndex = this.tableUpperIndex - this.datasetTableDataSource.data.length;
-    const previousPageData = this.tablePaginator.previousPage(this.layer.datasetLength, 20, this.tableUpperIndex, this.layer.dataset);
+    const previousPageData = this.tablePaginator.previousPage(this.layer.datasetLength, this.linesPerPage,
+      this.tableUpperIndex, this.layer.dataset);
     this.datasetTableDataSource.data = previousPageData;
     this.tableUpperIndex = newUpperIndex;
-    this.tableLowerIndex = this.tableLowerIndex - 20;
+    this.tableLowerIndex = this.tableLowerIndex - this.linesPerPage;
+    this.actualTablePage = this.tablePaginator.calculateActualTablePage(this.layer.datasetLength, this.linesPerPage,
+      this.tableUpperIndex, this.totalTablePages);
   }
 
 }

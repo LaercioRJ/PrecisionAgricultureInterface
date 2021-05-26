@@ -8,7 +8,7 @@
             <ng-container matColumnDef = Identificador>
                 <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>Identificador</th>
                 <td mat-cell class = "tableCell" *matCellDef = "let element; let i = index"> 
-                    {{i + 1}}
+                    {{(i + 1) + tableLowerIndex}}
                 </td>
             </ng-container>
             
@@ -38,10 +38,11 @@
         </table>
         <div class="tablePaginator">
             Página {{actualTablePage}} de {{totalTablePages}}
-            <button mat-icon-button (click) = "tablePreviousPage()" color = "primary">
+            <button mat-icon-button (click) = "tablePreviousPage()" [disabled] = "tableUpperIndex <= linesPerPage" color = "primary">
                 <span class="material-icons">west</span>
             </button>
-            <button mat-icon-button style="margin-right: 6.5%;" (click) = "tableNextPage()" color = "primary">
+            <button mat-icon-button style="margin-right: 6.5%;" [disabled] = "tableUpperIndex === layer.datasetLength"
+             (click) = "tableNextPage()" color = "primary">
                 <span class="material-icons">east</span>
             </button>
         </div>
