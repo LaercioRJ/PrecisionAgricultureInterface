@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 
 import { CardsDisplayComponent } from './main-menu/cards-display/cards-display.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { GradientCustomizationComponent } from './layer-visualization/map/map-legend-customization/gradient-customization/gradient-customization.component';
 import { IDWComponent } from './precision-agriculture/interpolation/IDW/idw/idw.component';
 import { IdwSelectorComponent } from './precision-agriculture/interpolation/IDW/idw-selector/idw-selector.component';
 import { InterpolationSwitchComponent } from './precision-agriculture/interpolation/interpolation-switch/interpolation-switch.component';
@@ -28,11 +29,11 @@ import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-
 
 
 
-
 @NgModule({
   declarations: [
     CardsDisplayComponent,
     ConfirmationDialogComponent,
+    GradientCustomizationComponent,
     IDWComponent,
     IdwSelectorComponent,
     InterpolationSwitchComponent,
