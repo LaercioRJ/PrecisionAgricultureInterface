@@ -78,11 +78,12 @@
         </table>
         <div class="tablePaginator">
             Página {{actualContournTablePage}} de {{totalContournTablePages}}
-            <button mat-icon-button color = "primary">
+            <button mat-icon-button color = "primary" (click) = "contournTablePreviousPage()"
+             [disabled] = "contournTableUpperIndex <= contournPointsPerPage">
                 <span class="material-icons">west</span>
             </button>
             <button mat-icon-button style="margin-right: 6.5%;" color = "primary" (click) = "contournTableNextPage()"
-             [disabled] = "contournTableUpperIndex === contournPointsPerPage">
+             [disabled] = "contournTableUpperIndex === contournLength">
                 <span class="material-icons">east</span>
             </button>
         </div>

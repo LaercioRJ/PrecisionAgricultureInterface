@@ -20,6 +20,7 @@ export class SpTableComponent implements OnInit {
   contournDisplayedColumns!: string[];
   contournPointsPerPage = 20;
   contournLatitudeHeader!: string;
+  contournLength = 0;
   contournLongitudeHeader!: string;
   contournTableDataSource = new MatTableDataSource<number[]>();
   contournTableLowerIndex = (this.contournPointsPerPage * -1);
@@ -53,12 +54,14 @@ export class SpTableComponent implements OnInit {
   }
 
   initializeContournTable(): void {
-    this.contournDisplayedColumns = ['Identificador', this.contournLatitudeHeader, this.contournLongitudeHeader];
-    this.totalContournTablePages = this.tablePaginator.calculateTotalTablePages(
-      (this.layer as SamplingLayer).contourn.coordinates.length, this.contournPointsPerPage);
+    const spLayer = (this.layer as SamplingLayer);
     this.hasContourn = true;
-    this.contournLatitudeHeader = (this.layer as SamplingLayer).contourn.latitudeHeader;
-    this.contournLongitudeHeader = (this.layer as SamplingLayer).contourn.longitudeHeader;
+    this.contournLatitudeHeader = spLayer.contourn.latitudeHeader;
+    this.contournLongitudeHeader = spLayer.contourn.longitudeHeader;
+    this.contournLength = spLayer.contourn.coordinates.length;
+    this.contournDisplayedColumns = ['Identificador', this.contournLatitudeHeader, this.contournLongitudeHeader];
+    this.totalContournTablePages = this.tablePaginator.calculateTotalTablePages( spLayer.contourn.coordinates.length,
+      this.contournPointsPerPage);
     this.contournTableNextPage();
   }
 
@@ -83,25 +86,27 @@ export class SpTableComponent implements OnInit {
       this.datasetTableUpperIndex, this.totalDatasetTablePages);
   }
 
-  contournTableNextPage(): void {
-    const zmlayer = (this.layer as SamplingLayer);
-    const nextpageData = this.tablePaginator.nextPage(zmlayer.contourn.coordinates.length, this.contournPointsPerPage,
-      this.contournTableUpperIndex, zmlayer.contourn.coordinates);
-    this.contournTableDataSource.data = nextpageData;
-    this.contournTableLowerIndex = this.datasetTableLowerIndex + this.contournPointsPerPage;
-    this.contournTableUpperIndex = this.datasetTableUpperIndex + nextpageData.length;
-    this.actualContournTablePage = this.tablePaginator.calculateActualTablePage(zmlayer.contourn.coordinates.length,
+  contournTablePreviousPage(): void {
+    const splayer = (this.layer as SamplingLayer);
+    const newUpperIndex = this.contournTableUpperIndex - this.contournTableDataSource.data.length;
+    const previousPageData = this.tablePaginator.previousPage(splayer.contourn.coordinates.length, this.contournPointsPerPage,
+      this.contournTableUpperIndex, splayer.contourn);
+    this.contournTableDataSource.data = previousPageData;
+    this.contournTableUpperIndex = newUpperIndex;
+    this.contournTableLowerIndex = this.datasetTableLowerIndex - this.contournPointsPerPage;
+    this.actualContournTablePage = this.tablePaginator.calculateActualTablePage(splayer.contourn.coordinates.length,
       this.contournPointsPerPage, this.contournTableUpperIndex, this.totalContournTablePages);
   }
 
-  /*tablePreviousPage(): void {
-    const newUpperIndex = this.tableUpperIndex - this.datasetTableDataSource.data.length;
-    const previousPageData = this.tablePaginator.previousPage(this.layer.datasetLength, 20, this.tableUpperIndex, this.layer.dataset);
-    this.datasetTableDataSource.data = previousPageData;
-    this.tableUpperIndex = newUpperIndex;
-    this.tableLowerIndex = this.tableLowerIndex - 20;
-    this.actualDatasetTablePage = this.tablePaginator.calculateActualTablePage(this.layer.datasetLength, 20, this.tableUpperIndex,
-      this.totalDatasetTablePages);
-  }*/
+  contournTableNextPage(): void {
+    const splayer = (this.layer as SamplingLayer);
+    const nextpageData = this.tablePaginator.nextPage(splayer.contourn.coordinates.length, this.contournPointsPerPage,
+      this.contournTableUpperIndex, splayer.contourn.coordinates);
+    this.contournTableDataSource.data = nextpageData;
+    this.contournTableLowerIndex = this.contournTableLowerIndex + this.contournPointsPerPage;
+    this.contournTableUpperIndex = this.contournTableUpperIndex + nextpageData.length;
+    this.actualContournTablePage = this.tablePaginator.calculateActualTablePage(splayer.contourn.coordinates.length,
+      this.contournPointsPerPage, this.contournTableUpperIndex, this.totalContournTablePages);
+  }
 
 }
