@@ -1,12 +1,17 @@
 .mainBody{
-    margin-top: 15px;
+    text-align: center;
 }
 .mainTitle{
     font-size: x-large;
     margin-left: auto;
     margin-right: auto;
 }
+.colorButton{
+    margin-right: 10px;
+    width: 110px;
+    margin-top: 7px;
+}
 .exitButtonsPlacement{
-    text-align: center;
+    text-align: right;
     margin-top: 12px;
 }
