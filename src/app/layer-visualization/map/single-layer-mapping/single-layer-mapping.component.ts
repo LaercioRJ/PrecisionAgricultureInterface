@@ -26,7 +26,7 @@ export class SingleLayerMappingComponent implements OnInit {
   ngOnInit(): void {
     const layerIndex = this.activatedRoute.snapshot.paramMap.get('layerIndex');
     this.layer = this.layerStorage.getLayer(Number(layerIndex));
-    this.mapping.RenderSimpleMap(this.layer.dataset[0].coordinates[0], this.layer.dataset[0].coordinates[1], 'map');
+    this.mapping.renderCompleteMap(this.layer.dataset, 'map');
   }
 
 }

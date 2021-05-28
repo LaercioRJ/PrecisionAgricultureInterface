@@ -1,12 +1,14 @@
+import { ClassesColors } from './classesColors';
 import { DatasetValue } from './datasetValue';
 
 export class Layer {
-    name: string;
+    classesColors = new ClassesColors();
+    dataHeader: string;
+    dataset: DatasetValue[] = [];
+    datasetLength: number;
     latitudeHeader: string;
     longitudeHeader: string;
-    dataHeader: string;
-    datasetLength: number;
-    dataset: DatasetValue[] = [];
+    name: string;
     constructor(name: string, latitudeHeader: string, longitudeHeader: string, dataHeader: string, datasetLength: number) {
         this.name = name;
         this.latitudeHeader = latitudeHeader;

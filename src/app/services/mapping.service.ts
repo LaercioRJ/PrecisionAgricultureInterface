@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { ClassesColors } from '../classes/classesColors';
+import { DatasetValue } from '../classes/datasetValue';
+
 import Circle from 'ol/style/Circle';
 import {defaults as defaultControls, FullScreen} from 'ol/control';
 import Feature from 'ol/Feature';
@@ -21,15 +24,15 @@ import View from 'ol/View';
 })
 export class MappingService {
 
-  private vectorSource!: VectorSource;
-  private vectorLayerFeatures = [];
-  private vectorLayer!: Vector;
-
   private map!: Map;
+
+  private vectorLayer!: Vector;
+  private vectorLayerFeatures: any[] = [];
+  private vectorSource!: VectorSource;
 
   constructor() { }
 
-  RenderSimpleMap(centralLatitude: number, centralLongitude: number, mapId: string): void {
+  renderSimpleMap(centralLatitude: number, centralLongitude: number, mapId: string): void {
     this.map = new Map({
       target: mapId,
       controls: [],
@@ -45,5 +48,46 @@ export class MappingService {
         maxResolution: 190
       })
     });
+  }
+
+  renderCompleteMap(dataset: DatasetValue[], mapId: string): void {
+    this.map = new Map({
+      target: mapId,
+      controls: defaultControls().extend([
+        new ScaleLine({
+          units: 'metric',
+          minWidth: 100
+        }),
+        new FullScreen({
+          tipLabel: 'Exibir em tela cheia'
+        })
+      ]),
+      layers: [
+        new Tile({
+          source: new OSM()
+        })
+      ],
+      view: new View({
+        center: fromLonLat([dataset[0].coordinates[0], dataset[0].coordinates[1]]),
+        zoom: 5,
+        maxResolution: 120,
+      })
+    });
+  }
+
+  drawDataset(dataset: DatasetValue[], classesColors: any): void {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < dataset.length; i++) {
+      this.vectorLayerFeatures[i] = new Feature({
+        geometry: new Point(fromLonLat([dataset[0].coordinates[0], dataset[0].coordinates[1]]))
+      });
+      this.vectorLayerFeatures[i].setStyle(new Style({
+        image: new Circle({
+          radius: 3,
+          fill: new Fill({ color: classesColors[dataset[i].data - 1] })
+        })
+      }));
+      this.vectorLayerFeatures[i].setId(i);
+    }
   }
 }

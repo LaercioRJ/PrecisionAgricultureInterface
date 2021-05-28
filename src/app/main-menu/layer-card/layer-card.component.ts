@@ -24,7 +24,7 @@ export class LayerCardComponent implements OnInit {
     this.confirmLayerType();
     const mapClass = 'map'.concat(this.layerId);
     this.changeMapDivClass(mapClass);
-    this.mapping.RenderSimpleMap(this.layer.dataset[0].coordinates[0], this.layer.dataset[0].coordinates[1], mapClass);
+    this.mapping.renderSimpleMap(this.layer.dataset[0].coordinates[0], this.layer.dataset[0].coordinates[1], mapClass);
   }
 
   private confirmLayerType(): void {
