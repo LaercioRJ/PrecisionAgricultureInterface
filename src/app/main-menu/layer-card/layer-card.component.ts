@@ -22,7 +22,7 @@ export class LayerCardComponent implements OnInit {
   ngOnInit(): void {
     this.layerDatasetLengthDisplay = String(this.layer.datasetLength).concat(' pontos');
     this.confirmLayerType();
-    const mapClass = 'map'.concat(this.layerId);
+    const mapClass = 'mapCard'.concat(this.layerId);
     this.changeMapDivClass(mapClass);
     this.mapping.renderSimpleMap(this.layer.dataset[0].coordinates[0], this.layer.dataset[0].coordinates[1], mapClass);
   }
@@ -34,7 +34,7 @@ export class LayerCardComponent implements OnInit {
   }
 
   private changeMapDivClass(newClass: string): void {
-    const mapDiv = document.getElementById('map');
+    const mapDiv = document.getElementById('mapCard');
     if (mapDiv !== null) {
       mapDiv.id = newClass;
     }
