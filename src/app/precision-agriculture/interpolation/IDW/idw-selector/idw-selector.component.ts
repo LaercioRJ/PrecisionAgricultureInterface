@@ -66,6 +66,7 @@ export class IdwSelectorComponent implements OnInit {
   }
 
   getFiveBestIDWExponents(exponentResearch: any): any {
+    console.log(exponentResearch);
     const fiveBestExponent: any[] = [];
     for (let i = 0; i < 5; i++) {
       fiveBestExponent.push(exponentResearch[i]);
@@ -73,7 +74,7 @@ export class IdwSelectorComponent implements OnInit {
     let aux: any;
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 4; j++) {
-        if (fiveBestExponent[j].isi > fiveBestExponent[j + 1].isi) {
+        if (fiveBestExponent[j].isi < fiveBestExponent[j + 1].isi) {
           aux = fiveBestExponent[j];
           fiveBestExponent[j] = fiveBestExponent[j + 1];
           fiveBestExponent[j + 1] = aux;
