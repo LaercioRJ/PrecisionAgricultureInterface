@@ -50,7 +50,16 @@ export class MappingService {
     });
   }
 
-  renderCompleteMap(dataset: DatasetValue[], mapId: string): void {
+  renderCompleteMap(dataset: DatasetValue[], mapId: string, classesColors: ClassesColors): void {
+    this.drawDataset(dataset, classesColors);
+    this.vectorSource = new VectorSource({
+      features: this.vectorLayerFeatures
+    });
+
+    this.vectorLayer = new Vector({
+      source: this.vectorSource
+    });
+
     this.map = new Map({
       target: mapId,
       controls: defaultControls().extend([
@@ -65,7 +74,8 @@ export class MappingService {
       layers: [
         new Tile({
           source: new OSM()
-        })
+        }),
+        this.vectorLayer
       ],
       view: new View({
         center: fromLonLat([dataset[0].coordinates[0], dataset[0].coordinates[1]]),
@@ -79,15 +89,30 @@ export class MappingService {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < dataset.length; i++) {
       this.vectorLayerFeatures[i] = new Feature({
-        geometry: new Point(fromLonLat([dataset[0].coordinates[0], dataset[0].coordinates[1]]))
+        geometry: new Point(fromLonLat([dataset[i].coordinates[0], dataset[i].coordinates[1]]))
       });
       this.vectorLayerFeatures[i].setStyle(new Style({
         image: new Circle({
           radius: 3,
-          fill: new Fill({ color: classesColors[dataset[i].data - 1] })
+          fill: new Fill({ color: classesColors.rgbCodes[dataset[i].data - 1] })
         })
       }));
       this.vectorLayerFeatures[i].setId(i);
     }
   }
+
+  getClickedPointId(clickEvent: any): any {
+    const eventPixel = this.map.getEventPixel(clickEvent);
+    return this.map.getFeaturesAtPixel(eventPixel)[0].getId();
+  }
+
+  changePointColor(pointId: number, newColorRgb: number[]): void {
+    this.vectorLayerFeatures[pointId].setStyle(new Style({
+      image: new Circle({
+        radius: 3,
+        fill: new Fill({ color: newColorRgb })
+      })
+    }));
+  }
+
 }
