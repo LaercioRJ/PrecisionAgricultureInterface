@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Layer } from '../../classes/layer';
-import { ZmLayer } from '../../classes/zmLayer';
 
 import { LayerStorageService } from '../../services/layer-storage.service';
 import { MessageDeliveryService } from '../../services/message-delivery.service';
@@ -125,7 +124,12 @@ export class RectificationComponent implements OnInit {
       const serverResult  = JSON.parse(JSON.stringify(result)).body;
       this.layerStorage.updateZmLayerAdditionalData(this.getLayerIndex(), rMethod, kSize, kFormat, iteration);
       this.saveServerResponse(this.getLayerIndex(), serverResult);
-    });
+    },
+      error => {
+        this.loadBarState = 'none';
+        this.messageDelivery.showMessage('Houve um problema ao acessar o servidor, por favor tente mais tarde.', 2400);
+        throw new Error('Sem resposta do servidor.');
+      });
   }
 
   saveServerResponse(layerIndex: number, serverResult: any): void {
@@ -137,10 +141,17 @@ export class RectificationComponent implements OnInit {
 
     saveResultsDialog.afterClosed().subscribe(result => {
       // returns if a new layer was created or if the consults results were deleted
+      let layerVisualizationPath = 'single-layer-mapping/';
+      if (result.newLayerCreated === true) {
+        const lastAddedLayerId = this.layerStorage.getNumberOfStoredLayers() - 1;
+        layerVisualizationPath = layerVisualizationPath.concat(String(lastAddedLayerId));
+      } else {
+        layerVisualizationPath = layerVisualizationPath.concat(String(this.getLayerIndex()));
+      }
       if (result.deleteResults === true) {
         this.messageDelivery.showMessage('Nenhum dado foi salvo.', 2100);
       } else {
-        this.messageDelivery.showMessage('A layer foi retificada com sucesso.', 2100);
+        this.messageDelivery.showMessageWithButtonRoute('A layer foi retificada com sucesso.', 'Verificar mapa', layerVisualizationPath);
       }
     });
   }

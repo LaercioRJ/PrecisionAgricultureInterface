@@ -50,11 +50,11 @@ export class ServerConnectionService {
     });
 
     return this.httpClient.post(url, {
-      exponent: exponentIdw,
-      neighbors: neighborsIdw,
-      radius: radiusIdw,
-      sizePixelX: pixelX,
-      sizePixelY: pixelY,
+      exponent: 0.5,
+      neighbors: 1,
+      radius: 1,
+      sizePixelX: 1,
+      sizePixelY: 1,
       dataset: [ {
         "coordinates": [
             197730.7244,

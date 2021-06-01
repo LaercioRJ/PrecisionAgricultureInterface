@@ -57,10 +57,14 @@ export class IDWComponent implements OnInit {
     const radius = this.idwForm.get('radius')?.value;
     const pixelX = this.idwForm.get('pixelX')?.value;
     const pixelY = this.idwForm.get('pixelY')?.value;
+    const contourn = (this.selectedLayer as SamplingLayer).contourn.coordinates;
+    console.log((this.selectedLayer as SamplingLayer));
     this.loadBarState = 'block';
     this.serverConnection.consumeIdwInterpolation(exponent, neighbors, radius, pixelX, pixelY, this.selectedLayer.dataset,
       (this.selectedLayer as SamplingLayer).contourn.coordinates).toPromise().then( result => {
         this.loadBarState = 'none';
+        const serverResult  = JSON.parse(JSON.stringify(result)).body;
+        console.log(serverResult);
       });
   }
 

@@ -73,6 +73,25 @@ export class LayerStorageService {
     this.storedLayers[layerIndex].dataset = newDataset;
   }
 
+  updateKrigingAdditionalData(pixelX: number, pixelY: number, krigingModel: string, krigingMethod: string, partialSill: number,
+                              range: number, layerIndex: number): void {
+    (this.storedLayers[layerIndex] as SamplingLayer).krigingMethod = krigingMethod;
+    (this.storedLayers[layerIndex] as SamplingLayer).krigingModel = krigingModel;
+    (this.storedLayers[layerIndex] as SamplingLayer).partialSill = partialSill;
+    (this.storedLayers[layerIndex] as SamplingLayer).range = range;
+    (this.storedLayers[layerIndex] as SamplingLayer).pixelX = pixelX;
+    (this.storedLayers[layerIndex] as SamplingLayer).pixelY = pixelY;
+  }
+
+  deleteKrigingAdditionalData(layerIndex: number): void {
+    (this.storedLayers[layerIndex] as SamplingLayer).krigingMethod = '';
+    (this.storedLayers[layerIndex] as SamplingLayer).krigingModel = '';
+    (this.storedLayers[layerIndex] as SamplingLayer).pixelX = 0;
+    (this.storedLayers[layerIndex] as SamplingLayer).pixelY = 0;
+    (this.storedLayers[layerIndex] as SamplingLayer).partialSill = 0;
+    (this.storedLayers[layerIndex] as SamplingLayer).range = 0;
+  }
+
   updateZmLayerAdditionalData(layerIndex: number, rectificationMethod: string, kernelSize: number, kernelFormat: string,
                               iterations: number): void {
     (this.storedLayers[layerIndex] as ZmLayer).rectificationMethod = rectificationMethod;

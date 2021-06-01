@@ -34,6 +34,7 @@ export class SaveServerResultsComponent implements OnInit {
   chooseSavingOperation(): void {
     let newLayerCreated = false;
     let deleteResults = false;
+    const oldLayer = this.layerStorage.getLayer(this.data.layerIndex);
 
     if ((this.selectedOption === this.options[1]) && (this.newLayerName.valid === false)) {
       this.MessageDelivery.showMessage('Por favor, dê um nome para a nova layer.', 2200);
@@ -44,11 +45,15 @@ export class SaveServerResultsComponent implements OnInit {
         deleteResults = true;
         break;
       case 'Criar uma nova layer.':
-        this.createNewLayer();
+        this.createNewLayer(oldLayer);
         if (this.deleteLayerAfterEdit === true) {
           this.layerStorage.deleteLayer(this.data.layerIndex);
         } else {
-          this.layerStorage.deleteZmLayerAdditionalData(this.data.layerIndex);
+          if (oldLayer instanceof ZmLayer) {
+            this.layerStorage.deleteZmLayerAdditionalData(this.data.layerIndex);
+          } else {
+            this.layerStorage.deleteKrigingAdditionalData(this.data.layerIndex);
+          }
         }
         newLayerCreated = true;
         break;
@@ -66,22 +71,31 @@ export class SaveServerResultsComponent implements OnInit {
     this.layerStorage.updateAllLayerDataset(this.data.layerIndex, dataset);
   }
 
-  createNewLayer(): void {
+  createNewLayer(oldLayer: Layer): void {
     const dataset = this.serverDataConvertion.responseToDataset(this.data.serverResult);
-    const oldLayer = this.layerStorage.getLayer(this.data.layerIndex);
+    const newLayerName = this.newLayerName.value;
     let newLayer;
     if (oldLayer instanceof SamplingLayer) {
-
+      newLayer = new SamplingLayer(newLayerName, oldLayer.latitudeHeader, oldLayer.longitudeHeader, oldLayer.dataHeader, dataset.length);
+      newLayer.contourn = (oldLayer as SamplingLayer).contourn;
+      newLayer.idwExpoent = (oldLayer as SamplingLayer).idwExpoent;
+      newLayer.krigingMethod = (oldLayer as SamplingLayer).krigingMethod;
+      newLayer.krigingModel = (oldLayer as SamplingLayer).krigingModel;
+      newLayer.neighbors = (oldLayer as SamplingLayer).neighbors;
+      newLayer.partialSill = (oldLayer as SamplingLayer).partialSill;
+      newLayer.pixelX = (oldLayer as SamplingLayer).pixelX;
+      newLayer.pixelY = (oldLayer as SamplingLayer).pixelY;
+      newLayer.radius = (oldLayer as SamplingLayer).radius;
+      newLayer.range = (oldLayer as SamplingLayer).range;
     } else {
-      const newLayerName = this.newLayerName.value;
       newLayer = new ZmLayer(newLayerName, oldLayer.latitudeHeader, oldLayer.longitudeHeader, oldLayer.dataHeader, dataset.length);
       newLayer.iterations = (oldLayer as ZmLayer).iterations;
       newLayer.kernelFormat = (oldLayer as ZmLayer).kernelFormat;
       newLayer.kernelSize = (oldLayer as ZmLayer).kernelSize;
       newLayer.rectificationMethod = (oldLayer as ZmLayer).rectificationMethod;
-      newLayer.dataset = dataset;
-      this.layerStorage.storeLayer(newLayer);
     }
+    newLayer.dataset = dataset;
+    this.layerStorage.storeLayer(newLayer);
   }
 
   enableLayerNameField(): void {
