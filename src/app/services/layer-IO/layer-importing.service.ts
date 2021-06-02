@@ -27,6 +27,9 @@ export class LayerImportingService {
   fileToLayer(file: File, layerType: number): void {
     /*layerType = 0 -> sampling point layer
       layerType = 1 -> management zone layer*/
+    if (layerType === 0) {
+      this.dataHeader = 'Amostra';
+    }
     this.dataset = [];
     this.confirmFileType(file.name);
     this.getFileName(file.name);

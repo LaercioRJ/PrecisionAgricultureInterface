@@ -1,6 +1,54 @@
 <mat-sidenav-container class="sidenavContainer">
     <mat-sidenav position = "start" mode = "side" class="sidenav" opened>
-        <button (click) = "openGradientCustomization()">Degradê</button>
+        
+        <br>
+        <span class="sidenavTitle">Layer: {{layer.name}}</span>
+        <br>
+        <br>
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-description>
+                        Detalhes
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-description>
+                        Consultar pontos selecionados
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div *ngIf="selectedPointId === -1">
+                    Nenhum ponto foi selecionado
+                </div>
+
+                <div *ngIf="selectedPointId !== -1">
+                    <mat-form-field class="pointInfoField" color = "primary" appearance = "fill">
+                        <mat-label>Identificador</mat-label>
+                        <input class="pointInfoDisplay" value = "{{selectedPointId + 1}}" matInput readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="pointInfoField" color = "primary" appearance = "fill">
+                        <mat-label>{{layer.latitudeHeader}}</mat-label>
+                        <input class="pointInfoDisplay" value = "{{selectedPointFirstCoordinate}}" matInput readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="pointInfoField" color = "primary" appearance = "fill">
+                        <mat-label>{{layer.longitudeHeader}}</mat-label>
+                        <input class="pointInfoDisplay" value = "{{selectedPointSecondCoordinate}}" matInput readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="pointInfoField" color = "primary" appearance = "fill">
+                        <mat-label>{{layer.dataHeader}}</mat-label>
+                        <input class="pointInfoDisplay" value = "{{selectedPointData}}" matInput readonly>
+                    </mat-form-field>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
     </mat-sidenav>
 
     <mat-sidenav-content>

@@ -85,6 +85,9 @@ export class KrigingComponent implements OnInit {
         this.loadBarStateParameters = 'none';
         this.parametersWereSelected = true;
         this.showSelectorResults(JSON.parse(JSON.stringify(result)).body, stepper);
+    },
+      error => {
+        this.messageDelivery.showMessage('Houve um problema ao consultar o servidor, por favor tente mais tarde.', 2400);
       });
   }
 
@@ -122,7 +125,10 @@ export class KrigingComponent implements OnInit {
         this.krigingSelectorResults.method, this.krigingSelectorResults.partialSill, this.krigingSelectorResults.partialSill,
         layerIndex);
       this.saveServerResponse(layerIndex, serverResult);
-    });
+    },
+      error => {
+        this.messageDelivery.showMessage('Houve um problema ao consultar o servidor, por favor tente mais tarde.', 2400);
+      });
   }
 
   getSelectedLayerIndex(): number {
@@ -161,8 +167,11 @@ export class KrigingComponent implements OnInit {
     const semivariogramHeight = this.semivariogramForm.get('semivariogramHeight')?.value;
     this.serverConnection.consumeSemivariogram(xAxis, yAxis, semivariogramWidth, semivariogramHeight, this.krigingSelectorResults.model,
       this.krigingSelectorResults.nuggetEffect, this.krigingSelectorResults.method, this.krigingSelectorResults.partialSill,
-      this.krigingSelectorResults.range).toPromise().then(result => {
+       this.krigingSelectorResults.range).toPromise().then(result => {
         this.showSemivariogramResults((result.body as Blob), xAxis);
+    },
+      error => {
+        this.messageDelivery.showMessage('Houve um problema ao consultar o servidor, por favor tente mais tarde.', 2400);
       });
   }
 
