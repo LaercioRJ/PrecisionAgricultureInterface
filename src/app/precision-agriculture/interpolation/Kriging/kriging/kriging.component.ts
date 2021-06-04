@@ -7,6 +7,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { KrigingSelectorResult } from '../../../../classes/krigingSelectorResult';
 import { Layer } from '../../../../classes/layer';
 
+import { ControlValidationService } from '../../../../services/validation/control-validation.service';
 import { LayerStorageService } from '../../../../services/layer-storage.service';
 import { MessageDeliveryService } from '../../../../services/message-delivery.service';
 import { ServerConnectionService } from '../../../server-connection.service';
@@ -24,27 +25,36 @@ export class KrigingComponent implements OnInit {
   @Input() selectedLayer!: Layer;
 
   krigingSelectorForm = new FormGroup({
-    rangeIntervals: new FormControl({disabled: false, value: 2}, [Validators.min(2), Validators.max(100)]),
-    partialSillIntervals: new FormControl({disabled: false, value: 2}, [Validators.min(2), Validators.max(100)]),
-    cutoff: new FormControl({disabled: false, value: 10}, [Validators.min(10), Validators.max(100)]),
-    pairs: new FormControl({disabled: false, value: 2}, [Validators.min(2), Validators.max(50)]),
-    amountLags: new FormControl({disabled: true, value: 5}, [Validators.min(5), Validators.max(15)]),
+    rangeIntervals: new FormControl({disabled: false, value: 2}, [Validators.min(2), Validators.max(100),
+      ControlValidationService.integerValidation()]),
+    partialSillIntervals: new FormControl({disabled: false, value: 2}, [Validators.min(2), Validators.max(100),
+      ControlValidationService.integerValidation()]),
+    cutoff: new FormControl({disabled: false, value: 10}, [Validators.min(10), Validators.max(100),
+      ControlValidationService.integerValidation()]),
+    pairs: new FormControl({disabled: false, value: 2}, [Validators.min(2), Validators.max(50),
+      ControlValidationService.integerValidation()]),
+    amountLags: new FormControl({disabled: true, value: 5}, [Validators.min(5), Validators.max(15),
+      ControlValidationService.integerValidation()]),
     selectedLagType: new FormControl({disabled: false, value: 'automatic'})
   });
   loadBarStateParameters = 'none';
   parametersWereSelected = false;
 
   krigingForm = new FormGroup({
-    sizePixelX: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(10)]),
-    sizePixelY: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(10)])
+    sizePixelX: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(10),
+      ControlValidationService.integerValidation()]),
+    sizePixelY: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(10),
+      ControlValidationService.integerValidation()])
   });
   loadBarStateKriging = 'none';
 
   semivariogramForm = new FormGroup({
     xAxis: new FormControl({disabled: false, value: 'eixo x'}, [Validators.required]),
     yAxis: new FormControl({disabled: false, value: 'eixo y'}, [Validators.required]),
-    semivariogramWidth: new FormControl({disabled: false, value: 750}, [Validators.min(500), Validators.max(1000)]),
-    semivariogramHeight: new FormControl({disabled: false, value: 750}, [Validators.min(500), Validators.max(1000)])
+    semivariogramWidth: new FormControl({disabled: false, value: 750}, [Validators.min(500), Validators.max(1000),
+      ControlValidationService.integerValidation()]),
+    semivariogramHeight: new FormControl({disabled: false, value: 750}, [Validators.min(500), Validators.max(1000),
+      ControlValidationService.integerValidation()])
   });
   loadBarStateSemivariogram = 'none';
 

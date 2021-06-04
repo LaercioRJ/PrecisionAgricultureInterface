@@ -3,10 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { ControlValidationService } from '../../../../services/validation/control-validation.service';
 import { MessageDeliveryService } from '../../../../services/message-delivery.service';
 import { ServerConnectionService } from '../../../server-connection.service';
-
-import { Layer } from '../../../../classes/layer';
 
 export interface InterpolatorSelectorResult {
   exponent: number;
@@ -26,8 +25,10 @@ export class IdwSelectorComponent implements OnInit {
   idwSelectorForm = new FormGroup({
     minExponent: new FormControl({disabled: false, value: 0.5}, [Validators.min(0.5), Validators.max(10)]),
     maxExponent: new FormControl({disabled: false, value: 6}, [Validators.min(0.5), Validators.max(10)]),
-    minNeighbor: new FormControl({disabled: false, value: 7}, [Validators.min(1), Validators.max(50)]),
-    maxNeighbor: new FormControl({disabled: false, value: 10}, [Validators.min(10), Validators.max(50)]),
+    minNeighbor: new FormControl({disabled: false, value: 7}, [Validators.min(1), Validators.max(50),
+      ControlValidationService.integerValidation()]),
+    maxNeighbor: new FormControl({disabled: false, value: 10}, [Validators.min(10), Validators.max(50),
+      ControlValidationService.integerValidation()]),
     stepExponent: new FormControl({disabled: false, value: 0.5}, [Validators.min(0.5), Validators.max(10)])
   });
   layer = this.data.layer;
@@ -58,6 +59,7 @@ export class IdwSelectorComponent implements OnInit {
      this.layer.dataset).toPromise().then(result => {
       this.loadBarState = 'none';
       const fiveBest = this.getFiveBestIDWExponents(JSON.parse(JSON.stringify(result)).body);
+      console.log(fiveBest);
       this.convertResult(fiveBest);
     }, err => {
       this.messageDelivery.showMessage('Houve um problema ao consultar o servidor, por favor tente mais tarde.', 2500);

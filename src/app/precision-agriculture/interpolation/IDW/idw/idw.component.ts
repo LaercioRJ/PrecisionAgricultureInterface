@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Layer } from '../../../../classes/layer';
 import { SamplingLayer } from '../../../../classes/samplingLayer';
 
+import { ControlValidationService } from '../../../../services/validation/control-validation.service';
 import { MessageDeliveryService } from '../../../../services/message-delivery.service';
 import { ServerConnectionService } from '../../../server-connection.service';
 
@@ -19,11 +20,16 @@ export class IDWComponent implements OnInit {
   @Input() selectedLayer!: Layer;
 
   idwForm = new FormGroup({
-    exponent: new FormControl({disabled: false, value: 0.5}, [Validators.min(0.5), Validators.max(10)]),
-    pixelX: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(10)]),
-    pixelY: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(10)]),
-    radius: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(100)]),
-    neighbors: new FormControl({disabled: true, value: 1}, [Validators.min(1), Validators.max(50)]),
+    exponent: new FormControl({disabled: false, value: 0.5}, [Validators.min(0.5), Validators.max(10),
+      ControlValidationService.integerValidation()]),
+    pixelX: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(10),
+      ControlValidationService.integerValidation()]),
+    pixelY: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(10),
+      ControlValidationService.integerValidation()]),
+    radius: new FormControl({disabled: false, value: 1}, [Validators.min(1), Validators.max(100),
+      ControlValidationService.integerValidation()]),
+    neighbors: new FormControl({disabled: true, value: 1}, [Validators.min(1), Validators.max(50),
+      ControlValidationService.integerValidation()]),
     selectedArea: new FormControl({disabled: false, value: 'radius'})
   });
   loadBarState = 'none';
