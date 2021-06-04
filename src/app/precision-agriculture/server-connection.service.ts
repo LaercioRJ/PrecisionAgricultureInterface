@@ -641,6 +641,7 @@ export class ServerConnectionService {
     });
   }
 
+  // TODO generalizar esta função
   consumeIdwInterpolatorSelection(minExponent: number, maxExponent: number, exponentStep: number, minNeighbors: number,
                                   maxNeighbors: number, layerDataset: DatasetValue[]): Observable<object> {
     const url = 'https://adb.md.utfpr.edu.br/api/interpolation/isi/idw';

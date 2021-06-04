@@ -1,9 +1,21 @@
 export class ClassesColors{
     rgbCodes: number[][] = [];
-    constructor() {
-        this.rgbCodes[0] = [0, 255, 0];
-        this.rgbCodes[1] = [255, 0, 0];
-        this.rgbCodes[2] = [0, 0, 255];
-        this.rgbCodes[3] = [255, 255, 0];
+    constructor(classesQuantity: number) {
+        const preCodedClassesColors = [
+            [0, 255, 0],
+            [255, 0, 0],
+            [0, 0, 255],
+            [255, 255, 0],
+            [0, 255, 255],
+            [255, 0, 255],
+            [0, 125, 0],
+            [125, 0, 0],
+            [0, 0, 125],
+            [125, 125, 0]
+        ];
+        for (let i = 0; i < classesQuantity; i++) {
+            this.rgbCodes.push(preCodedClassesColors[i]);
+        }
+        this.rgbCodes.push([0, 0, 0]);
     }
 }

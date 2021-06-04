@@ -50,8 +50,8 @@ export class MappingService {
     });
   }
 
-  renderCompleteMap(dataset: DatasetValue[], mapId: string, classesColors: ClassesColors): void {
-    this.drawDataset(dataset, classesColors);
+  renderCompleteMap(dataset: DatasetValue[], mapId: string, classesColors: ClassesColors, mapType: string): void {
+    this.drawDataset(dataset, classesColors, mapType);
     this.vectorSource = new VectorSource({
       features: this.vectorLayerFeatures
     });
@@ -85,16 +85,22 @@ export class MappingService {
     });
   }
 
-  drawDataset(dataset: DatasetValue[], classesColors: any): void {
+  drawDataset(dataset: DatasetValue[], classesColors: any, mapType: string): void {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < dataset.length; i++) {
       this.vectorLayerFeatures[i] = new Feature({
         geometry: new Point(fromLonLat([dataset[i].coordinates[0], dataset[i].coordinates[1]]))
       });
+      let rgbColor: number[];
+      if (mapType === 'zm') {
+        rgbColor = classesColors.rgbCodes[dataset[i].data - 1];
+      } else {
+        rgbColor = classesColors.rgbCodes[0];
+      }
       this.vectorLayerFeatures[i].setStyle(new Style({
         image: new Circle({
           radius: 3,
-          fill: new Fill({ color: classesColors.rgbCodes[dataset[i].data - 1] })
+          fill: new Fill({ color: rgbColor })
         })
       }));
       this.vectorLayerFeatures[i].setId(i);

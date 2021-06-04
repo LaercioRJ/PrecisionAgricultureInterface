@@ -7,6 +7,7 @@ import { LayerStorageService } from '../../../services/layer-storage.service';
 
 import { GradientCustomizationComponent } from '../map-legend-customization/gradient-customization/gradient-customization.component';
 
+import { ClassesColors } from '../../../classes/classesColors';
 import { Layer } from '../../../classes/layer';
 import { SamplingLayer } from '../../../classes/samplingLayer';
 import { ZmLayer } from '../../../classes/zmLayer';
@@ -20,7 +21,8 @@ export class SingleLayerMappingComponent implements OnInit {
 
   // TODO: fix choose and unchoose methods
 
-  layer!: Layer;
+  layer: any;
+  layerType!: string;
   selectedPointId = -1;
   selectedPointFirstCoordinate = 0;
   selectedPointSecondCoordinate = 0;
@@ -32,9 +34,23 @@ export class SingleLayerMappingComponent implements OnInit {
               private matDialog: MatDialog) { }
 
   ngOnInit(): void {
-    const layerIndex = this.activatedRoute.snapshot.paramMap.get('layerIndex');
-    this.layer = this.layerStorage.getLayer(Number(layerIndex));
-    this.mapping.renderCompleteMap(this.layer.dataset, 'fullMap', this.layer.classesColors);
+    const layerIndex = Number(this.activatedRoute.snapshot.paramMap.get('layerIndex'));
+    this.getLayer(layerIndex);
+    this.mapping.renderCompleteMap(this.layer.dataset, 'fullMap', this.layer.classesColors, this.layerType);
+  }
+
+  getLayer(layerIndex: number): void {
+    const selectedlayer = this.layerStorage.getLayer(layerIndex);
+    if (selectedlayer instanceof ZmLayer) {
+      this.layerType = 'zm';
+      const classesQuantity  = (selectedlayer as ZmLayer).discoverHigherClass();
+      selectedlayer.classesColors = new ClassesColors(classesQuantity);
+      this.layer = (selectedlayer as ZmLayer);
+    } else {
+      this.layerType = 'sp';
+      selectedlayer.classesColors = new ClassesColors(2);
+      this.layer = (selectedlayer as SamplingLayer);
+    }
   }
 
   selectPoint(clickEvent: any): void {
@@ -58,7 +74,7 @@ export class SingleLayerMappingComponent implements OnInit {
   }
 
   chooseNewPoint(chosenPointId: number): void {
-    this.mapping.changePointColor(chosenPointId, [0, 0, 0]);
+    this.mapping.changePointColor(chosenPointId, this.layer.classesColors[this.layer.classesColors.length]);
     this.selectedPointId = chosenPointId;
     this.selectedPointFirstCoordinate = this.layer.dataset[chosenPointId].coordinates[0];
     this.selectedPointSecondCoordinate = this.layer.dataset[chosenPointId].coordinates[1];
@@ -66,12 +82,21 @@ export class SingleLayerMappingComponent implements OnInit {
   }
 
   unchooseSelectedPoint(): void {
-    const pointClass = this.layer.dataset[this.selectedPointId].data;
-    this.mapping.changePointColor(this.selectedPointId, this.layer.classesColors.rgbCodes[pointClass - 1]);
+    const pointOriginalColor = this.getPointClassColor();
+    this.mapping.changePointColor(this.selectedPointId, pointOriginalColor);
     this.selectedPointFirstCoordinate = 0;
     this.selectedPointSecondCoordinate = 0;
     this.selectedPointData = 0;
     this.selectedPointId = -1;
+  }
+
+  getPointClassColor(): any {
+    if (this.layerType === 'zm') {
+      const pointData = this.layer.dataset[this.selectedPointId].data;
+      return this.layer.classesColors.rgbCodes[pointData - 1];
+    } else {
+      return this.layer.classesColors.rgbCodes[0];
+    }
   }
 
   chooseAnotherPoint(chosenPointId: number): void {

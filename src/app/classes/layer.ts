@@ -2,7 +2,7 @@ import { ClassesColors } from './classesColors';
 import { DatasetValue } from './datasetValue';
 
 export class Layer {
-    classesColors = new ClassesColors();
+    classesColors = new ClassesColors(0);
     dataHeader: string;
     dataset: DatasetValue[] = [];
     datasetLength: number;
