@@ -24,6 +24,14 @@
     width: 100%;
     height: 92vh;
 }
+.expansionPanelTitle{
+    margin-left: auto;
+    margin-right: auto;
+}
 mat-panel-description{
     color: black;
+}
+.sidenavButton{
+    width: 90%;
+    margin-top: 10px;
 }

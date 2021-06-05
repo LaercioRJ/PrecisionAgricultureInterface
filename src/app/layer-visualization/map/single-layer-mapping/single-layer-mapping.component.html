@@ -9,7 +9,9 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-description>
-                        Detalhes
+                        <span class="expansionPanelTitle">
+                            Detalhes
+                        </span>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
             </mat-expansion-panel>
@@ -17,7 +19,9 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-description>
-                        Consultar pontos selecionados
+                        <span class="expansionPanelTitle">
+                            Consultar pontos selecionados
+                        </span>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 
@@ -47,7 +51,31 @@
                     </mat-form-field>
                 </div>
             </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-description>
+                        <span class="expansionPanelTitle">
+                            Legenda
+                        </span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+            </mat-expansion-panel>
         </mat-accordion>
+
+        <button mat-raised-button color = "primary" class="sidenavButton">
+            Download Mapa
+            <span class="material-icons">
+                get_app
+            </span>
+        </button>
+
+        <button mat-raised-button color = "primary" class="sidenavButton">
+            Aplicar Degradê
+            <span class="material-icons">
+                color_lens
+            </span>
+        </button>
 
     </mat-sidenav>
 

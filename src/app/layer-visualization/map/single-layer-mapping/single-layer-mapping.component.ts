@@ -8,7 +8,6 @@ import { LayerStorageService } from '../../../services/layer-storage.service';
 import { GradientCustomizationComponent } from '../map-legend-customization/gradient-customization/gradient-customization.component';
 
 import { ClassesColors } from '../../../classes/classesColors';
-import { Layer } from '../../../classes/layer';
 import { SamplingLayer } from '../../../classes/samplingLayer';
 import { ZmLayer } from '../../../classes/zmLayer';
 
