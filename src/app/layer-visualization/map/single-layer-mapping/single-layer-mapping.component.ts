@@ -6,6 +6,7 @@ import { MappingService } from '../../../services/mapping.service';
 import { LayerStorageService } from '../../../services/layer-storage.service';
 
 import { GradientCustomizationComponent } from '../map-legend-customization/gradient-customization/gradient-customization.component';
+import { ZmMappingInfoComponent } from '../layer-info/zm-mapping-info/zm-mapping-info.component';
 
 import { ClassesColors } from '../../../classes/classesColors';
 import { SamplingLayer } from '../../../classes/samplingLayer';
@@ -41,12 +42,12 @@ export class SingleLayerMappingComponent implements OnInit {
   getLayer(layerIndex: number): void {
     const selectedlayer = this.layerStorage.getLayer(layerIndex);
     if (selectedlayer instanceof ZmLayer) {
-      this.layerType = 'zm';
+      this.layerType = 'Zona de Manejo';
       const classesQuantity  = (selectedlayer as ZmLayer).discoverHigherClass();
       selectedlayer.classesColors = new ClassesColors(classesQuantity);
       this.layer = (selectedlayer as ZmLayer);
     } else {
-      this.layerType = 'sp';
+      this.layerType = 'Pontos Amostrais';
       selectedlayer.classesColors = new ClassesColors(2);
       this.layer = (selectedlayer as SamplingLayer);
     }
@@ -90,7 +91,7 @@ export class SingleLayerMappingComponent implements OnInit {
   }
 
   getPointClassColor(): any {
-    if (this.layerType === 'zm') {
+    if (this.layerType === 'Zona de Manejo') {
       const pointData = this.layer.dataset[this.selectedPointId].data;
       return this.layer.classesColors.rgbCodes[pointData - 1];
     } else {

@@ -1,0 +1,18 @@
+<div *ngIf="typedZmLayer.rectificationMethod !== ''">
+    <mat-form-field class="infoField" appearance="fill">
+        <mat-label>Método de Retificação</mat-label>
+        <input class="rectificationInfoDisplay" matInput value={{typedZmLayer.rectificationMethod}} readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance="fill">
+        <mat-label>Tamanho da Janela (em pixeis)</mat-label>
+        <input class="rectificationInfoDisplay" matInput value={{typedZmLayer.kernelSize}} readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance="fill">
+        <mat-label>Formato da Janela</mat-label>
+        <input class="rectificationInfoDisplay" matInput value={{typedZmLayer.kernelFormat}} readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance="fill">
+        <mat-label>N° de Iterações</mat-label>
+        <input class="rectificationInfoDisplay" matInput value={{typedZmLayer.iterations}} readonly>
+    </mat-form-field>
+</div>

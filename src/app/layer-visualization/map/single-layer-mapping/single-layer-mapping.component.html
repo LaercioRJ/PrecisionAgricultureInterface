@@ -14,6 +14,30 @@
                         </span>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
+
+                <mat-form-field class="pointInfoField" color = "primary" appearance = "fill">
+                    <mat-label>Nome da Área</mat-label>
+                    <input class="pointInfoDisplay" value="{{layer.name}}" matInput readonly>
+                </mat-form-field>
+
+                <mat-form-field class="pointInfoField" color = "primary" appearance = "fill">
+                    <mat-label>N° de Pontos</mat-label>
+                    <input class="pointInfoDisplay" value="{{layer.datasetLength}}" matInput readonly>
+                </mat-form-field>
+
+                <mat-form-field class="pointInfoField" color = "primary" appearance = "fill">
+                    <mat-label>Tipo de Layer</mat-label>
+                    <input class="pointInfoDisplay" value="{{layerType}}" matInput readonly>
+                </mat-form-field>
+
+                <div *ngIf="layerType === 'Zona de Manejo'">
+                    <app-zm-mapping-info [layer] = "this.layer"></app-zm-mapping-info>
+                </div>
+
+                <div *ngIf="layerType === 'Pontos Amostrais'">
+                    <app-sp-mapping-info [layer] = "this.layer"></app-sp-mapping-info>
+                </div>
+
             </mat-expansion-panel>
 
             <mat-expansion-panel>
@@ -76,6 +100,7 @@
                 color_lens
             </span>
         </button>
+        <br>
 
     </mat-sidenav>
 

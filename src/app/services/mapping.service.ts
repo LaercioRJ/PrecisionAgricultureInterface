@@ -92,7 +92,7 @@ export class MappingService {
         geometry: new Point(fromLonLat([dataset[i].coordinates[0], dataset[i].coordinates[1]]))
       });
       let rgbColor: number[];
-      if (mapType === 'zm') {
+      if (mapType === 'Zona de Manejo') {
         rgbColor = classesColors.rgbCodes[dataset[i].data - 1];
       } else {
         rgbColor = classesColors.rgbCodes[0];

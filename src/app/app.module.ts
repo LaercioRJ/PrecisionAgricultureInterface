@@ -23,10 +23,13 @@ import { MzTableComponent } from './layer-visualization/table/data-tables/mz-tab
 import { RectificationComponent } from './precision-agriculture/rectification/rectification.component';
 import { SemivariogramResultsComponent } from './precision-agriculture/interpolation/Kriging/semivariogram-results/semivariogram-results.component';
 import { SpLayerInfoComponent } from './layer-visualization/table/layer-info/sp-layer-info/sp-layer-info.component';
+import { SpMappingInfoComponent } from './layer-visualization/map/layer-info/sp-mapping-info/sp-mapping-info.component';
 import { SpTableComponent } from './layer-visualization/table/data-tables/sp-table/sp-table.component';
 import { TablePageComponent } from './layer-visualization/table/table-page/table-page.component';
 import { TopBarComponent } from './main-menu/top-bar/top-bar.component';
 import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-layer-info/zm-layer-info.component';
+import { ZmMappingInfoComponent } from './layer-visualization/map/layer-info/zm-mapping-info/zm-mapping-info.component';
+
 
 
 
@@ -48,10 +51,12 @@ import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-
     SemivariogramResultsComponent,
     SingleLayerMappingComponent,
     SpLayerInfoComponent,
+    SpMappingInfoComponent,
     SpTableComponent,
     TablePageComponent,
     TopBarComponent,
     ZmLayerInfoComponent,
+    ZmMappingInfoComponent,
   ],
   imports: [
     AppRoutingModule,

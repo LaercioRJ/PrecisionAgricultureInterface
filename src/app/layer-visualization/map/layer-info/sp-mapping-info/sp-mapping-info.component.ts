@@ -4,22 +4,20 @@ import { Layer } from '../../../../classes/layer';
 import { SamplingLayer } from '../../../../classes/samplingLayer';
 
 @Component({
-  selector: 'app-sp-layer-info',
-  templateUrl: './sp-layer-info.component.html',
-  styleUrls: ['./sp-layer-info.component.css']
+  selector: 'app-sp-mapping-info',
+  templateUrl: './sp-mapping-info.component.html',
+  styleUrls: ['./sp-mapping-info.component.css']
 })
-export class SpLayerInfoComponent implements OnInit {
+export class SpMappingInfoComponent implements OnInit {
   @Input() layer!: Layer;
 
   interpolationType = '';
   typedSPLayer!: SamplingLayer;
-  
 
   constructor() { }
 
   ngOnInit(): void {
     this.typedSPLayer = (this.layer as SamplingLayer);
-    this.identifyInterpolationType();
   }
 
   identifyInterpolationType(): void {

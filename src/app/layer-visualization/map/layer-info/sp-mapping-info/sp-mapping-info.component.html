@@ -1,0 +1,57 @@
+<div *ngIf="interpolationType === 'IDW'">
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Tipo do Interpolador</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="IDW" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Expoente</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.idwExpoent}}" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Raio</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.radius}}" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>N° de Vizinhos</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.neighbors}}" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Tamanho do Pixel X (em metros)</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.pixelX}}" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Tamanho do Pixel Y (em metros)</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.pixelY}}" readonly>
+    </mat-form-field>
+</div>
+
+<div *ngIf="interpolationType === 'Krigagem'">
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Tipo do Interpolador</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="Krigagem" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Modelo</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.krigingModel}}" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Mátodo</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.krigingMethod}}" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Partial Sill</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.partialSill}}" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Range</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.range}}" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Tamanho do Pixel X (em metros)</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.pixelX}}" readonly>
+    </mat-form-field>
+    <mat-form-field class="infoField" appearance = "fill">
+        <mat-label>Tamanho do Pixel Y (em metros)</mat-label>
+        <input class="interpolationInfoDisplay" matInput value="{{typedSPLayer.pixelY}}" readonly>
+    </mat-form-field>
+</div>
