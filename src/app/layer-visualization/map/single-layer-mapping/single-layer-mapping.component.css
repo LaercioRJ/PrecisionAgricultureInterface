@@ -35,3 +35,77 @@ mat-panel-description{
     width: 90%;
     margin-top: 10px;
 }
+table{
+    width: 100%;
+}
+.legendColor{
+    margin-left: 10px;
+    max-width: 10px;
+    max-height: 10px;
+}
+#legendColor0{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor1{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor2{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor3{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor4{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor5{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor6{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor7{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor8{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor9{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#legendColor10{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}

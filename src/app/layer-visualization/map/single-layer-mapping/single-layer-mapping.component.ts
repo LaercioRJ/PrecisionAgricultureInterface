@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { MappingService } from '../../../services/mapping.service';
 import { LayerStorageService } from '../../../services/layer-storage.service';
@@ -12,6 +13,11 @@ import { ClassesColors } from '../../../classes/classesColors';
 import { SamplingLayer } from '../../../classes/samplingLayer';
 import { ZmLayer } from '../../../classes/zmLayer';
 
+export interface LegendLine {
+  lineName: string;
+  lineColor: string;
+}
+
 @Component({
   selector: 'app-single-layer-mapping',
   templateUrl: './single-layer-mapping.component.html',
@@ -19,10 +25,10 @@ import { ZmLayer } from '../../../classes/zmLayer';
 })
 export class SingleLayerMappingComponent implements OnInit {
 
-  // TODO: fix choose and unchoose methods
-
+  displayedColumns!: string[];
   layer: any;
   layerType!: string;
+  tableDataSource = new MatTableDataSource<LegendLine>();
   selectedPointId = -1;
   selectedPointFirstCoordinate = 0;
   selectedPointSecondCoordinate = 0;
@@ -37,6 +43,8 @@ export class SingleLayerMappingComponent implements OnInit {
     const layerIndex = Number(this.activatedRoute.snapshot.paramMap.get('layerIndex'));
     this.getLayer(layerIndex);
     this.mapping.renderCompleteMap(this.layer.dataset, 'fullMap', this.layer.classesColors, this.layerType);
+    this.renderLegend();
+    this.changeLegendVisualColor(0);
   }
 
   getLayer(layerIndex: number): void {
@@ -51,6 +59,36 @@ export class SingleLayerMappingComponent implements OnInit {
       selectedlayer.classesColors = new ClassesColors(2);
       this.layer = (selectedlayer as SamplingLayer);
     }
+  }
+
+  renderLegend(): void {
+    if (this.layerType === 'Pontos Amostrais') {
+      this.displayedColumns = ['Dado', 'Cor'];
+      const spTableContent: LegendLine[] = [
+        {lineName: 'Ponto', lineColor: ''},
+        {lineName: 'Contorno', lineColor: ''},
+        {lineName: 'Seletor', lineColor: ''}
+      ];
+      this.tableDataSource.data = spTableContent;
+    } else {
+      this.displayedColumns = ['Classe', 'Cor'];
+      const zmTableContent: LegendLine[] = [];
+      for (let i = 0; i < this.layer.classesColors.rgbCodes.length; i++) {
+        zmTableContent.push({lineName: String(i + 1), lineColor: ''});
+      }
+      zmTableContent.push({lineName: 'Seletor', lineColor: ''});
+      this.tableDataSource.data = zmTableContent;
+    }
+  }
+
+  changeLegendVisualColor(idNumber: number): void {
+    const rgbCode = 'rgb(' + this.layer.classesColors.rgbCodes[idNumber][0].toString() + ', '
+      + this.layer.classesColors.rgbCodes[idNumber][1].toString() + ', ' + this.layer.classesColors.rgbCodes[idNumber][2].toString() +
+      ')';
+    const foo = document.getElementById('legendColor0');
+    console.log(foo);
+    // tslint:disable-next-line: no-non-null-assertion
+    document.getElementById('legendColor0')!.style.background = rgbCode;
   }
 
   selectPoint(clickEvent: any): void {
