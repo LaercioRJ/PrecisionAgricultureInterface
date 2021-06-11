@@ -122,7 +122,8 @@ export class RectificationComponent implements OnInit {
     this.serverConnection.consumeRectification(kFormat, kSize, rMethod, iteration, this.layer.dataset).toPromise().then( result => {
       this.loadBarState = 'none';
       const serverResult  = JSON.parse(JSON.stringify(result)).body;
-      this.layerStorage.updateZmLayerAdditionalData(this.getLayerIndex(), rMethod, kSize, kFormat, iteration);
+      this.layerStorage.updateZmLayerAdditionalData(this.getLayerIndex(), this.selectedRectificationMethod, kSize,
+        this.selectedKernelFormat, iteration);
       this.saveServerResponse(this.getLayerIndex(), serverResult);
     },
       error => {

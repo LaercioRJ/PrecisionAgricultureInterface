@@ -64,14 +64,17 @@ export class IDWComponent implements OnInit {
     const pixelX = this.idwForm.get('pixelX')?.value;
     const pixelY = this.idwForm.get('pixelY')?.value;
     const contourn = (this.selectedLayer as SamplingLayer).contourn.coordinates;
-    console.log((this.selectedLayer as SamplingLayer));
     this.loadBarState = 'block';
     this.serverConnection.consumeIdwInterpolation(exponent, neighbors, radius, pixelX, pixelY, this.selectedLayer.dataset,
       (this.selectedLayer as SamplingLayer).contourn.coordinates).toPromise().then( result => {
         this.loadBarState = 'none';
         const serverResult  = JSON.parse(JSON.stringify(result)).body;
-        console.log(serverResult);
-      });
+      },
+        error => {
+          this.loadBarState = 'none';
+          this.messageDelivery.showMessage('Houve um problema ao consultar o servidor, por favor tente mais tarde.', 2400);
+        }
+      );
   }
 
   disableRadioButton(changedInput: string): void {

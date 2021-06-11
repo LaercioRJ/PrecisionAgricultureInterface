@@ -137,6 +137,7 @@ export class KrigingComponent implements OnInit {
       this.saveServerResponse(layerIndex, serverResult);
     },
       error => {
+        this.loadBarStateKriging = 'none';
         this.messageDelivery.showMessage('Houve um problema ao consultar o servidor, por favor tente mais tarde.', 2400);
       });
   }

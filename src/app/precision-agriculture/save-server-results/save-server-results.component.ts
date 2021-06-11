@@ -52,7 +52,7 @@ export class SaveServerResultsComponent implements OnInit {
           if (oldLayer instanceof ZmLayer) {
             this.layerStorage.deleteZmLayerAdditionalData(this.data.layerIndex);
           } else {
-            this.layerStorage.deleteKrigingAdditionalData(this.data.layerIndex);
+            this.layerStorage.deleteInterpolationAdditionalData(this.data.layerIndex);
           }
         }
         newLayerCreated = true;

@@ -83,13 +83,25 @@ export class LayerStorageService {
     (this.storedLayers[layerIndex] as SamplingLayer).pixelY = pixelY;
   }
 
-  deleteKrigingAdditionalData(layerIndex: number): void {
+  updateIdwAdditionalData(layerIndex: number, idwExponent: number, radius: number, neighbors: number, pixelX: number,
+                          pixelY: number): void {
+    (this.storedLayers[layerIndex] as SamplingLayer).idwExpoent = idwExponent;
+    (this.storedLayers[layerIndex] as SamplingLayer).neighbors = neighbors;
+    (this.storedLayers[layerIndex] as SamplingLayer).radius = radius;
+    (this.storedLayers[layerIndex] as SamplingLayer).pixelX = pixelX;
+    (this.storedLayers[layerIndex] as SamplingLayer).pixelY = pixelY;
+  }
+
+  deleteInterpolationAdditionalData(layerIndex: number): void {
     (this.storedLayers[layerIndex] as SamplingLayer).krigingMethod = '';
     (this.storedLayers[layerIndex] as SamplingLayer).krigingModel = '';
     (this.storedLayers[layerIndex] as SamplingLayer).pixelX = 0;
     (this.storedLayers[layerIndex] as SamplingLayer).pixelY = 0;
     (this.storedLayers[layerIndex] as SamplingLayer).partialSill = 0;
     (this.storedLayers[layerIndex] as SamplingLayer).range = 0;
+    (this.storedLayers[layerIndex] as SamplingLayer).idwExpoent = 0;
+    (this.storedLayers[layerIndex] as SamplingLayer).neighbors = 0;
+    (this.storedLayers[layerIndex] as SamplingLayer).radius = 0;
   }
 
   updateZmLayerAdditionalData(layerIndex: number, rectificationMethod: string, kernelSize: number, kernelFormat: string,

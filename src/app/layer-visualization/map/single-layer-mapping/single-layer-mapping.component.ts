@@ -73,7 +73,7 @@ export class SingleLayerMappingComponent implements OnInit {
     } else {
       this.displayedColumns = ['Classe', 'Cor'];
       const zmTableContent: LegendLine[] = [];
-      for (let i = 0; i < this.layer.classesColors.rgbCodes.length; i++) {
+      for (let i = 0; i < this.layer.classesColors.rgbCodes.length - 1; i++) {
         zmTableContent.push({lineName: String(i + 1), lineColor: ''});
       }
       zmTableContent.push({lineName: 'Seletor', lineColor: ''});
