@@ -29,7 +29,6 @@ export class TablePaginatorService {
     }
     for (let i = 0; i < pointsExhibited; i++) {
       previousPagePoints.push(tableContent[newUpperIndex - (pointsExhibited - i)]);
-      console.log(tableContent[newUpperIndex - (pointsExhibited - i)]);
     }
     return previousPagePoints;
   }

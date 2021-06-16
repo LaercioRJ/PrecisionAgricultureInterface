@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -22,6 +22,9 @@ import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmat
 })
 export class CardsDisplayComponent implements OnInit {
 
+  @ViewChild('fileInputSP', { read: ElementRef }) fileInputSP!: ElementRef;
+  @ViewChild('fileInputZM', { read: ElementRef }) fileInputZM!: ElementRef;
+
   constructor(private contournImporting: ContournImportingService,
               private contournExporting: ContournExportingService,
               private layerExporting: LayerExportingService,
@@ -43,8 +46,11 @@ export class CardsDisplayComponent implements OnInit {
   }
 
   recieveLayerFile(event: any, layerType: number): void {
+    console.log('a');
     if (event.target.files && event.target.files[0]) {
       this.layerImporting.fileToLayer(event.target.files[0], layerType);
+      this.fileInputSP.nativeElement.value = '';
+      this.fileInputZM.nativeElement.value = '';
       this.displayedLayers = this.layerStorage.getLayers();
     } else {
     }
