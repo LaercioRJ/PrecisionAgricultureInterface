@@ -13,6 +13,7 @@ export class ContournImportingService {
   constructor(private layerStorage: LayerStorageService,
               private messageDelivery: MessageDeliveryService) { }
 
+  private dataseparator!: string;
   private fileName = '';
   private latitudeHeader = 'Latitude';
   private longitudeHeader = 'Longitude';
@@ -42,14 +43,32 @@ export class ContournImportingService {
     reader.readAsText(file);
     reader.onload = () => {
       const content = reader.result as string;
+      this.getFileSeparator(content.split(/\n/)[0]);
       const haveHeaders = this.extractHeaders(content.split(/\n/)[0]);
       this.extractCoordinates(haveHeaders, content, layerIndex);
       this.addContourn(layerIndex);
     };
   }
 
+  private getFileSeparator(fileFirstLine: string): void {
+    const separatorsFound = [];
+    if (fileFirstLine.lastIndexOf(',') !== -1) {
+      separatorsFound.push(',');
+    }
+    if (fileFirstLine.lastIndexOf(';') !== -1) {
+      separatorsFound.push(';');
+    }
+    if (fileFirstLine.lastIndexOf('\t') !== -1) {
+      separatorsFound.push('\t');
+    }
+    if (separatorsFound.length !== 1) {
+      this.fileReadingErrorMessage(1);
+    }
+    this.dataseparator = separatorsFound[0];
+  }
+
   private extractHeaders(fileHeaders: string): number {
-    const separatedHeaders: string[] = fileHeaders.split(',');
+    const separatedHeaders: string[] = fileHeaders.split(this.dataseparator);
     if (isNaN(Number(separatedHeaders[0] + 1)) && isNaN(Number(separatedHeaders[1] + 1))) {
       this.latitudeHeader = separatedHeaders[0];
       this.longitudeHeader = separatedHeaders[1];
@@ -65,19 +84,21 @@ export class ContournImportingService {
     fileLines = fileContent.split(/\n/);
     for (; haveHeaders < fileLines.length; haveHeaders++) {
       this.validateComaSeparation(fileLines[haveHeaders], haveHeaders + 1);
-      lineValues = fileLines[haveHeaders].split(',');
+      lineValues = fileLines[haveHeaders].split(this.dataseparator);
       this.validateNumberFields(lineValues, haveHeaders);
       this.coordinates.push([Number(lineValues[0]), Number(lineValues[1])]);
     }
   }
 
   private validateComaSeparation(fileLine: string, lineIndex: number): void {
-    const lineFirstHalf = fileLine.slice(0, fileLine.indexOf(',') + 1);
-    const lineSecondHalf = fileLine.slice(fileLine.indexOf(',') + 1, fileLine.length);
-    if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(',')) || (lineFirstHalf.indexOf('.') === -1 )) {
+    const lineFirstHalf = fileLine.slice(0, fileLine.indexOf(this.dataseparator) + 1);
+    const lineSecondHalf = fileLine.slice(fileLine.indexOf(this.dataseparator) + 1, fileLine.length);
+    if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(this.dataseparator)) || (lineFirstHalf.indexOf('.') === -1 )) {
+      console.log('Erro 1');
       this.fileReadingErrorMessage(lineIndex);
     }
-    if ((lineSecondHalf.indexOf(',') !== -1) || (lineSecondHalf.indexOf('.') === -1)) {
+    if ((lineSecondHalf.indexOf(this.dataseparator) !== -1) || (lineSecondHalf.indexOf('.') === -1)) {
+      console.log('Erro 2');
       this.fileReadingErrorMessage(lineIndex);
     }
   }

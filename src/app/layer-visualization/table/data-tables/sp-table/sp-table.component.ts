@@ -90,10 +90,10 @@ export class SpTableComponent implements OnInit {
     const splayer = (this.layer as SamplingLayer);
     const newUpperIndex = this.contournTableUpperIndex - this.contournTableDataSource.data.length;
     const previousPageData = this.tablePaginator.previousPage(splayer.contourn.coordinates.length, this.contournPointsPerPage,
-      this.contournTableUpperIndex, splayer.contourn);
+      this.contournTableUpperIndex, splayer.contourn.coordinates);
     this.contournTableDataSource.data = previousPageData;
     this.contournTableUpperIndex = newUpperIndex;
-    this.contournTableLowerIndex = this.datasetTableLowerIndex - this.contournPointsPerPage;
+    this.contournTableLowerIndex = this.contournTableLowerIndex - this.contournPointsPerPage;
     this.actualContournTablePage = this.tablePaginator.calculateActualTablePage(splayer.contourn.coordinates.length,
       this.contournPointsPerPage, this.contournTableUpperIndex, this.totalContournTablePages);
   }

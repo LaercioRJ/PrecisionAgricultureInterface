@@ -7,18 +7,18 @@ import { LayerStorageService } from '../layer-storage.service';
 import { DatasetValue } from '../../classes/datasetValue';
 import { SamplingLayer } from '../../classes/samplingLayer';
 import { ZmLayer } from '../../classes/zmLayer';
-import { getMatFormFieldPlaceholderConflictError } from '@angular/material/form-field';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LayerImportingService {
 
+  private dataHeader = 'Classe';
+  private dataseparator!: string;
+  private dataset: DatasetValue[] = [];
   private fileName = '';
   private latitudeHeader = 'Latitude';
   private longitudeHeader = 'Longitude';
-  private dataHeader = 'Classe';
-  private dataset: DatasetValue[] = [];
 
   constructor(private integerValidation: IntegerValidationService,
               private layerStorage: LayerStorageService,
@@ -53,9 +53,27 @@ export class LayerImportingService {
     reader.readAsText(file);
     reader.onload = () => {
       const content = reader.result as string;
+      this.getFileSeparator(content.split(/\n/)[0]);
       const haveHeaders = this.extractHeaders(content.split(/\n/)[0]);
       this.extractSamplingPoints(haveHeaders, content, layerType);
     };
+  }
+
+  private getFileSeparator(fileFirstLine: string): void {
+    const separatorsFound = [];
+    if (fileFirstLine.lastIndexOf(',') !== -1) {
+      separatorsFound.push(',');
+    }
+    if (fileFirstLine.lastIndexOf(';') !== -1) {
+      separatorsFound.push(';');
+    }
+    if (fileFirstLine.lastIndexOf('\t') !== -1) {
+      separatorsFound.push('\t');
+    }
+    if (separatorsFound.length !== 1) {
+      this.fileReadingErrorMessage(1);
+    }
+    this.dataseparator = separatorsFound[0];
   }
 
   private extractHeaders(fileHeaders: string): number {
@@ -76,7 +94,7 @@ export class LayerImportingService {
     fileLines = fileContent.split(/\n/);
     for (; haveHeaders < fileLines.length; haveHeaders++) {
       this.validateComaSeparation(fileLines[haveHeaders], haveHeaders);
-      lineValues = fileLines[haveHeaders].split(',');
+      lineValues = fileLines[haveHeaders].split(this.dataseparator);
       this.validateNumberFields(lineValues, haveHeaders + 1);
       if (layerType === 1) {
         this.validateZMClasses(Number(lineValues[2]), haveHeaders + 1);
@@ -87,12 +105,12 @@ export class LayerImportingService {
   }
 
   private validateComaSeparation(fileLine: string, lineIndex: number): void {
-    const lineFirstHalf = fileLine.slice(0, fileLine.indexOf(',') + 1);
-    const lineSecondHalf = fileLine.slice(fileLine.indexOf(',') + 1, fileLine.lastIndexOf(',') + 1);
-    if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(',')) || (lineFirstHalf.indexOf('.') === -1 )) {
+    const lineFirstHalf = fileLine.slice(0, fileLine.indexOf(this.dataseparator) + 1);
+    const lineSecondHalf = fileLine.slice(fileLine.indexOf(this.dataseparator) + 1, fileLine.lastIndexOf(this.dataseparator) + 1);
+    if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(this.dataseparator)) || (lineFirstHalf.indexOf('.') === -1 )) {
       this.fileReadingErrorMessage(lineIndex);
     }
-    if ((lineSecondHalf.indexOf('.') > lineSecondHalf.indexOf(',')) || (lineSecondHalf.indexOf('.') === -1)) {
+    if ((lineSecondHalf.indexOf('.') > lineSecondHalf.indexOf(this.dataseparator)) || (lineSecondHalf.indexOf('.') === -1)) {
       this.fileReadingErrorMessage(lineIndex);
     }
   }
