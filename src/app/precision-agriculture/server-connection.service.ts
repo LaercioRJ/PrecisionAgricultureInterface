@@ -641,7 +641,6 @@ export class ServerConnectionService {
     });
   }
 
-  // TODO generalizar esta função
   consumeIdwInterpolatorSelection(minExponent: number, maxExponent: number, exponentStep: number, minNeighbors: number,
                                   maxNeighbors: number, layerDataset: DatasetValue[]): Observable<object> {
     const url = 'https://adb.md.utfpr.edu.br/api/interpolation/isi/idw';
@@ -702,8 +701,10 @@ export class ServerConnectionService {
     });
   }
 
+  // TODO: Generalizar esta função
   consumeKrigingInterpolation(modelk: string, nuggetE: number, methodk: string, rangek: number, partialSillk: number,
-                              sPixelX: number, sPixelY: number): Observable<object> {
+                              sPixelX: number, sPixelY: number, layerDataset: DatasetValue[], layerContourn: number[][]
+                              ): Observable<object> {
     const url = 'https://adb.md.utfpr.edu.br/api/interpolation/kriging';
 
     this.httpHeaders = new HttpHeaders({
@@ -1352,6 +1353,7 @@ export class ServerConnectionService {
     });
   }
 
+  // TODO: Generalizar esta função
   consumeSemivariogram(labelXS: string, labelYS: string, widthS: number, heightS: number, modelS: string, nEffect: number,
                        methodS: string, pSill: number, rangeS: number): Observable<HttpResponse<Blob>> {
     const url = 'https://adb.md.utfpr.edu.br/api/interpolation/geostatistics/variogram';

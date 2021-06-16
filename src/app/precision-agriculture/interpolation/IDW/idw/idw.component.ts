@@ -69,6 +69,13 @@ export class IDWComponent implements OnInit {
       (this.selectedLayer as SamplingLayer).contourn.coordinates).toPromise().then( result => {
         this.loadBarState = 'none';
         const serverResult  = JSON.parse(JSON.stringify(result)).body;
+        const newLayer = new SamplingLayer(this.selectedLayer.name, this.selectedLayer.latitudeHeader, this.selectedLayer.longitudeHeader,
+          this.selectedLayer.dataHeader, this.selectedLayer.datasetLength);
+        newLayer.idwExpoent = exponent;
+        newLayer.neighbors = neighbors;
+        newLayer.radius = radius;
+        newLayer.pixelX = pixelX;
+        newLayer.pixelY = pixelY;
       },
         error => {
           this.loadBarState = 'none';

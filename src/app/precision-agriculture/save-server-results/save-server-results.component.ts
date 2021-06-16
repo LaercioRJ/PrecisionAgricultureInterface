@@ -3,8 +3,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { Layer } from '../../classes/layer';
-import { SamplingLayer } from '../../classes/samplingLayer';
-import { ZmLayer } from '../../classes/zmLayer';
 
 import { LayerStorageService  } from '../../services/layer-storage.service';
 import { MessageDeliveryService } from '../../services/message-delivery.service';
@@ -34,7 +32,6 @@ export class SaveServerResultsComponent implements OnInit {
   chooseSavingOperation(): void {
     let newLayerCreated = false;
     let deleteResults = false;
-    const oldLayer = this.layerStorage.getLayer(this.data.layerIndex);
 
     if ((this.selectedOption === this.options[1]) && (this.newLayerName.valid === false)) {
       this.MessageDelivery.showMessage('Por favor, dê um nome para a nova layer.', 2200);
@@ -45,20 +42,14 @@ export class SaveServerResultsComponent implements OnInit {
         deleteResults = true;
         break;
       case 'Criar uma nova layer.':
-        this.createNewLayer(oldLayer);
+        this.createNewLayer(this.data.newLayer);
         if (this.deleteLayerAfterEdit === true) {
           this.layerStorage.deleteLayer(this.data.layerIndex);
-        } else {
-          if (oldLayer instanceof ZmLayer) {
-            this.layerStorage.deleteZmLayerAdditionalData(this.data.layerIndex);
-          } else {
-            this.layerStorage.deleteInterpolationAdditionalData(this.data.layerIndex);
-          }
         }
         newLayerCreated = true;
         break;
       case 'Sobrescrever layer atual.':
-        this.overwriteOriginalLayer();
+        this.overwriteOriginalLayer(this.data.newLayer);
         break;
     }
     this.dialogReference.close({
@@ -66,36 +57,23 @@ export class SaveServerResultsComponent implements OnInit {
     });
   }
 
-  overwriteOriginalLayer(): void {
-    const dataset = this.serverDataConvertion.responseToDataset(this.data.serverResult);
-    this.layerStorage.updateAllLayerDataset(this.data.layerIndex, dataset);
+  overwriteOriginalLayer(newLayerData: Layer): void {
+    const substitutelayer = this.atributeNewDataset(newLayerData);
+    this.layerStorage.updateLayer(this.data.layerIndex, substitutelayer);
   }
 
-  createNewLayer(oldLayer: Layer): void {
-    const dataset = this.serverDataConvertion.responseToDataset(this.data.serverResult);
+  createNewLayer(newLayerData: Layer): void {
+    const newLayer = this.atributeNewDataset(newLayerData);
     const newLayerName = this.newLayerName.value;
-    let newLayer;
-    if (oldLayer instanceof SamplingLayer) {
-      newLayer = new SamplingLayer(newLayerName, oldLayer.latitudeHeader, oldLayer.longitudeHeader, oldLayer.dataHeader, dataset.length);
-      newLayer.contourn = (oldLayer as SamplingLayer).contourn;
-      newLayer.idwExpoent = (oldLayer as SamplingLayer).idwExpoent;
-      newLayer.krigingMethod = (oldLayer as SamplingLayer).krigingMethod;
-      newLayer.krigingModel = (oldLayer as SamplingLayer).krigingModel;
-      newLayer.neighbors = (oldLayer as SamplingLayer).neighbors;
-      newLayer.partialSill = (oldLayer as SamplingLayer).partialSill;
-      newLayer.pixelX = (oldLayer as SamplingLayer).pixelX;
-      newLayer.pixelY = (oldLayer as SamplingLayer).pixelY;
-      newLayer.radius = (oldLayer as SamplingLayer).radius;
-      newLayer.range = (oldLayer as SamplingLayer).range;
-    } else {
-      newLayer = new ZmLayer(newLayerName, oldLayer.latitudeHeader, oldLayer.longitudeHeader, oldLayer.dataHeader, dataset.length);
-      newLayer.iterations = (oldLayer as ZmLayer).iterations;
-      newLayer.kernelFormat = (oldLayer as ZmLayer).kernelFormat;
-      newLayer.kernelSize = (oldLayer as ZmLayer).kernelSize;
-      newLayer.rectificationMethod = (oldLayer as ZmLayer).rectificationMethod;
-    }
-    newLayer.dataset = dataset;
+    newLayer.name = newLayerName;
     this.layerStorage.storeLayer(newLayer);
+  }
+
+  atributeNewDataset(newLayer: Layer): Layer {
+    const dataset = this.serverDataConvertion.responseToDataset(this.data.serverResult);
+    newLayer.dataset = dataset;
+    newLayer.datasetLength = dataset.length;
+    return newLayer;
   }
 
   enableLayerNameField(): void {

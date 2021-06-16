@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Layer } from '../../classes/layer';
+import { ZmLayer } from '../../classes/zmLayer';
 
 import { LayerStorageService } from '../../services/layer-storage.service';
 import { MessageDeliveryService } from '../../services/message-delivery.service';
@@ -122,9 +123,13 @@ export class RectificationComponent implements OnInit {
     this.serverConnection.consumeRectification(kFormat, kSize, rMethod, iteration, this.layer.dataset).toPromise().then( result => {
       this.loadBarState = 'none';
       const serverResult  = JSON.parse(JSON.stringify(result)).body;
-      this.layerStorage.updateZmLayerAdditionalData(this.getLayerIndex(), this.selectedRectificationMethod, kSize,
-        this.selectedKernelFormat, iteration);
-      this.saveServerResponse(this.getLayerIndex(), serverResult);
+      const newLayer = new ZmLayer(this.layer.name, this.layer.latitudeHeader, this.layer.longitudeHeader, this.layer.dataHeader,
+        this.layer.datasetLength);
+      newLayer.iterations = iteration;
+      newLayer.rectificationMethod = this.selectedRectificationMethod;
+      newLayer.kernelSize = kSize;
+      newLayer.kernelFormat = this.selectedKernelFormat;
+      this.saveServerResponse(this.getLayerIndex(), serverResult, newLayer);
     },
       error => {
         this.loadBarState = 'none';
@@ -133,11 +138,11 @@ export class RectificationComponent implements OnInit {
       });
   }
 
-  saveServerResponse(layerIndex: number, serverResult: any): void {
+  saveServerResponse(layerIndex: number, serverResult: any, newLayer: ZmLayer): void {
     const saveResultsDialog = this.matDialog.open(SaveServerResultsComponent, {
       width: '350px',
       disableClose: true,
-      data: { layerIndex, serverResult }
+      data: { layerIndex, serverResult, newLayer }
     });
 
     saveResultsDialog.afterClosed().subscribe(result => {

@@ -6,6 +6,7 @@ import { MatStepper } from '@angular/material/stepper';
 
 import { KrigingSelectorResult } from '../../../../classes/krigingSelectorResult';
 import { Layer } from '../../../../classes/layer';
+import { SamplingLayer } from '../../../../classes/samplingLayer';
 
 import { ControlValidationService } from '../../../../services/validation/control-validation.service';
 import { LayerStorageService } from '../../../../services/layer-storage.service';
@@ -126,15 +127,24 @@ export class KrigingComponent implements OnInit {
     const sizePixelX = this.krigingForm.get('sizePixelX')?.value;
     const sizePixelY = this.krigingForm.get('sizePixelY')?.value;
     this.serverConnection.consumeKrigingInterpolation(this.krigingSelectorResults.model, this.krigingSelectorResults.nuggetEffect,
-     this.krigingSelectorResults.method, this.krigingSelectorResults.partialSill, this.krigingSelectorResults.partialSill,
-     sizePixelX, sizePixelY).toPromise().then(result => {
+     this.krigingSelectorResults.method, this.krigingSelectorResults.range, this.krigingSelectorResults.partialSill,
+     sizePixelX, sizePixelY, this.selectedLayer.dataset, (this.selectedLayer as SamplingLayer).contourn.coordinates).toPromise().then
+     (result => {
       this.loadBarStateKriging = 'none';
       const serverResult  = JSON.parse(JSON.stringify(result)).body;
       const layerIndex = this.getSelectedLayerIndex();
       this.layerStorage.updateKrigingAdditionalData(sizePixelX, sizePixelY, this.krigingSelectorResults.model,
         this.krigingSelectorResults.method, this.krigingSelectorResults.partialSill, this.krigingSelectorResults.partialSill,
         layerIndex);
-      this.saveServerResponse(layerIndex, serverResult);
+      const newLayer = new SamplingLayer(this.selectedLayer.name, this.selectedLayer.latitudeHeader, this.selectedLayer.longitudeHeader,
+        this.selectedLayer.dataHeader, this.selectedLayer.datasetLength);
+      newLayer.krigingMethod = this.krigingSelectorResults.method;
+      newLayer.krigingModel = this.krigingSelectorResults.model;
+      newLayer.partialSill = this.krigingSelectorResults.partialSill;
+      newLayer.range = this.krigingSelectorResults.range;
+      newLayer.pixelX = sizePixelX;
+      newLayer.pixelY = sizePixelY;
+      this.saveServerResponse(layerIndex, serverResult, newLayer);
     },
       error => {
         this.loadBarStateKriging = 'none';
@@ -146,11 +156,11 @@ export class KrigingComponent implements OnInit {
     return Number(this.activatedRoute.snapshot.paramMap.get('layerIndex') as string);
   }
 
-  saveServerResponse(layerIndex: number, serverResult: any): void {
+  saveServerResponse(layerIndex: number, serverResult: any, newLayer: Layer): void {
     const saveResultsDialog = this.matDialog.open(SaveServerResultsComponent, {
       width: '350px',
       disableClose: true,
-      data: { layerIndex, serverResult }
+      data: { layerIndex, serverResult, newLayer }
     });
 
     saveResultsDialog.afterClosed().subscribe(result => {

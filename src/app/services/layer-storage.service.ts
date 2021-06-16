@@ -15,12 +15,12 @@ export class LayerStorageService {
 
   private storedLayers: Layer[] = [];
 
-  storeLayer(newLayer: Layer): void {
-    this.storedLayers.push(newLayer);
+  addcontourn(contourn: Contourn, layerIndex: number): void {
+    (this.storedLayers[layerIndex] as SamplingLayer).contourn = contourn;
   }
 
-  getLayers(): Layer[] {
-    return this.storedLayers;
+  deleteLayer(layerIndex: number): void {
+    this.storedLayers.splice(layerIndex, 1);
   }
 
   getLayer(layerIndex: number): Layer {
@@ -46,14 +46,6 @@ export class LayerStorageService {
     return copiedLayer;
   }
 
-  deleteLayer(layerIndex: number): void {
-    this.storedLayers.splice(layerIndex, 1);
-  }
-
-  addcontourn(contourn: Contourn, layerIndex: number): void {
-    (this.storedLayers[layerIndex] as SamplingLayer).contourn = contourn;
-  }
-
   getLayerContourn(layerIndex: number): Contourn {
     let copiedContourn;
     const originalContourn = (this.storedLayers[layerIndex] as SamplingLayer).contourn;
@@ -65,12 +57,30 @@ export class LayerStorageService {
     return copiedContourn;
   }
 
+  getLayers(): Layer[] {
+    return this.storedLayers;
+  }
+
   getNumberOfStoredLayers(): number {
     return this.storedLayers.length;
   }
 
+  storeLayer(newLayer: Layer): void {
+    this.storedLayers.push(newLayer);
+  }
+
   updateAllLayerDataset(layerIndex: number, newDataset: DatasetValue[]): void {
     this.storedLayers[layerIndex].dataset = newDataset;
+    this.storedLayers[layerIndex].datasetLength = newDataset.length;
+  }
+
+  updateIdwAdditionalData(layerIndex: number, idwExponent: number, radius: number, neighbors: number, pixelX: number,
+                          pixelY: number): void {
+    (this.storedLayers[layerIndex] as SamplingLayer).idwExpoent = idwExponent;
+    (this.storedLayers[layerIndex] as SamplingLayer).neighbors = neighbors;
+    (this.storedLayers[layerIndex] as SamplingLayer).radius = radius;
+    (this.storedLayers[layerIndex] as SamplingLayer).pixelX = pixelX;
+    (this.storedLayers[layerIndex] as SamplingLayer).pixelY = pixelY;
   }
 
   updateKrigingAdditionalData(pixelX: number, pixelY: number, krigingModel: string, krigingMethod: string, partialSill: number,
@@ -83,39 +93,7 @@ export class LayerStorageService {
     (this.storedLayers[layerIndex] as SamplingLayer).pixelY = pixelY;
   }
 
-  updateIdwAdditionalData(layerIndex: number, idwExponent: number, radius: number, neighbors: number, pixelX: number,
-                          pixelY: number): void {
-    (this.storedLayers[layerIndex] as SamplingLayer).idwExpoent = idwExponent;
-    (this.storedLayers[layerIndex] as SamplingLayer).neighbors = neighbors;
-    (this.storedLayers[layerIndex] as SamplingLayer).radius = radius;
-    (this.storedLayers[layerIndex] as SamplingLayer).pixelX = pixelX;
-    (this.storedLayers[layerIndex] as SamplingLayer).pixelY = pixelY;
-  }
-
-  deleteInterpolationAdditionalData(layerIndex: number): void {
-    (this.storedLayers[layerIndex] as SamplingLayer).krigingMethod = '';
-    (this.storedLayers[layerIndex] as SamplingLayer).krigingModel = '';
-    (this.storedLayers[layerIndex] as SamplingLayer).pixelX = 0;
-    (this.storedLayers[layerIndex] as SamplingLayer).pixelY = 0;
-    (this.storedLayers[layerIndex] as SamplingLayer).partialSill = 0;
-    (this.storedLayers[layerIndex] as SamplingLayer).range = 0;
-    (this.storedLayers[layerIndex] as SamplingLayer).idwExpoent = 0;
-    (this.storedLayers[layerIndex] as SamplingLayer).neighbors = 0;
-    (this.storedLayers[layerIndex] as SamplingLayer).radius = 0;
-  }
-
-  updateZmLayerAdditionalData(layerIndex: number, rectificationMethod: string, kernelSize: number, kernelFormat: string,
-                              iterations: number): void {
-    (this.storedLayers[layerIndex] as ZmLayer).rectificationMethod = rectificationMethod;
-    (this.storedLayers[layerIndex] as ZmLayer).kernelSize = kernelSize;
-    (this.storedLayers[layerIndex] as ZmLayer).kernelFormat = kernelFormat;
-    (this.storedLayers[layerIndex] as ZmLayer).iterations = iterations;
-  }
-
-  deleteZmLayerAdditionalData(layerIndex: number): void {
-    (this.storedLayers[layerIndex] as ZmLayer).rectificationMethod = '';
-    (this.storedLayers[layerIndex] as ZmLayer).kernelSize = 0;
-    (this.storedLayers[layerIndex] as ZmLayer).kernelFormat = '';
-    (this.storedLayers[layerIndex] as ZmLayer).iterations = 0;
+  updateLayer(layerIndex: number, newLayer: Layer): void {
+    this.storedLayers[layerIndex] = newLayer;
   }
 }
