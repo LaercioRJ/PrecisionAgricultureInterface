@@ -46,7 +46,6 @@ export class CardsDisplayComponent implements OnInit {
   }
 
   recieveLayerFile(event: any, layerType: number): void {
-    console.log('a');
     if (event.target.files && event.target.files[0]) {
       this.layerImporting.fileToLayer(event.target.files[0], layerType);
       this.fileInputSP.nativeElement.value = '';

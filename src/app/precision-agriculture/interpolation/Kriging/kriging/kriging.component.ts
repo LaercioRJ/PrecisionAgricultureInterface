@@ -133,9 +133,6 @@ export class KrigingComponent implements OnInit {
       this.loadBarStateKriging = 'none';
       const serverResult  = JSON.parse(JSON.stringify(result)).body;
       const layerIndex = this.getSelectedLayerIndex();
-      this.layerStorage.updateKrigingAdditionalData(sizePixelX, sizePixelY, this.krigingSelectorResults.model,
-        this.krigingSelectorResults.method, this.krigingSelectorResults.partialSill, this.krigingSelectorResults.partialSill,
-        layerIndex);
       const newLayer = new SamplingLayer(this.selectedLayer.name, this.selectedLayer.latitudeHeader, this.selectedLayer.longitudeHeader,
         this.selectedLayer.dataHeader, this.selectedLayer.datasetLength);
       newLayer.krigingMethod = this.krigingSelectorResults.method;
@@ -144,6 +141,7 @@ export class KrigingComponent implements OnInit {
       newLayer.range = this.krigingSelectorResults.range;
       newLayer.pixelX = sizePixelX;
       newLayer.pixelY = sizePixelY;
+      newLayer.contourn = (this.selectedLayer as SamplingLayer).contourn;
       this.saveServerResponse(layerIndex, serverResult, newLayer);
     },
       error => {

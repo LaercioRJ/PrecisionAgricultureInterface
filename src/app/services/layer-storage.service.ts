@@ -25,22 +25,34 @@ export class LayerStorageService {
 
   getLayer(layerIndex: number): Layer {
     let copiedLayer;
-    const originalLayer = this.storedLayers[layerIndex];
-    if (originalLayer instanceof SamplingLayer) {
+    if (this.storedLayers[layerIndex] instanceof SamplingLayer) {
+      const originalLayer = (this.storedLayers[layerIndex] as SamplingLayer);
       copiedLayer = new SamplingLayer(originalLayer.name, originalLayer.latitudeHeader, originalLayer.longitudeHeader,
         originalLayer.dataHeader, originalLayer.datasetLength);
-      copiedLayer.contourn = (this.storedLayers[layerIndex] as SamplingLayer).contourn;
+      copiedLayer.contourn = originalLayer.contourn;
+      copiedLayer.classesColors = originalLayer.classesColors;
+      copiedLayer.idwExpoent = originalLayer.idwExpoent;
+      copiedLayer.krigingMethod = originalLayer.krigingMethod;
+      copiedLayer.krigingModel = originalLayer.krigingModel;
+      copiedLayer.neighbors = originalLayer.neighbors;
+      copiedLayer.partialSill = originalLayer.partialSill;
+      copiedLayer.pixelX = originalLayer.pixelX;
+      copiedLayer.pixelY = originalLayer.pixelY;
+      copiedLayer.radius = originalLayer.radius;
+      copiedLayer.range = originalLayer.range;
     } else {
+      const originalLayer = (this.storedLayers[layerIndex] as ZmLayer);
       copiedLayer = new ZmLayer(originalLayer.name, originalLayer.latitudeHeader, originalLayer.longitudeHeader,
         originalLayer.dataHeader, originalLayer.datasetLength);
       copiedLayer.kernelFormat = (originalLayer as ZmLayer).kernelFormat;
       copiedLayer.kernelSize = (originalLayer as ZmLayer).kernelSize;
       copiedLayer.iterations = (originalLayer as ZmLayer).iterations;
       copiedLayer.rectificationMethod = (originalLayer as ZmLayer).rectificationMethod;
+      copiedLayer.classesColors = originalLayer.classesColors;
     }
     let originalData;
-    for (let i = 0; i < originalLayer.datasetLength; i++) {
-      originalData = originalLayer.dataset[i];
+    for (let i = 0; i < this.storedLayers[layerIndex].datasetLength; i++) {
+      originalData = this.storedLayers[layerIndex].dataset[i];
       copiedLayer.dataset.push(new DatasetValue(originalData.coordinates[0], originalData.coordinates[1], originalData.data));
     }
     return copiedLayer;
@@ -66,31 +78,13 @@ export class LayerStorageService {
   }
 
   storeLayer(newLayer: Layer): void {
+    console.log(newLayer as SamplingLayer);
     this.storedLayers.push(newLayer);
   }
 
   updateAllLayerDataset(layerIndex: number, newDataset: DatasetValue[]): void {
     this.storedLayers[layerIndex].dataset = newDataset;
     this.storedLayers[layerIndex].datasetLength = newDataset.length;
-  }
-
-  updateIdwAdditionalData(layerIndex: number, idwExponent: number, radius: number, neighbors: number, pixelX: number,
-                          pixelY: number): void {
-    (this.storedLayers[layerIndex] as SamplingLayer).idwExpoent = idwExponent;
-    (this.storedLayers[layerIndex] as SamplingLayer).neighbors = neighbors;
-    (this.storedLayers[layerIndex] as SamplingLayer).radius = radius;
-    (this.storedLayers[layerIndex] as SamplingLayer).pixelX = pixelX;
-    (this.storedLayers[layerIndex] as SamplingLayer).pixelY = pixelY;
-  }
-
-  updateKrigingAdditionalData(pixelX: number, pixelY: number, krigingModel: string, krigingMethod: string, partialSill: number,
-                              range: number, layerIndex: number): void {
-    (this.storedLayers[layerIndex] as SamplingLayer).krigingMethod = krigingMethod;
-    (this.storedLayers[layerIndex] as SamplingLayer).krigingModel = krigingModel;
-    (this.storedLayers[layerIndex] as SamplingLayer).partialSill = partialSill;
-    (this.storedLayers[layerIndex] as SamplingLayer).range = range;
-    (this.storedLayers[layerIndex] as SamplingLayer).pixelX = pixelX;
-    (this.storedLayers[layerIndex] as SamplingLayer).pixelY = pixelY;
   }
 
   updateLayer(layerIndex: number, newLayer: Layer): void {
