@@ -7,6 +7,7 @@ import { MappingService } from '../../../services/mapping.service';
 import { LayerStorageService } from '../../../services/layer-storage.service';
 
 import { GradientCustomizationComponent } from '../map-legend-customization/gradient-customization/gradient-customization.component';
+import { IndividualColorCustomizationComponent } from '../map-legend-customization/individual-color-customization/individual-color-customization.component';
 import { ZmMappingInfoComponent } from '../layer-info/zm-mapping-info/zm-mapping-info.component';
 
 import { ClassesColors } from '../../../classes/classesColors';
@@ -144,6 +145,12 @@ export class SingleLayerMappingComponent implements OnInit {
 
   openGradientCustomization(): void {
     const dialogRef = this.matDialog.open(GradientCustomizationComponent, {
+      width: '530px',
+    });
+  }
+
+  openIndividualColorCustomization(): void {
+    const dialogRef = this.matDialog.open(IndividualColorCustomizationComponent, {
       width: '530px',
     });
   }

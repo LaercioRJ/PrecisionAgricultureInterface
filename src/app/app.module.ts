@@ -12,6 +12,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { GradientCustomizationComponent } from './layer-visualization/map/map-legend-customization/gradient-customization/gradient-customization.component';
 import { IDWComponent } from './precision-agriculture/interpolation/IDW/idw/idw.component';
 import { IdwSelectorComponent } from './precision-agriculture/interpolation/IDW/idw-selector/idw-selector.component';
+import { IndividualColorCustomizationComponent } from './layer-visualization/map/map-legend-customization/individual-color-customization/individual-color-customization.component';
 import { InterpolationSwitchComponent } from './precision-agriculture/interpolation/interpolation-switch/interpolation-switch.component';
 import { KrigingComponent } from './precision-agriculture/interpolation/Kriging/kriging/kriging.component';
 import { KrigingParametersTableComponent } from './precision-agriculture/interpolation/Kriging/kriging-parameters-table/kriging-parameters-table.component';
@@ -31,8 +32,6 @@ import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-
 import { ZmMappingInfoComponent } from './layer-visualization/map/layer-info/zm-mapping-info/zm-mapping-info.component';
 
 
-
-
 @NgModule({
   declarations: [
     CardsDisplayComponent,
@@ -40,6 +39,7 @@ import { ZmMappingInfoComponent } from './layer-visualization/map/layer-info/zm-
     GradientCustomizationComponent,
     IDWComponent,
     IdwSelectorComponent,
+    IndividualColorCustomizationComponent,
     InterpolationSwitchComponent,
     KrigingComponent,
     KrigingParametersTableComponent,

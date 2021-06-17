@@ -89,7 +89,8 @@
                     <ng-container matColumnDef = Classe>
                         <th mat-header-cell style="text-align: center;" *matHeaderCellDef>Classe</th>
                         <td mat-cell *matCellDef = "let element;">
-                            <button matTooltip = "Alterar a cor deste elemento" mat-stroked-button>
+                            <button (click) = "openIndividualColorCustomization()" matTooltip = "Alterar a cor deste elemento"
+                                mat-stroked-button>
                                 {{element.lineName}}
                             </button>
                             &nbsp;&nbsp;&nbsp;&nbsp;
