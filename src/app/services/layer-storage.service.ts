@@ -78,7 +78,6 @@ export class LayerStorageService {
   }
 
   storeLayer(newLayer: Layer): void {
-    console.log(newLayer as SamplingLayer);
     this.storedLayers.push(newLayer);
   }
 

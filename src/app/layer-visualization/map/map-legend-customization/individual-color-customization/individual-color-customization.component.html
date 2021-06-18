@@ -1,10 +1,10 @@
 <mat-toolbar color = "primary">
-    <span class="mainTitle">Alterar cor do seletor</span>
+    <span class="mainTitle">Alterar cor de {{structureToAlter}}</span>
 </mat-toolbar>
 <div class="mainBody">
     <br>
     <span class="secondaryTitle">Cor Selecionada:</span>
-    <div></div>
+    <div class="rectangleColorExample" id = "rectangleColorExample"></div>
     <mat-divider></mat-divider>
     <span class="secondaryTitle">Cores Predefinidas</span>
     <br>
@@ -32,10 +32,25 @@
     <button class="colorButton" style="background-color: aquamarine;" mat-button (click) = "alterClassColor(127, 255, 212)">Aquamarine</button>
     <button class="colorButton" style="background-color: cyan;" mat-button (click) = "alterClassColor(0, 255, 255)">Ciano</button>
     <mat-divider></mat-divider>
-    <span class="secondaryTitle"></span>
+    <span class="secondaryTitle">Escala RGB</span>
     <br>
     <br>
     <div>
-
+        <mat-form-field appearance="outline">
+            <mat-label>Vermelho</mat-label>
+            <input matInput color = "primary" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Verde</mat-label>
+            <input matInput color = "primary" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Azul</mat-label>
+            <input matInput color = "primary" readonly>
+        </mat-form-field>
     </div>
+</div>
+<div class="exitButtonsPosition">
+    <button color = "primary" mat-raised-button>Aplicar</button>
+    <button color = "primary" (click) = "closeDialogCancelChanges()" style = "margin-left: 7px;" mat-raised-button>Cancelar</button>
 </div>

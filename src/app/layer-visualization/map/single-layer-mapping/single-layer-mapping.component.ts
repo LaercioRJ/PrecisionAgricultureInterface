@@ -45,7 +45,7 @@ export class SingleLayerMappingComponent implements OnInit {
     this.getLayer(layerIndex);
     this.mapping.renderCompleteMap(this.layer.dataset, 'fullMap', this.layer.classesColors, this.layerType);
     this.renderLegend();
-    this.changeLegendVisualColor(0);
+    // this.changeLegendVisualColor(0);
   }
 
   getLayer(layerIndex: number): void {
@@ -149,9 +149,22 @@ export class SingleLayerMappingComponent implements OnInit {
     });
   }
 
-  openIndividualColorCustomization(): void {
+  openIndividualColorCustomization(structureTableIndex: number): void {
+    let alteredStructureName;
+    const rgbColorToAlter = this.layer.classesColors.rgbCodes[structureTableIndex];
+    if (this.layer.classesColors.rgbCodes.length === (structureTableIndex + 1)) {
+      alteredStructureName = 'Seletor';
+    } else {
+      if (this.layerType === 'Zona de Manejo') {
+        alteredStructureName = 'Classe '.concat(String(structureTableIndex + 1));
+      } else {
+        alteredStructureName = this.tableDataSource.data[structureTableIndex].lineName;
+      }
+    }
     const dialogRef = this.matDialog.open(IndividualColorCustomizationComponent, {
       width: '530px',
+      data: { alteredStructureName, rgbColorToAlter },
+      disableClose: true
     });
   }
 
