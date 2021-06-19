@@ -37,13 +37,20 @@
             <tr mat-row *matRowDef = "let row; columns: datasetDisplayedColumns"></tr>
         </table>
         <div class="tablePaginator">
-            Página {{actualTablePage}} de {{totalTablePages}}
-            <button mat-icon-button (click) = "tablePreviousPage()" [disabled] = "tableUpperIndex <= linesPerPage" color = "primary">
-                <span class="material-icons">west</span>
+            <button mat-icon-button matTooltip="Regressar 10 páginas" color = "primary">
+                <span class="material-icons">arrow_back_ios</span>
             </button>
-            <button mat-icon-button style="margin-right: 6.5%;" [disabled] = "tableUpperIndex === layer.datasetLength"
+            <button mat-icon-button matTooltip="Regressar 1 página" (click) = "tablePreviousPage()"
+             [disabled] = "tableUpperIndex <= linesPerPage" color = "primary">
+                <span class="material-icons">keyboard_arrow_left</span>
+            </button>
+            Página {{actualTablePage}} de {{totalTablePages}}
+            <button mat-icon-button matTooltip="Avançar 1 página" [disabled] = "tableUpperIndex === layer.datasetLength"
              (click) = "tableNextPage()" color = "primary">
-                <span class="material-icons">east</span>
+                <span class="material-icons">keyboard_arrow_right</span>
+            </button>
+            <button mat-icon-button (click) = "tableNextTenPages()" matTooltip="Avançar 10 páginas" color = "primary">
+                <span class="material-icons">arrow_forward_ios</span>
             </button>
         </div>
       </div>

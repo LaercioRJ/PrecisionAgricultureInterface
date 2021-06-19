@@ -19,6 +19,18 @@ export class TablePaginatorService {
     return nextPagePoints;
   }
 
+  nextTenPages(pointsQuantity: number, pointsExhibited: number, exhibitionUpperIndex: number, tableContent: any): any {
+    const nextPagePoints = [];
+    let actualPagePointsQuantity = pointsExhibited;
+    if ((exhibitionUpperIndex + (pointsExhibited * 10)) > pointsQuantity) {
+      actualPagePointsQuantity = pointsQuantity - (exhibitionUpperIndex + (pointsExhibited * 10));
+    }
+    for (let i = 0; i < actualPagePointsQuantity; i++) {
+      nextPagePoints.push(tableContent[(exhibitionUpperIndex + (pointsExhibited * 9)) + i]);
+    }
+    return nextPagePoints;
+  }
+
   previousPage(pointsQuantity: number, pointsExhibited: number, exhibitionUpperIndex: number, tableContent: any): any {
     const previousPagePoints = [];
     let newUpperIndex = 0;
