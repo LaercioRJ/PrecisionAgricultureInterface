@@ -61,4 +61,15 @@ export class MzTableComponent implements OnInit {
       this.tableUpperIndex, this.totalTablePages);
   }
 
+  tablePreviousTenPages(): void {
+    const newUpperIndex = this.tableUpperIndex - (this.linesPerPage * 10);
+    const previousPageData = this.tablePaginator.previousTenPages(this.layer.datasetLength, this.linesPerPage,
+      this.tableUpperIndex, this.layer.dataset);
+    this.datasetTableDataSource.data = previousPageData;
+    this.tableUpperIndex = newUpperIndex;
+    this.tableLowerIndex = this.tableLowerIndex - (this.linesPerPage * 10);
+    this.actualTablePage = this.tablePaginator.calculateActualTablePage(this.layer.datasetLength, this.linesPerPage,
+      this.tableUpperIndex, this.totalTablePages);
+  }
+
 }

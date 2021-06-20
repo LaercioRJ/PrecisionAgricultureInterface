@@ -22,8 +22,8 @@ export class TablePaginatorService {
   nextTenPages(pointsQuantity: number, pointsExhibited: number, exhibitionUpperIndex: number, tableContent: any): any {
     const nextPagePoints = [];
     let actualPagePointsQuantity = pointsExhibited;
-    if ((exhibitionUpperIndex + (pointsExhibited * 10)) > pointsQuantity) {
-      actualPagePointsQuantity = pointsQuantity - (exhibitionUpperIndex + (pointsExhibited * 10));
+    if ((exhibitionUpperIndex + (pointsExhibited * 9)) > pointsQuantity) {
+      actualPagePointsQuantity = pointsQuantity - (exhibitionUpperIndex + (pointsExhibited * 9));
     }
     for (let i = 0; i < actualPagePointsQuantity; i++) {
       nextPagePoints.push(tableContent[(exhibitionUpperIndex + (pointsExhibited * 9)) + i]);
@@ -38,6 +38,20 @@ export class TablePaginatorService {
       newUpperIndex = exhibitionUpperIndex - (pointsQuantity % pointsExhibited);
     } else {
       newUpperIndex = exhibitionUpperIndex - pointsExhibited;
+    }
+    for (let i = 0; i < pointsExhibited; i++) {
+      previousPagePoints.push(tableContent[newUpperIndex - (pointsExhibited - i)]);
+    }
+    return previousPagePoints;
+  }
+
+  previousTenPages(pointsQuantity: number, pointsExhibited: number, exhibitionUpperIndex: number, tableContent: any): any {
+    const previousPagePoints = [];
+    let newUpperIndex = 0;
+    if ((exhibitionUpperIndex === pointsQuantity) && ((pointsQuantity % pointsExhibited) !== 0)) {
+      newUpperIndex = exhibitionUpperIndex - ((pointsQuantity % pointsExhibited) + (pointsExhibited * 10));
+    } else {
+      newUpperIndex = exhibitionUpperIndex - (pointsExhibited * 10);
     }
     for (let i = 0; i < pointsExhibited; i++) {
       previousPagePoints.push(tableContent[newUpperIndex - (pointsExhibited - i)]);
