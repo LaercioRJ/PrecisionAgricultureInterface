@@ -21,6 +21,7 @@ export class IndividualColorCustomizationComponent implements OnInit {
   structureToAlter = this.data.alteredStructureName;
 
   ngOnInit(): void {
+    this.alterSelectedColor();
   }
 
   closeDialogApplyChanges(): void {
@@ -37,6 +38,7 @@ export class IndividualColorCustomizationComponent implements OnInit {
     this.newColorValues[0] = redLevel;
     this.newColorValues[1] = greenLevel;
     this.newColorValues[2] = blueLevel;
+    this.alterSelectedColor();
   }
 
   alterSelectedColor(): void {
@@ -49,6 +51,7 @@ export class IndividualColorCustomizationComponent implements OnInit {
     this.redRgbValue = red.toString();
     this.greenRgbValue = green.toString();
     this.blueRgbValue = blue.toString();
+    // tslint:disable-next-line: no-non-null-assertion
     document.getElementById('rectangleColorExample')!.style.background = 'rgb(' + this.redRgbValue + ', ' + this.greenRgbValue + ', '
       + this.blueRgbValue + ')';
   }
