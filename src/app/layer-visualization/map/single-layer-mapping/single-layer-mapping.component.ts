@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, AfterContentChecked, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -24,7 +24,7 @@ export interface LegendLine {
   templateUrl: './single-layer-mapping.component.html',
   styleUrls: ['./single-layer-mapping.component.css']
 })
-export class SingleLayerMappingComponent implements OnInit {
+export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
 
   displayedColumns!: string[];
   layer: any;
@@ -45,7 +45,12 @@ export class SingleLayerMappingComponent implements OnInit {
     this.getLayer(layerIndex);
     this.mapping.renderCompleteMap(this.layer.dataset, 'fullMap', this.layer.classesColors, this.layerType);
     this.renderLegend();
-    // this.changeLegendVisualColor(0);
+  }
+
+  ngAfterViewInit(): void {
+    for (let i = 0; i < this.layer.classesColors.rgbCodes.length; i++) {
+      this.changeLegendVisualColor(i);
+    }
   }
 
   getLayer(layerIndex: number): void {
@@ -86,10 +91,8 @@ export class SingleLayerMappingComponent implements OnInit {
     const rgbCode = 'rgb(' + this.layer.classesColors.rgbCodes[idNumber][0].toString() + ', '
       + this.layer.classesColors.rgbCodes[idNumber][1].toString() + ', ' + this.layer.classesColors.rgbCodes[idNumber][2].toString() +
       ')';
-    const foo = document.getElementById('legendColor0');
-    console.log(foo);
     // tslint:disable-next-line: no-non-null-assertion
-    document.getElementById('legendColor0')!.style.background = rgbCode;
+    document.getElementById('legendColor'.concat(String(idNumber)))!.style.background = rgbCode;
   }
 
   selectPoint(clickEvent: any): void {

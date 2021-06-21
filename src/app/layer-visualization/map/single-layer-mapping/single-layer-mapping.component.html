@@ -100,7 +100,7 @@
                     <ng-container matColumnDef = Cor>
                         <th mat-header-cell style="text-align: center;" *matHeaderCellDef>Cor</th>
                         <td mat-cell *matCellDef = "let element; let i = index">
-                            <div id = "legendColor0" class="legendColor">
+                            <div id = "legendColor{{i}}" class="legendColor">
                                 {{element.lineColor}}
                             </div>
                         </td>
