@@ -1,5 +1,5 @@
 <mat-toolbar color = "primary">
-    <span class="mainTitle">Alterar cor de {{structureToAlter}}</span>
+    <span class="mainTitle">Alterar cor {{structureToAlter}}</span>
 </mat-toolbar>
 
 <br>
@@ -10,27 +10,23 @@
 <br>
 <br>
 <button class="colorButton" style="background-color: darkred; color: white" mat-button (click) = "alterClassColor(139, 0, 0)">Vermelho E.</button>
-<button class="colorButton" style="background-color: rgb(255, 115, 0); color: white;" mat-button (click) = "alterClassColor(255, 115, 0)">Laranja E.</button>
-<button class="colorButton" style="background-color: rgb(0, 76, 0); color: white" mat-button (click) = "alterClassColor(0, 76, 0)">Verde E.</button>
-<button class="colorButton" style="background-color: darkblue; color: white" mat-button (click) = "alterClassColor(0, 0, 139)">Azul E.</button>
-<br>
-<br>
 <button class="colorButton" style="background-color: red; color: white" mat-button (click) = "alterClassColor(255, 0, 0)">Vermelho</button>
-<button class="colorButton" style="background-color: orange; color: white;" mat-button (click) = "alterClassColor(255, 165, 0)">Laranja</button>
-<button class="colorButton" style="background-color: green; color: white" mat-button (click) = "alterClassColor(0, 128, 0)">Verde</button>
-<button class="colorButton" style="background-color: blue; color: white" mat-button (click) = "alterClassColor(0, 0, 255)">Azul</button>
-<br>
-<br>
 <button class="colorButton" style="background-color: rgb(255, 125, 125);" mat-button (click) = "alterClassColor(255, 125, 125)">Vermelho C.</button>
-<button class="colorButton" style="background-color: yellow" mat-button (click) = "alterClassColor(255, 255, 0)">Amarelo</button>
-<button class="colorButton" style="background-color: lightgreen;" mat-button (click) = "alterClassColor(144, 238, 144)">Verde C.</button>
-<button class="colorButton" style="background-color: lightblue;" mat-button (click) = "alterClassColor(173, 216, 230)">Azul C.</button>
 <br>
 <br>
-<button class="colorButton" style="background-color: rgb(255, 169, 169);" mat-button (click) = "alterClassColor(255, 169, 169)">Coral C.</button>
+<button class="colorButton" style="background-color: rgb(255, 115, 0); color: white;" mat-button (click) = "alterClassColor(255, 115, 0)">Laranja E.</button>
+<button class="colorButton" style="background-color: orange; color: white;" mat-button (click) = "alterClassColor(255, 165, 0)">Laranja</button>
 <button class="colorButton" style="background-color: lightsalmon;" mat-button (click) = "alterClassColor(255, 160, 122)">Salmão C.</button>
-<button class="colorButton" style="background-color: aquamarine;" mat-button (click) = "alterClassColor(127, 255, 212)">Aquamarine</button>
-<button class="colorButton" style="background-color: cyan;" mat-button (click) = "alterClassColor(0, 255, 255)">Ciano</button>
+<br>
+<br>
+<button class="colorButton" style="background-color: rgb(0, 76, 0); color: white" mat-button (click) = "alterClassColor(0, 76, 0)">Verde E.</button>
+<button class="colorButton" style="background-color: green; color: white" mat-button (click) = "alterClassColor(0, 128, 0)">Verde</button>
+<button class="colorButton" style="background-color: lightgreen;" mat-button (click) = "alterClassColor(144, 238, 144)">Verde C.</button>
+<br>
+<br>
+<button class="colorButton" style="background-color: darkblue; color: white" mat-button (click) = "alterClassColor(0, 0, 139)">Azul E.</button>
+<button class="colorButton" style="background-color: blue; color: white" mat-button (click) = "alterClassColor(0, 0, 255)">Azul</button>
+<button class="colorButton" style="background-color: lightblue;" mat-button (click) = "alterClassColor(173, 216, 230)">Azul C.</button>
 <mat-divider></mat-divider>
 <span class="secondaryTitle">Escala RGB</span>
 <br>
@@ -51,6 +47,6 @@
 </div>
 
 <div class="exitButtonsPosition">
-    <button color = "primary" mat-raised-button>Aplicar</button>
+    <button color = "primary" (click) = "closeDialogApplyChanges()" mat-raised-button>Aplicar</button>
     <button color = "primary" (click) = "closeDialogCancelChanges()" style = "margin-left: 7px;" mat-raised-button>Cancelar</button>
 </div>

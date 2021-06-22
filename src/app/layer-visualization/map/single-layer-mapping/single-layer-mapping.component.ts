@@ -156,18 +156,25 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
     let alteredStructureName;
     const rgbColorToAlter = this.layer.classesColors.rgbCodes[structureTableIndex];
     if (this.layer.classesColors.rgbCodes.length === (structureTableIndex + 1)) {
-      alteredStructureName = 'Seletor';
+      alteredStructureName = 'do Seletor';
     } else {
       if (this.layerType === 'Zona de Manejo') {
-        alteredStructureName = 'Classe '.concat(String(structureTableIndex + 1));
+        alteredStructureName = 'da Classe '.concat(String(structureTableIndex + 1));
       } else {
-        alteredStructureName = this.tableDataSource.data[structureTableIndex].lineName;
+        alteredStructureName = 'do '.concat(this.tableDataSource.data[structureTableIndex].lineName);
       }
     }
     const dialogRef = this.matDialog.open(IndividualColorCustomizationComponent, {
       width: '530px',
       data: { alteredStructureName, rgbColorToAlter },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.layer.classesColors.rgbCodes[structureTableIndex] = result.data;
+        this.changeLegendVisualColor(structureTableIndex);
+      }
     });
   }
 
