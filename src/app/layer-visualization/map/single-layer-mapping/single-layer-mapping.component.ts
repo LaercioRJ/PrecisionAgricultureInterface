@@ -147,8 +147,11 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
   }
 
   openGradientCustomization(): void {
+    const rgbColors = this.layer.classesColors.rgbCodes;
     const dialogRef = this.matDialog.open(GradientCustomizationComponent, {
       width: '530px',
+      data: { rgbColors },
+      disableClose: true
     });
   }
 

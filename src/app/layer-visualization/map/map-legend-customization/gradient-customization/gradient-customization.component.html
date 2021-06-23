@@ -2,11 +2,17 @@
     <mat-toolbar color = "primary">
         <span class="mainTitle">Aplicar Degradê</span>
     </mat-toolbar>
-    <div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <div class="gradientExampleStripPosition">
+        <div id="gradientExample0" class="gradientExample"></div>
+        <div id="gradientExample1" class="gradientExample"></div>
+        <div id="gradientExample2" class="gradientExample"></div>
+        <div id="gradientExample3" class="gradientExample"></div>
+        <div id="gradientExample4" class="gradientExample"></div>
+        <div id="gradientExample5" class="gradientExample"></div>
+        <div id="gradientExample6" class="gradientExample"></div>
+        <div id="gradientExample7" class="gradientExample"></div>
+        <div id="gradientExample8" class="gradientExample"></div>
+        <div id="gradientExample9" class="gradientExample"></div>
     </div>
     <button mat-button class="colorButton" style="background-color: red; color: white;">Vermelho</button>
     <button mat-button class="colorButton" style="background-color: green; color: white;">Verde</button>
@@ -16,5 +22,5 @@
 </div>
 <div class="exitButtonsPlacement">
     <button mat-raised-button color = "primary">Aplicar</button>
-    <button style="margin-left: 7px;" mat-raised-button color = "primary">Cancelar</button>
+    <button style="margin-left: 7px;" (click) = "closeDialogCancelChanges()" mat-raised-button color = "primary">Cancelar</button>
 </div>

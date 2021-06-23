@@ -1,10 +1,16 @@
-.mainBody{
-    text-align: center;
-}
 .mainTitle{
     font-size: x-large;
     margin-left: auto;
     margin-right: auto;
+}
+.gradientExampleStripPosition{
+    margin-top: 15px;
+    margin-bottom: 7px;
+    text-align: center;
+}
+.gradientExample{
+    height: 40px;
+    display: inline-block;
 }
 .colorButton{
     margin-right: 10px;
