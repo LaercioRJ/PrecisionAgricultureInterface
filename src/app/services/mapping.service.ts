@@ -86,25 +86,40 @@ export class MappingService {
   }
 
   drawDataset(dataset: DatasetValue[], classesColors: any, mapType: string): void {
+    const styles = this.createStyles(classesColors.rgbCodes, mapType);
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < dataset.length; i++) {
       this.vectorLayerFeatures[i] = new Feature({
         geometry: new Point(fromLonLat([dataset[i].coordinates[0], dataset[i].coordinates[1]]))
       });
-      let rgbColor: number[];
+      let style: Style;
       if (mapType === 'Zona de Manejo') {
-        rgbColor = classesColors.rgbCodes[dataset[i].data - 1];
+        style = styles[dataset[i].data - 1];
       } else {
-        rgbColor = classesColors.rgbCodes[0];
+        style = styles[0];
       }
-      this.vectorLayerFeatures[i].setStyle(new Style({
-        image: new Circle({
-          radius: 3,
-          fill: new Fill({ color: rgbColor })
-        })
-      }));
+      this.vectorLayerFeatures[i].setStyle(style);
       this.vectorLayerFeatures[i].setId(i);
     }
+  }
+
+  createStyles(classesColors: any, mapType: string): Style[] {
+    const mapStyles: Style[] = [];
+    let colorsQuantity: number;
+    if (mapType === 'Zona de Manejo') {
+      colorsQuantity = classesColors.length - 1;
+    } else {
+      colorsQuantity = 1;
+    }
+    for (let i = 0; i < colorsQuantity; i++) {
+      mapStyles.push(new Style({
+        image: new Circle({
+          radius: 3,
+          fill: new Fill({ color: classesColors[i] })
+        })
+      }));
+    }
+    return mapStyles;
   }
 
   getClickedPointId(clickEvent: any): any {
