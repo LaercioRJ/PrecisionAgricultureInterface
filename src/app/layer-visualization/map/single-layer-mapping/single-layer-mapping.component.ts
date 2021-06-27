@@ -48,7 +48,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    for (let i = 0; i < this.layer.classesColors.rgbCodes.length; i++) {
+    for (let i = 0; i < (this.layer.classesColors.rgbCodes.length) - 1; i++) {
       this.changeLegendVisualColor(i);
     }
   }
@@ -79,7 +79,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
     } else {
       this.displayedColumns = ['Classe', 'Cor'];
       const zmTableContent: LegendLine[] = [];
-      for (let i = 0; i < this.layer.classesColors.rgbCodes.length - 1; i++) {
+      for (let i = 0; i < this.layer.classesColors.rgbCodes.length - 2; i++) {
         zmTableContent.push({lineName: String(i + 1), lineColor: ''});
       }
       zmTableContent.push({lineName: 'Seletor', lineColor: ''});
@@ -152,6 +152,15 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
       width: '530px',
       data: { rgbColors },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.layer.classesColors.rgbCodes = result.colors;
+        for (let i = 0; i < (this.layer.classesColors.rgbCodes.length - 2); i++) {
+          this.changeLegendVisualColor(i);
+        }
+      }
     });
   }
 

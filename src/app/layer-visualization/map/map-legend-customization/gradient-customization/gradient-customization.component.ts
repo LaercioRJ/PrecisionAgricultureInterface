@@ -12,12 +12,16 @@ export class GradientCustomizationComponent implements AfterViewInit, OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngAfterViewInit(): void {
+    const colorsQuantity = this.data.rgbColors.length;
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < (this.data.rgbColors.length - 1); i++) {
+    for (let i = 0; i < (colorsQuantity - 2); i++) {
       const block = document.getElementById('gradientExample'.concat(String(i))) as HTMLElement;
-      this.adjustExampleBlockWidth(block, (this.data.rgbColors.length - 1));
-      this.adjustExampleBlockColor(block, this.data.rgbColors[i]);
+      this.adjustExampleBlockWidth(block, (colorsQuantity - 2));
     }
+    const red = this.data.rgbColors[colorsQuantity - 1][0];
+    const green = this.data.rgbColors[colorsQuantity - 1][1];
+    const blue = this.data.rgbColors[colorsQuantity - 1][2];
+    this.applyGradient(red, blue, green);
   }
 
   ngOnInit(): void {
@@ -25,7 +29,7 @@ export class GradientCustomizationComponent implements AfterViewInit, OnInit {
   }
 
   applyGradient(activeRed: number, activeGreen: number, activeBlue: number): void {
-    const rgbGradientInterval = 255 / (this.data.rgbColors.length - 1);
+    const rgbGradientInterval = 255 / (this.data.rgbColors.length - 2);
     const rgbSet: number[][] = [];
     for (let i = 0; i < (this.data.rgbColors.length - 1); i++) {
       const block = document.getElementById('gradientExample'.concat(String(i))) as HTMLElement;
@@ -36,15 +40,14 @@ export class GradientCustomizationComponent implements AfterViewInit, OnInit {
       this.adjustExampleBlockColor(block, rgbCode);
       rgbSet.push(rgbCode);
     }
-    rgbSet.push(this.data.rgbColors[this.data.rgbColors.length - 1]);
+    rgbSet.push(this.data.rgbColors[this.data.rgbColors.length - 2]);
     this.data.rgbColors = rgbSet;
-    console.log(this.data.rgbColors);
   }
 
   closeDialogApplyChanges(): void {
-    const result = this.data.rgbColors;
+    const colors = this.data.rgbColors;
     this.matDialogReference.close({
-      result
+      colors
     });
   }
 

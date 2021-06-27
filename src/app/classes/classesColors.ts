@@ -16,6 +16,7 @@ export class ClassesColors{
         for (let i = 0; i < classesQuantity; i++) {
             this.rgbCodes.push(preCodedClassesColors[i]);
         }
-        this.rgbCodes.push([0, 0, 0]);
+        this.rgbCodes.push([0, 0, 0]); // point seletor on mapping
+        this.rgbCodes.push([1, 1, 1]); // gradient coloring variable
     }
 }
