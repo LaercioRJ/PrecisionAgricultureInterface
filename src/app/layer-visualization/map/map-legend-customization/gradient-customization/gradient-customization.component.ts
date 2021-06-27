@@ -11,8 +11,6 @@ export class GradientCustomizationComponent implements AfterViewInit, OnInit {
   constructor(private matDialogReference: MatDialogRef<GradientCustomizationComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  fakeArray = new Array(10);
-
   ngAfterViewInit(): void {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < (this.data.rgbColors.length - 1); i++) {
@@ -24,6 +22,30 @@ export class GradientCustomizationComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  applyGradient(activeRed: number, activeGreen: number, activeBlue: number): void {
+    const rgbGradientInterval = 255 / (this.data.rgbColors.length - 1);
+    const rgbSet: number[][] = [];
+    for (let i = 0; i < (this.data.rgbColors.length - 1); i++) {
+      const block = document.getElementById('gradientExample'.concat(String(i))) as HTMLElement;
+      const rgbCode: number[] = [];
+      rgbCode.push(((Math.round(rgbGradientInterval) * (i + 1)) - 1) * activeRed);
+      rgbCode.push(((Math.round(rgbGradientInterval) * (i + 1)) - 1) * activeGreen);
+      rgbCode.push(((Math.round(rgbGradientInterval) * (i + 1)) - 1) * activeBlue);
+      this.adjustExampleBlockColor(block, rgbCode);
+      rgbSet.push(rgbCode);
+    }
+    rgbSet.push(this.data.rgbColors[this.data.rgbColors.length - 1]);
+    this.data.rgbColors = rgbSet;
+    console.log(this.data.rgbColors);
+  }
+
+  closeDialogApplyChanges(): void {
+    const result = this.data.rgbColors;
+    this.matDialogReference.close({
+      result
+    });
   }
 
   closeDialogCancelChanges(): void {
