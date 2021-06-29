@@ -3,8 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { MappingService } from '../../../services/mapping.service';
 import { LayerStorageService } from '../../../services/layer-storage.service';
+import { MappingService } from '../../../services/mapping.service';
+import { MessageDeliveryService } from '../../../services/message-delivery.service';
+import { NumberInputValidationService } from '../../../services/validation/number-input-validation.service';
 
 import { GradientCustomizationComponent } from '../map-legend-customization/gradient-customization/gradient-customization.component';
 import { IndividualColorCustomizationComponent } from '../map-legend-customization/individual-color-customization/individual-color-customization.component';
@@ -26,7 +28,9 @@ export interface LegendLine {
 })
 export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
 
+  alteredPointsId: number[] = [];
   displayedColumns!: string[];
+  isEditing = false;
   layer: any;
   layerType!: string;
   tableDataSource = new MatTableDataSource<LegendLine>();
@@ -34,11 +38,14 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
   selectedPointFirstCoordinate = 0;
   selectedPointSecondCoordinate = 0;
   selectedPointData = 0;
+  wasEdited = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private layerStorage: LayerStorageService,
               private mapping: MappingService,
-              private matDialog: MatDialog) { }
+              private matDialog: MatDialog,
+              private messageDelivery: MessageDeliveryService,
+              private numberInputValidation: NumberInputValidationService) { }
 
   ngOnInit(): void {
     const layerIndex = Number(this.activatedRoute.snapshot.paramMap.get('layerIndex'));
@@ -93,6 +100,27 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
       ')';
     // tslint:disable-next-line: no-non-null-assertion
     document.getElementById('legendColor'.concat(String(idNumber)))!.style.background = rgbCode;
+  }
+
+  validateLayerDataEditing(): void {
+    this.wasEdited = true;
+    let dirtyForm = false;
+    if (this.layerType === 'Zona de Manejo') {
+      if (!this.numberInputValidation.isInteger(this.selectedPointData)) {
+        this.messageDelivery.showMessage('Por favor, adicione apenas números inteiros !', 2200);
+        dirtyForm = true;
+      }
+      if (!this.numberInputValidation.isWithinBounds(this.selectedPointData, 1, 10)) {
+        this.messageDelivery.showMessage('Por favor, adicione apenas números maiores do que 0 ou menores que 11 !', 2500);
+        dirtyForm = true;
+      }
+    }
+    if (dirtyForm) {
+      this.selectedPointData = this.layer.dataset[this.selectedPointId].data;
+    } else {
+      this.layer.dataset[this.selectedPointId].data = this.selectedPointData;
+      this.alteredPointsId.push(this.selectedPointData);
+    }
   }
 
   selectPoint(clickEvent: any): void {

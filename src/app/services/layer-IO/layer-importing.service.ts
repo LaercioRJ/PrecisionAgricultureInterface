@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { IntegerValidationService } from '../integer-validation.service';
+import { NumberInputValidationService } from '../validation/number-input-validation.service';
 import { MessageDeliveryService } from '../message-delivery.service';
 import { LayerStorageService } from '../layer-storage.service';
 
@@ -20,7 +20,7 @@ export class LayerImportingService {
   private latitudeHeader = 'Latitude';
   private longitudeHeader = 'Longitude';
 
-  constructor(private integerValidation: IntegerValidationService,
+  constructor(private numberValidation: NumberInputValidationService,
               private layerStorage: LayerStorageService,
               private messageDelivery: MessageDeliveryService) { }
 
@@ -125,8 +125,7 @@ export class LayerImportingService {
   }
 
   private validateZMClasses(data: number, lineIndex: number): void {
-    const isInteger = this.integerValidation.isInteger(data);
-    if (isInteger === false) {
+    if (!this.numberValidation.isInteger(data)) {
       this.fileReadingErrorMessage(lineIndex);
     }
     if ((data < 1) || (data > 10)) {
