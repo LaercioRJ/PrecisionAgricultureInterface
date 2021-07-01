@@ -123,11 +123,9 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
     }
   }
 
-  // PAREI AQUI 30/06/2021
   chooseNewPoint(chosenPointId: number): void {
-    // VERIFICAR SE ESTE LOG N PRINTA UNDEFINED
-    console.log(this.layer.classesColors[this.layer.classesColors.rgbCodes.length]);
-    this.mapping.changePointColor(chosenPointId, this.layer.classesColors[this.layer.classesColors.rgbCodes.length]);
+    const selectorColorClassIndex = this.layer.classesColors.rgbCodes.length - 2;
+    this.mapping.changePointColor(chosenPointId, this.layer.classesColors[selectorColorClassIndex]);
     this.selectedPointId = chosenPointId;
     this.selectedPointFirstCoordinate = this.layer.dataset[chosenPointId].coordinates[0];
     this.selectedPointSecondCoordinate = this.layer.dataset[chosenPointId].coordinates[1];
@@ -189,7 +187,9 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
       }
     }
     if (this.selectedPointId !== -1) {
-      // this.mapping.changePointColor(this.selectedPointId, );
+      const selectorColorClassIndex = this.layer.classesColors.rgbCodes.length - 2;
+      this.mapping.changePointColor(this.selectedPointId, this.layer.classesColors.rgbCodes[selectorColorClassIndex]);
+      this.selectedPointData = this.layer.dataset[this.selectedPointId].data;
     }
     this.wasEdited = false;
     this.alteredPointsId = [];
