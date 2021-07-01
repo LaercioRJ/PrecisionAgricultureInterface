@@ -58,6 +58,10 @@ export class LayerStorageService {
     return copiedLayer;
   }
 
+  getLayers(): Layer[] {
+    return this.storedLayers;
+  }
+
   getLayerContourn(layerIndex: number): Contourn {
     let copiedContourn;
     const originalContourn = (this.storedLayers[layerIndex] as SamplingLayer).contourn;
@@ -69,8 +73,8 @@ export class LayerStorageService {
     return copiedContourn;
   }
 
-  getLayers(): Layer[] {
-    return this.storedLayers;
+  getLayerPoint(layerIndex: number, pointIndex: number): DatasetValue {
+    return this.storedLayers[layerIndex].dataset[pointIndex];
   }
 
   getNumberOfStoredLayers(): number {

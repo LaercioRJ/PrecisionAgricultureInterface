@@ -76,8 +76,8 @@
 
                     <mat-form-field *ngIf="isEditing === true" class="pointInfoField" color = "primary" appearance = "standard">
                         <mat-label>{{layer.dataHeader}}</mat-label>
-                        <input type="number" class="pointInfoDisplay" value = "{{selectedPointData}}" matInput 
-                         [(ngModel)] = "selectedPointData">
+                        <input type="number" (change) = "validateLayerDataEditing()" class="pointInfoDisplay" value = "{{selectedPointData}}"
+                         matInput [(ngModel)] = "selectedPointData">
                     </mat-form-field>
 
                     <mat-slide-toggle [(ngModel)] = "isEditing">
@@ -89,6 +89,15 @@
                         </div> 
                     </mat-slide-toggle>
                 </div>
+
+                <button mat-raised-button class="saveAlterationButtons" *ngIf="wasEdited === true" color = "accent">
+                    Salvar as Alterações
+                </button>
+                <button (click) = "deleteEditingAlterations()" mat-raised-button class="saveAlterationButtons" 
+                 *ngIf="wasEdited === true" color = "accent">
+                    Deletar as Alterações
+                </button>
+
             </mat-expansion-panel>
 
             <mat-expansion-panel>

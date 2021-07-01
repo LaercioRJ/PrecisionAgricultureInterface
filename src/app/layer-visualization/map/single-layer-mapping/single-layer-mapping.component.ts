@@ -15,6 +15,7 @@ import { ZmMappingInfoComponent } from '../layer-info/zm-mapping-info/zm-mapping
 import { ClassesColors } from '../../../classes/classesColors';
 import { SamplingLayer } from '../../../classes/samplingLayer';
 import { ZmLayer } from '../../../classes/zmLayer';
+import { DatasetValue } from 'src/app/classes/datasetValue';
 
 export interface LegendLine {
   lineName: string;
@@ -102,27 +103,6 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
     document.getElementById('legendColor'.concat(String(idNumber)))!.style.background = rgbCode;
   }
 
-  validateLayerDataEditing(): void {
-    this.wasEdited = true;
-    let dirtyForm = false;
-    if (this.layerType === 'Zona de Manejo') {
-      if (!this.numberInputValidation.isInteger(this.selectedPointData)) {
-        this.messageDelivery.showMessage('Por favor, adicione apenas números inteiros !', 2200);
-        dirtyForm = true;
-      }
-      if (!this.numberInputValidation.isWithinBounds(this.selectedPointData, 1, 10)) {
-        this.messageDelivery.showMessage('Por favor, adicione apenas números maiores do que 0 ou menores que 11 !', 2500);
-        dirtyForm = true;
-      }
-    }
-    if (dirtyForm) {
-      this.selectedPointData = this.layer.dataset[this.selectedPointId].data;
-    } else {
-      this.layer.dataset[this.selectedPointId].data = this.selectedPointData;
-      this.alteredPointsId.push(this.selectedPointData);
-    }
-  }
-
   selectPoint(clickEvent: any): void {
     try{
       const clickedPointId = Number(this.mapping.getClickedPointId(clickEvent));
@@ -143,8 +123,11 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
     }
   }
 
+  // PAREI AQUI 30/06/2021
   chooseNewPoint(chosenPointId: number): void {
-    this.mapping.changePointColor(chosenPointId, this.layer.classesColors[this.layer.classesColors.length]);
+    // VERIFICAR SE ESTE LOG N PRINTA UNDEFINED
+    console.log(this.layer.classesColors[this.layer.classesColors.rgbCodes.length]);
+    this.mapping.changePointColor(chosenPointId, this.layer.classesColors[this.layer.classesColors.rgbCodes.length]);
     this.selectedPointId = chosenPointId;
     this.selectedPointFirstCoordinate = this.layer.dataset[chosenPointId].coordinates[0];
     this.selectedPointSecondCoordinate = this.layer.dataset[chosenPointId].coordinates[1];
@@ -152,7 +135,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
   }
 
   unchooseSelectedPoint(): void {
-    const pointOriginalColor = this.getPointClassColor();
+    const pointOriginalColor = this.getPointClassColor(this.selectedPointData);
     this.mapping.changePointColor(this.selectedPointId, pointOriginalColor);
     this.selectedPointFirstCoordinate = 0;
     this.selectedPointSecondCoordinate = 0;
@@ -160,18 +143,57 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
     this.selectedPointId = -1;
   }
 
-  getPointClassColor(): any {
-    if (this.layerType === 'Zona de Manejo') {
-      const pointData = this.layer.dataset[this.selectedPointId].data;
-      return this.layer.classesColors.rgbCodes[pointData - 1];
-    } else {
+  getPointClassColor(pointData: number): any {
+    if (this.layerType === 'Pontos Amostrais') {
       return this.layer.classesColors.rgbCodes[0];
+    } else {
+      return this.layer.classesColors.rgbCodes[pointData - 1];
     }
   }
 
   chooseAnotherPoint(chosenPointId: number): void {
     this.unchooseSelectedPoint();
     this.chooseNewPoint(chosenPointId);
+  }
+
+  validateLayerDataEditing(): void {
+    this.wasEdited = true;
+    let dirtyForm = false;
+    if (this.layerType === 'Zona de Manejo') {
+      if (!this.numberInputValidation.isInteger(this.selectedPointData)) {
+        this.messageDelivery.showMessage('Por favor, adicione apenas números inteiros !', 2200);
+        dirtyForm = true;
+      }
+      if (!this.numberInputValidation.isWithinBounds(this.selectedPointData, 1, 10)) {
+        this.messageDelivery.showMessage('Por favor, adicione apenas números maiores do que 0 ou menores que 11 !', 2500);
+        dirtyForm = true;
+      }
+    }
+    if (dirtyForm) {
+      this.selectedPointData = this.layer.dataset[this.selectedPointId].data;
+    } else {
+      this.layer.dataset[this.selectedPointId].data = this.selectedPointData;
+      this.alteredPointsId.push(this.selectedPointId);
+    }
+  }
+
+  deleteEditingAlterations(): void {
+    const layerIndex = Number(this.activatedRoute.snapshot.paramMap.get('layerIndex'));
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.alteredPointsId.length; i++) {
+      const pointOldDataset = this.layerStorage.getLayerPoint(layerIndex, this.alteredPointsId[i]);
+      this.layer.dataset[this.alteredPointsId[i]].data = pointOldDataset.data;
+      if (this.layerType === 'Zona de Manejo') {
+        const oldColor = this.getPointClassColor(pointOldDataset.data);
+        this.mapping.changePointColor(this.alteredPointsId[i], oldColor);
+      }
+    }
+    if (this.selectedPointId !== -1) {
+      // this.mapping.changePointColor(this.selectedPointId, );
+    }
+    this.wasEdited = false;
+    this.alteredPointsId = [];
+    this.messageDelivery.showMessage('Todas as alterações foram desfeitas com sucesso !', 2200);
   }
 
   openGradientCustomization(): void {

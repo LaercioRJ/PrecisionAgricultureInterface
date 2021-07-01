@@ -38,6 +38,13 @@ mat-panel-description{
 table{
     width: 100%;
 }
+.saveAlterationsButtonsPosition{
+    text-align: center;
+}
+.saveAlterationButtons{
+    margin-top: 10px;
+    width: 110%;
+}
 .legendColor{
     margin-left: 10px;
     max-width: 10px;
