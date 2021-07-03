@@ -4,6 +4,7 @@
         <!--<div class="mat-slide-localization">
           <mat-slide-toggle>Editar Dados</mat-slide-toggle>
         </div>-->
+        <mat-divider></mat-divider>
         <table mat-table [dataSource] = "datasetTableDataSource">
             <ng-container matColumnDef = Identificador>
                 <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>Identificador</th>
@@ -11,7 +12,6 @@
                     {{(i + 1) + tableLowerIndex}}
                 </td>
             </ng-container>
-            
             <ng-container matColumnDef = {{layer.latitudeHeader}}>
                 <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>{{layer.latitudeHeader}}</th>
                 <td mat-cell class = "tableCell" *matCellDef = "let element"> 
@@ -29,7 +29,12 @@
             <ng-container matColumnDef = {{layer.dataHeader}}>
                 <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>{{layer.dataHeader}}</th>
                 <td mat-cell class = "tableCell" *matCellDef = "let element; let i = index">  
-                  {{element.data}}
+                  <div *ngIf="!isEditing">
+                    {{element.data}}
+                  </div>
+                  <div *ngIf="isEditing">
+                    <input type="number" matInput [value] = "element.data" (change) = "editTableData($event, i)">
+                  </div>
                 </td>
             </ng-container>
 
@@ -52,6 +57,7 @@
             <button mat-icon-button (click) = "tableNextTenPages()" matTooltip="Avançar 10 páginas" color = "primary">
                 <span class="material-icons">arrow_forward_ios</span>
             </button>
+            <mat-slide-toggle [(ngModel)] = "isEditing" class="editingSlide">Editar dados</mat-slide-toggle>
         </div>
       </div>
     </mat-tab>

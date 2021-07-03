@@ -69,15 +69,15 @@
                         <input class="pointInfoDisplay" value = "{{selectedPointSecondCoordinate}}" matInput readonly>
                     </mat-form-field>
 
-                    <mat-form-field *ngIf="isEditing === false" class="pointInfoField" color = "primary" appearance = "fill">
+                    <mat-form-field *ngIf="!isEditing" class="pointInfoField" color = "primary" appearance = "fill">
                         <mat-label>{{layer.dataHeader}}</mat-label>
                         <input class="pointInfoDisplay" value = "{{selectedPointData}}" matInput readonly>
                     </mat-form-field>
 
-                    <mat-form-field *ngIf="isEditing === true" class="pointInfoField" color = "primary" appearance = "standard">
+                    <mat-form-field *ngIf="isEditing" class="pointInfoField" color = "primary" appearance = "standard">
                         <mat-label>{{layer.dataHeader}}</mat-label>
-                        <input type="number" (change) = "validateLayerDataEditing()" class="pointInfoDisplay" value = "{{selectedPointData}}"
-                         matInput [(ngModel)] = "selectedPointData">
+                        <input type="number" (change) = "validateLayerDataEditing()" class="pointInfoDisplay" 
+                            value = "{{selectedPointData}}" matInput [(ngModel)] = "selectedPointData">
                     </mat-form-field>
 
                     <mat-slide-toggle [(ngModel)] = "isEditing">
