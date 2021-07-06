@@ -155,7 +155,6 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
   }
 
   validateLayerDataEditing(): void {
-    this.wasEdited = true;
     let dirtyForm = false;
     if (this.layerType === 'Zona de Manejo') {
       if (!this.numberInputValidation.isInteger(this.selectedPointData)) {
@@ -170,6 +169,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
     if (dirtyForm) {
       this.selectedPointData = this.layer.dataset[this.selectedPointId].data;
     } else {
+      this.wasEdited = true;
       this.layer.dataset[this.selectedPointId].data = this.selectedPointData;
       this.alteredPointsId.push(this.selectedPointId);
     }

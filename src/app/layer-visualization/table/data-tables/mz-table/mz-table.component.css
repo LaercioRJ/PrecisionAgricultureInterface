@@ -50,3 +50,21 @@ table{
     color: black;
     background-color: white;
 }
+.editInput{
+    border: black;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+.mat-row:hover{
+    background-color: rgb(230, 230, 230);
+}
+.tableEditionControls{
+    background-color: white;
+    text-align: right;
+}
+.editingSlide{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}

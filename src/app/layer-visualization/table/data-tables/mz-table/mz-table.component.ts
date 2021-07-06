@@ -84,7 +84,6 @@ export class MzTableComponent implements OnInit {
   }
 
   editTableData(event: any, tablePointIndex: number): void {
-    this.wasEdited = true;
     let dirtForm = false;
     const newInput = Number(event.target.value);
 
@@ -100,6 +99,7 @@ export class MzTableComponent implements OnInit {
     if (dirtForm) {
       event.target.value = this.layer.dataset[tablePointIndex + this.tableLowerIndex].data;
     } else {
+      this.wasEdited = true;
       this.layer.dataset[tablePointIndex + this.tableLowerIndex] = this.datasetTableDataSource.data[tablePointIndex];
       this.alteredpointsId.push(tablePointIndex + this.tableLowerIndex);
     }
