@@ -86,7 +86,7 @@ export class ContournImportingService {
       this.validateComaSeparation(fileLines[haveHeaders], haveHeaders + 1);
       lineValues = fileLines[haveHeaders].split(this.dataseparator);
       this.validateNumberFields(lineValues, haveHeaders);
-      this.coordinates.push([Number(lineValues[0]), Number(lineValues[1])]);
+      this.coordinates.push([Number(lineValues[1]), Number(lineValues[0])]);
     }
   }
 

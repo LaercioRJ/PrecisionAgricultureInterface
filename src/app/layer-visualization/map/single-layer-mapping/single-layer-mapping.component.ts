@@ -30,7 +30,9 @@ export interface LegendLine {
 export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
 
   alteredPointsId: number[] = [];
+  contournExhibited = false;
   displayedColumns!: string[];
+  hasContourn = false;
   isEditing = false;
   layer: any;
   layerType!: string;
@@ -53,6 +55,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
     this.getLayer(layerIndex);
     this.mapping.renderCompleteMap(this.layer.dataset, 'fullMap', this.layer.classesColors, this.layerType);
     this.renderLegend();
+    this.verifyContourn();
   }
 
   ngAfterViewInit(): void {
@@ -92,6 +95,13 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
       }
       zmTableContent.push({lineName: 'Seletor', lineColor: ''});
       this.tableDataSource.data = zmTableContent;
+    }
+  }
+
+  verifyContourn(): void {
+    if ((this.layerType === 'Pontos Amostrais') && (this.layer.contourn !== undefined)) {
+      this.hasContourn = true;
+      this.mapping.drawContourn(this.layer.contourn.coordinates, this.layer.classesColors);
     }
   }
 

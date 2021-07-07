@@ -36,6 +36,7 @@
 
                 <div *ngIf="layerType === 'Pontos Amostrais'">
                     <app-sp-mapping-info [layer] = "this.layer"></app-sp-mapping-info>
+                    <mat-checkbox [(ngModel)] = "contournExhibited" *ngIf="hasContourn">Exibir Contorno</mat-checkbox>
                 </div>
 
             </mat-expansion-panel>

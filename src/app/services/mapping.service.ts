@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ClassesColors } from '../classes/classesColors';
+import { Contourn } from '../classes/contourn';
 import { DatasetValue } from '../classes/datasetValue';
 
 import Circle from 'ol/style/Circle';
@@ -8,11 +9,13 @@ import {defaults as defaultControls, FullScreen} from 'ol/control';
 import Feature from 'ol/Feature';
 import Fill from 'ol/style/Fill';
 import { fromLonLat } from 'ol/proj';
+import LineString from 'ol/geom/LineString';
 import Map from 'ol/Map';
 import OSM from 'ol/source/OSM';
 import Point from 'ol/geom/Point';
 import { Tile } from 'ol/layer';
 import ScaleLine from 'ol/control/ScaleLine';
+import { Stroke } from 'ol/style';
 import { Style } from 'ol/style';
 import { Vector } from 'ol/layer';
 import VectorSource from 'ol/source/Vector';
@@ -120,6 +123,30 @@ export class MappingService {
       }));
     }
     return mapStyles;
+  }
+
+  drawContourn(contournCoordinates: number[][], classesColors: any): void {
+    const contournFeatures = [];
+    const contournColor = classesColors.rgbCodes[1];
+    const contournStyle = new Style({
+      stroke: new Stroke({
+        color: contournColor,
+        width: 2
+      })
+    });
+    for (let i = 0; i < (contournCoordinates.length - 1); i++) {
+      const feature = new Feature({
+        geometry: new LineString([fromLonLat(contournCoordinates[i]), fromLonLat(contournCoordinates[i + 1])])
+      });
+      feature.setStyle(contournStyle);
+      contournFeatures.push(feature);
+    }
+    const contourn = new Vector({
+      source: new VectorSource({
+        features: contournFeatures
+      })
+    });
+    this.map.addLayer(contourn);
   }
 
   getClickedPointId(clickEvent: any): any {

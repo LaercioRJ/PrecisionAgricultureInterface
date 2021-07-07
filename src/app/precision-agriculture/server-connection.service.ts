@@ -644,7 +644,6 @@ export class ServerConnectionService {
   consumeIdwInterpolatorSelection(minExponent: number, maxExponent: number, exponentStep: number, minNeighbors: number,
                                   maxNeighbors: number, layerDataset: DatasetValue[]): Observable<object> {
     const url = 'https://adb.md.utfpr.edu.br/api/interpolation/isi/idw';
-    console.log('a');
 
     this.httpHeaders = new HttpHeaders({
       'Content-Type' : 'application/json'
@@ -730,7 +729,9 @@ export class ServerConnectionService {
         sizePixelY: sPixelY,
         roundCoord: 5,
         roundData: 5,
-        dataset:[
+        dataset: layerDataset,
+        contourn: layerContourn
+        /*dataset:[
             {
                 "coordinates": [
                     197824.6518,
@@ -1344,7 +1345,7 @@ export class ServerConnectionService {
             [ 197886.22611944593, 7187058.714470454 ],
             [ 197890.38020070933, 7187066.5701064 ],
             [ 197894.26470944943, 7187072.97813128 ]
-        ]
+        ]*/
     },
     {
         headers: this.httpHeaders,
