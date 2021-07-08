@@ -30,7 +30,7 @@ export interface LegendLine {
 export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
 
   alteredPointsId: number[] = [];
-  contournExhibited = false;
+  contournExhibited = true;
   displayedColumns!: string[];
   hasContourn = false;
   isEditing = false;
@@ -100,8 +100,16 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
 
   verifyContourn(): void {
     if ((this.layerType === 'Pontos Amostrais') && (this.layer.contourn !== undefined)) {
-      this.hasContourn = true;
       this.mapping.drawContourn(this.layer.contourn.coordinates, this.layer.classesColors);
+      this.hasContourn = true;
+    }
+  }
+
+  activateContourn(): void {
+    if (this.contournExhibited) {
+      this.mapping.drawContourn(this.layer.contourn.coordinates, this.layer.classesColors);
+    } else {
+      this.mapping.deleteContourn();
     }
   }
 

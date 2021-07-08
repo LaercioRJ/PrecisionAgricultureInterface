@@ -729,9 +729,7 @@ export class ServerConnectionService {
         sizePixelY: sPixelY,
         roundCoord: 5,
         roundData: 5,
-        dataset: layerDataset,
-        contourn: layerContourn
-        /*dataset:[
+        dataset:[
             {
                 "coordinates": [
                     197824.6518,
@@ -1345,7 +1343,7 @@ export class ServerConnectionService {
             [ 197886.22611944593, 7187058.714470454 ],
             [ 197890.38020070933, 7187066.5701064 ],
             [ 197894.26470944943, 7187072.97813128 ]
-        ]*/
+        ]
     },
     {
         headers: this.httpHeaders,

@@ -29,6 +29,7 @@ export class MappingService {
 
   private map!: Map;
 
+  private contournLayer!: Vector;
   private vectorLayer!: Vector;
   private vectorLayerFeatures: any[] = [];
   private vectorSource!: VectorSource;
@@ -141,12 +142,20 @@ export class MappingService {
       feature.setStyle(contournStyle);
       contournFeatures.push(feature);
     }
-    const contourn = new Vector({
+    this.contournLayer = new Vector({
       source: new VectorSource({
         features: contournFeatures
       })
     });
-    this.map.addLayer(contourn);
+    this.map.addLayer(this.contournLayer);
+  }
+
+  addPreviouslyDrawedContourn(): void {
+    this.map.addLayer(this.contournLayer);
+  }
+
+  deleteContourn(): void {
+    this.map.removeLayer(this.contournLayer);
   }
 
   getClickedPointId(clickEvent: any): any {
