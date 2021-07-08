@@ -93,4 +93,11 @@ export class LayerStorageService {
   updateLayer(layerIndex: number, newLayer: Layer): void {
     this.storedLayers[layerIndex] = newLayer;
   }
+
+  updateSomeDatasetPoints(layerIndex: number, newDatasetPoints: DatasetValue[], newPointsIndex: number[]): void {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < newPointsIndex.length; i++) {
+      this.storedLayers[layerIndex].dataset[newPointsIndex[i]].data = newDatasetPoints[newPointsIndex[i]].data;
+    }
+  }
 }

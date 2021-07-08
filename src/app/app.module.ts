@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogRef } from '@angular/material/dialog';
 import { MaterialModule } from './material-module';
 import { NgModule } from '@angular/core';
 
@@ -16,6 +15,7 @@ import { IndividualColorCustomizationComponent } from './layer-visualization/map
 import { InterpolationSwitchComponent } from './precision-agriculture/interpolation/interpolation-switch/interpolation-switch.component';
 import { KrigingComponent } from './precision-agriculture/interpolation/Kriging/kriging/kriging.component';
 import { KrigingParametersTableComponent } from './precision-agriculture/interpolation/Kriging/kriging-parameters-table/kriging-parameters-table.component';
+import { SaveLayerEditingComponent } from './layer-visualization/save-layer-editing/save-layer-editing.component';
 import { SaveServerResultsComponent } from './precision-agriculture/save-server-results/save-server-results.component';
 import { SelectorResultsComponent } from './precision-agriculture/interpolation/Kriging/selector-results/selector-results.component';
 import { SingleLayerMappingComponent } from './layer-visualization/map/single-layer-mapping/single-layer-mapping.component';
@@ -31,7 +31,6 @@ import { TopBarComponent } from './main-menu/top-bar/top-bar.component';
 import { ZmLayerInfoComponent } from './layer-visualization/table/layer-info/zm-layer-info/zm-layer-info.component';
 import { ZmMappingInfoComponent } from './layer-visualization/map/layer-info/zm-mapping-info/zm-mapping-info.component';
 
-
 @NgModule({
   declarations: [
     CardsDisplayComponent,
@@ -46,6 +45,7 @@ import { ZmMappingInfoComponent } from './layer-visualization/map/layer-info/zm-
     LayerCardComponent,
     MzTableComponent,
     RectificationComponent,
+    SaveLayerEditingComponent,
     SaveServerResultsComponent,
     SelectorResultsComponent,
     SemivariogramResultsComponent,

@@ -1,0 +1,23 @@
+<div class="dialog">
+    <mat-toolbar color = "primary">
+        <span class="title">Salvar Alterações</span>
+    </mat-toolbar>
+    <mat-card>
+        <mat-radio-group (change) = "enableLayerField()" [(ngModel)] = "selectedOption">
+            <mat-radio-button *ngFor="let option of options" [value] = "option" color = "primary">
+                {{option}}
+                <br>
+            </mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field appearance="standard">
+            <mat-label>Nome da nova layer</mat-label>
+            <input matInput [formControl] = "newLayerName" placeholder="Nova layer" color = "primary" required>
+        </mat-form-field>
+        <mat-checkbox [disabled] = "selectedOption !== options[1]" [(ngModel)] = "deleteLayerAfterEdit">
+            Excluir layer original
+        </mat-checkbox>
+        <br>
+        <br>
+        <button mat-raised-button (click) = "finishEditing()" color = "primary">Confirmar</button>
+    </mat-card>
+</div>
