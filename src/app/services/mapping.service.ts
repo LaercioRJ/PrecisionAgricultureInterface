@@ -90,7 +90,7 @@ export class MappingService {
   }
 
   drawDataset(dataset: DatasetValue[], classesColors: any, mapType: string): void {
-    const styles = this.createStyles(classesColors.rgbCodes, mapType);
+    const styles = this.createPointsStyles(classesColors.rgbCodes, mapType);
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < dataset.length; i++) {
       this.vectorLayerFeatures[i] = new Feature({
@@ -107,11 +107,11 @@ export class MappingService {
     }
   }
 
-  createStyles(classesColors: any, mapType: string): Style[] {
+  createPointsStyles(classesColors: any, mapType: string): Style[] {
     const mapStyles: Style[] = [];
     let colorsQuantity: number;
     if (mapType === 'Zona de Manejo') {
-      colorsQuantity = classesColors.length - 1;
+      colorsQuantity = classesColors.length - 2;
     } else {
       colorsQuantity = 1;
     }
@@ -128,13 +128,7 @@ export class MappingService {
 
   drawContourn(contournCoordinates: number[][], classesColors: any): void {
     const contournFeatures = [];
-    const contournColor = classesColors.rgbCodes[1];
-    const contournStyle = new Style({
-      stroke: new Stroke({
-        color: contournColor,
-        width: 2
-      })
-    });
+    const contournStyle = this.createContournStyle(classesColors.rgbCodes[1]);
     for (let i = 0; i < (contournCoordinates.length - 1); i++) {
       const feature = new Feature({
         geometry: new LineString([fromLonLat(contournCoordinates[i]), fromLonLat(contournCoordinates[i + 1])])
@@ -148,6 +142,16 @@ export class MappingService {
       })
     });
     this.map.addLayer(this.contournLayer);
+  }
+
+  createContournStyle(rgbCodeColor: number[]): Style {
+    const contournStyle = new Style({
+      stroke: new Stroke({
+        color: rgbCodeColor,
+        width: 2
+      })
+    });
+    return contournStyle;
   }
 
   addPreviouslyDrawedContourn(): void {

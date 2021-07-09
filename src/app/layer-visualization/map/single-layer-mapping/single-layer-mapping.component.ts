@@ -107,7 +107,8 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
 
   activateContourn(): void {
     if (this.contournExhibited) {
-      this.mapping.drawContourn(this.layer.contourn.coordinates, this.layer.classesColors);
+      // this.mapping.drawContourn(this.layer.contourn.coordinates, this.layer.classesColors);
+      this.mapping.addPreviouslyDrawedContourn();
     } else {
       this.mapping.deleteContourn();
     }
