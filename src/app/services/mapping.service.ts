@@ -30,6 +30,7 @@ export class MappingService {
   private map!: Map;
 
   private contournLayer!: Vector;
+  private contournLayerFeatures: any[] = [];
   private vectorLayer!: Vector;
   private vectorLayerFeatures: any[] = [];
   private vectorSource!: VectorSource;
@@ -127,18 +128,18 @@ export class MappingService {
   }
 
   drawContourn(contournCoordinates: number[][], classesColors: any): void {
-    const contournFeatures = [];
+    this.contournLayerFeatures = [];
     const contournStyle = this.createContournStyle(classesColors.rgbCodes[1]);
     for (let i = 0; i < (contournCoordinates.length - 1); i++) {
       const feature = new Feature({
         geometry: new LineString([fromLonLat(contournCoordinates[i]), fromLonLat(contournCoordinates[i + 1])])
       });
       feature.setStyle(contournStyle);
-      contournFeatures.push(feature);
+      this.contournLayerFeatures.push(feature);
     }
     this.contournLayer = new Vector({
       source: new VectorSource({
-        features: contournFeatures
+        features: this.contournLayerFeatures
       })
     });
     this.map.addLayer(this.contournLayer);
@@ -174,6 +175,30 @@ export class MappingService {
         fill: new Fill({ color: newColorRgb })
       })
     }));
+  }
+
+  changeAllPointsColor(classesColors: any, mapType: string, dataset?: DatasetValue[]): void {
+    const styles = this.createPointsStyles(classesColors.rgbCodes, mapType);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.vectorLayerFeatures.length; i++) {
+      let style;
+      if (mapType === 'Zona de Manejo') {
+        if (dataset !== undefined){
+          style = styles[dataset[i].data - 1];
+        }
+      } else {
+        style = styles[0];
+      }
+      this.vectorLayerFeatures[i].setStyle(style);
+    }
+  }
+
+  changeContournColor(newColorRgb: number[]): void {
+    const newStyle = this.createContournStyle(newColorRgb);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.contournLayerFeatures.length; i++) {
+      this.contournLayerFeatures[i].setStyle(newStyle);
+    }
   }
 
 }

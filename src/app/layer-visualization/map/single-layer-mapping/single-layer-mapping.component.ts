@@ -144,7 +144,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
 
   chooseNewPoint(chosenPointId: number): void {
     const selectorColorClassIndex = this.layer.classesColors.rgbCodes.length - 2;
-    this.mapping.changePointColor(chosenPointId, this.layer.classesColors[selectorColorClassIndex]);
+    this.mapping.changePointColor(chosenPointId, this.layer.classesColors.rgbCodes[selectorColorClassIndex]);
     this.selectedPointId = chosenPointId;
     this.selectedPointFirstCoordinate = this.layer.dataset[chosenPointId].coordinates[0];
     this.selectedPointSecondCoordinate = this.layer.dataset[chosenPointId].coordinates[1];
@@ -229,6 +229,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
         for (let i = 0; i < (this.layer.classesColors.rgbCodes.length - 2); i++) {
           this.changeLegendVisualColor(i);
         }
+        this.mapping.changeAllPointsColor(this.layer.classesColors, this.layerType, this.layer.dataset);
       }
     });
   }
@@ -255,6 +256,25 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
       if (result) {
         this.layer.classesColors.rgbCodes[structureTableIndex] = result.data;
         this.changeLegendVisualColor(structureTableIndex);
+        if (this.layerType === 'Pontos Amostrais') {
+          switch (structureTableIndex) {
+            case 0:
+              this.mapping.changeAllPointsColor(this.layer.classesColors, this.layerType);
+              break;
+            case 1:
+              this.mapping.changeContournColor(result.data);
+              break;
+            case 2:
+              if (this.selectedPointId !== -1) {
+                this.mapping.changePointColor(this.selectedPointId, result.data);
+              }
+              break;
+          }
+        } else {
+          switch (structureTableIndex) {
+
+          }
+        }
       }
     });
   }
