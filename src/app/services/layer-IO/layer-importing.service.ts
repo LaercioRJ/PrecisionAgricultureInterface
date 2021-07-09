@@ -93,7 +93,7 @@ export class LayerImportingService {
     let lineValues: string[];
     fileLines = fileContent.split(/\n/);
     for (; haveHeaders < fileLines.length; haveHeaders++) {
-      this.validateComaSeparation(fileLines[haveHeaders], haveHeaders);
+      this.validateDataSeparation(fileLines[haveHeaders], haveHeaders);
       lineValues = fileLines[haveHeaders].split(this.dataseparator);
       this.validateNumberFields(lineValues, haveHeaders + 1);
       if (layerType === 1) {
@@ -104,7 +104,7 @@ export class LayerImportingService {
     this.storeLayer(layerType);
   }
 
-  private validateComaSeparation(fileLine: string, lineIndex: number): void {
+  private validateDataSeparation(fileLine: string, lineIndex: number): void {
     const lineFirstHalf = fileLine.slice(0, fileLine.indexOf(this.dataseparator) + 1);
     const lineSecondHalf = fileLine.slice(fileLine.indexOf(this.dataseparator) + 1, fileLine.lastIndexOf(this.dataseparator) + 1);
     if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(this.dataseparator)) || (lineFirstHalf.indexOf('.') === -1 )) {
@@ -128,7 +128,7 @@ export class LayerImportingService {
     if (!this.numberValidation.isInteger(data)) {
       this.fileReadingErrorMessage(lineIndex);
     }
-    if ((data < 1) || (data > 10)) {
+    if (!this.numberValidation.isWithinBounds(data, 1, 10)) {
       this.fileReadingErrorMessage(lineIndex);
     }
   }

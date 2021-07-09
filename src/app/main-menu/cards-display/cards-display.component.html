@@ -50,7 +50,7 @@
                     </span>
                     Visualizar
                 </button>
-                <button *ngIf="selectedLayerType === 0" (click) = "fileInputContourn.click()" matTooltip="Adicionar um contorno para a layer"
+                <button *ngIf="selectedLayerType === 'Pontos amostrais'" (click) = "fileInputContourn.click()" matTooltip="Adicionar um contorno para a layer"
                  class="cardOptionsButton" mat-button>
                     <span style="font-size: 25px;" class="material-icons">
                         add
@@ -59,21 +59,22 @@
                 </button>
                 <input #fileInputContourn style="display: none;" type="file" (change) = "recieveContournFile($event)" accept=".txt,.csv">
                 <div matTooltip="É necessário de um contorno para realizar a interpolação" [matTooltipDisabled]="hasContourn">
-                    <button (click) = "interpolateLayer()" *ngIf="selectedLayerType === 0" class="cardOptionsButton" mat-button>
+                    <button (click) = "interpolateLayer()" *ngIf="selectedLayerType === 'Pontos amostrais'" class="cardOptionsButton"
+                     mat-button>
                         <span style="font-size: 25px;" class="material-icons">
                             miscellaneous_services
                         </span>
                         Interpolar
                     </button>
                 </div>
-                <button (click) = "rectifyLayer()" *ngIf="selectedLayerType === 1" class="cardOptionsButton" mat-button>
+                <button (click) = "rectifyLayer()" *ngIf="selectedLayerType === 'Zona de Manejo'" class="cardOptionsButton" mat-button>
                     <span style="font-size: 25px;" class="material-icons">
                         miscellaneous_services
                     </span>
                     Retificar
                 </button>
-                <button *ngIf="selectedLayerType === 0" matTooltip="Classifica a área em zonas de manejo" class="cardOptionsButton"
-                 mat-button>
+                <button *ngIf="selectedLayerType === 'Zona de Manejo'" matTooltip="Classifica a área em zonas de manejo"
+                 class="cardOptionsButton" mat-button>
                     <span style="font-size: 25px;" class="material-icons">
                         format_shapes
                     </span>
@@ -112,16 +113,16 @@
                         <mat-icon style="font-size: 25px;" class="material-icons">
                             view_comfy
                         </mat-icon>
-                        <span *ngIf="selectedLayerType === 0">
+                        <span *ngIf="selectedLayerType === 'Pontos amostrais'">
                             Pontos amostrais
                         </span>
-                        <span *ngIf="selectedLayerType === 1">
+                        <span *ngIf="selectedLayerType === 'Zona de Manejo'">
                             Zonas de Manejo
                         </span>
                     </button>
                     <div matTooltip="Nenhum contorno foi importado para esta layer" [matTooltipDisabled]="hasContourn">
-                        <button [matMenuTriggerFor] = "FileTypeMenuContourn" [disabled] = "!hasContourn" *ngIf="selectedLayerType === 0"
-                         mat-menu-item>
+                        <button [matMenuTriggerFor] = "FileTypeMenuContourn" [disabled] = "!hasContourn"
+                         *ngIf="selectedLayerType === 'Pontos amostrais'" mat-menu-item>
                             <mat-icon style="font-size: 25px;" class="material-icons">
                                 select_all
                             </mat-icon>
@@ -164,7 +165,8 @@
             <mat-sidenav-content>
                 <div *ngFor="let displayedLayer of displayedLayers; let i = index">
                     <app-layer-card (click) = "selectLayer(i, cardSidenav)" [layer] = "this.displayedLayers[i]"
-                      layerId =  {{i}}></app-layer-card>
+                        layerIndex =  {{i}}>
+                    </app-layer-card>
                 </div>
             </mat-sidenav-content>
         </mat-sidenav-container>

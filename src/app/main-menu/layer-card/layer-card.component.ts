@@ -11,7 +11,7 @@ import { MappingService } from '../../services/mapping.service';
   styleUrls: ['./layer-card.component.css']
 })
 export class LayerCardComponent implements OnInit {
-  @Input() layerId!: string;
+  @Input() layerIndex!: string;
   @Input() layer!: Layer;
 
   layerDatasetLengthDisplay = '';
@@ -22,7 +22,7 @@ export class LayerCardComponent implements OnInit {
   ngOnInit(): void {
     this.layerDatasetLengthDisplay = String(this.layer.datasetLength).concat(' pontos');
     this.confirmLayerType();
-    const mapClass = 'mapCard'.concat(this.layerId);
+    const mapClass = 'mapCard'.concat(this.layerIndex);
     this.changeMapDivClass(mapClass);
     this.mapping.renderSimpleMap(this.layer.dataset[0].coordinates[0], this.layer.dataset[0].coordinates[1], mapClass);
   }

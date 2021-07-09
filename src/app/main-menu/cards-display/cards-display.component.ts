@@ -37,7 +37,7 @@ export class CardsDisplayComponent implements OnInit {
   displayedLayers: Layer[] = [];
   selectedLayerIndex = -1;
   selectedLayerName = '';
-  selectedLayerType = 0;
+  selectedLayerType = 'Pontos Amostrais';
   hasContourn = false;
   /*Sampling Points Layer = 0; Management Zone Layer = 1 */
 
@@ -83,14 +83,14 @@ export class CardsDisplayComponent implements OnInit {
 
   changeSelectedLayer(newLayerIndex: number): void {
     if (this.displayedLayers[newLayerIndex] instanceof SamplingLayer) {
-      this.selectedLayerType = 0;
+      this.selectedLayerType = 'Pontos amostrais';
       if ((this.displayedLayers[newLayerIndex] as SamplingLayer).contourn !== undefined) {
         this.hasContourn = true;
       } else {
         this.hasContourn = false;
       }
     } else {
-      this.selectedLayerType = 1;
+      this.selectedLayerType = 'Zona de Manejo';
       this.hasContourn = false;
     }
     this.selectedLayerIndex = newLayerIndex;

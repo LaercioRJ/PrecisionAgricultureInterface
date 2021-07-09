@@ -83,22 +83,20 @@ export class ContournImportingService {
     let lineValues: string[];
     fileLines = fileContent.split(/\n/);
     for (; haveHeaders < fileLines.length; haveHeaders++) {
-      this.validateComaSeparation(fileLines[haveHeaders], haveHeaders + 1);
+      this.validateDataSeparation(fileLines[haveHeaders], haveHeaders + 1);
       lineValues = fileLines[haveHeaders].split(this.dataseparator);
       this.validateNumberFields(lineValues, haveHeaders);
       this.coordinates.push([Number(lineValues[1]), Number(lineValues[0])]);
     }
   }
 
-  private validateComaSeparation(fileLine: string, lineIndex: number): void {
+  private validateDataSeparation(fileLine: string, lineIndex: number): void {
     const lineFirstHalf = fileLine.slice(0, fileLine.indexOf(this.dataseparator) + 1);
     const lineSecondHalf = fileLine.slice(fileLine.indexOf(this.dataseparator) + 1, fileLine.length);
     if ((lineFirstHalf.indexOf('.') > lineFirstHalf.indexOf(this.dataseparator)) || (lineFirstHalf.indexOf('.') === -1 )) {
-      console.log('Erro 1');
       this.fileReadingErrorMessage(lineIndex);
     }
     if ((lineSecondHalf.indexOf(this.dataseparator) !== -1) || (lineSecondHalf.indexOf('.') === -1)) {
-      console.log('Erro 2');
       this.fileReadingErrorMessage(lineIndex);
     }
   }

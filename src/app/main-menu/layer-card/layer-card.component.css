@@ -4,7 +4,6 @@
     color: white;
     font-size: x-large;
 }
-
 .topBar{
     height: 17%;
     width: 100%;
@@ -13,12 +12,10 @@
     background-image: linear-gradient(#388E3C, #5bc519);
     text-align: center;
 }
-
 .layerTypeText{
     font-size: small;
     color: whitesmoke;
 }
-
 .layerCard{
     margin-left: 5%;
     margin-top: 5vh;
@@ -30,54 +27,45 @@
     border: solid;
     border-color: black;
 }
-
 .layerCard:hover{
     cursor: pointer;
     transition: all 0.4s;
 }
-
 @media only screen and (max-width: 1920px) {
     .layerCard:hover{
         transform: scale(1.1);
     }
 }
-
 @media only screen and (max-width: 500px) {
     .layerCard:hover{
         transform: scale(1.05);
     }
 }
-
 @media only screen and (max-width: 1700px) {
     .layerCard {
         width: 18%;
     }
 }
-
 @media only screen and (max-width: 1400px) {
     .layerCard {
         width: 27%;
     }
 }
-
 @media only screen and (max-width: 1000px) {
     .layerCard {
         width: 42%;
     }
 }
-
 @media only screen and (max-width: 700px)  {
     .layerCard {
         width: 85%;
     }
 }
-
 .layerCard:active{
     cursor: pointer;
     transform: scale(1.0);
     transition: all 0.2s;
 }
-
 .map{
     width: 100%;
     height: 83%;
