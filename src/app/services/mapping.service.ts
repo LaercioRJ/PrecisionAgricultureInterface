@@ -193,6 +193,21 @@ export class MappingService {
     }
   }
 
+  changeClassPointsColor(alteredClass: number, newColor: number[], dataset: DatasetValue[]): void {
+    const newStyle = new Style({
+      image: new Circle({
+        radius: 3,
+        fill: new Fill({ color: newColor })
+      })
+    });
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < dataset.length; i++) {
+      if (dataset[i].data === alteredClass) {
+        this.vectorLayerFeatures[i].setStyle(newStyle);
+      }
+    }
+  }
+
   changeContournColor(newColorRgb: number[]): void {
     const newStyle = this.createContournStyle(newColorRgb);
     // tslint:disable-next-line: prefer-for-of

@@ -271,8 +271,12 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
               break;
           }
         } else {
-          switch (structureTableIndex) {
-
+          // tslint:disable-next-line: prefer-for-of
+          if (structureTableIndex !== (this.layer.classesColors.rgbCodes.length - 2)) {
+            this.mapping.changeClassPointsColor((structureTableIndex + 1), result.data, this.layer.dataset);
+          }
+          if (this.selectedPointId !== -1) {
+            this.mapping.changePointColor(this.selectedPointId, result.data);
           }
         }
       }
