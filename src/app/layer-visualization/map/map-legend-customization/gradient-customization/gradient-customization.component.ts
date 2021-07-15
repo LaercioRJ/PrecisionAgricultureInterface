@@ -21,17 +21,21 @@ export class GradientCustomizationComponent implements AfterViewInit, OnInit {
     const red = this.data.rgbColors[colorsQuantity - 1][0];
     const green = this.data.rgbColors[colorsQuantity - 1][1];
     const blue = this.data.rgbColors[colorsQuantity - 1][2];
-    this.applyGradient(red, blue, green);
+    this.applyGradient(red, green, blue);
   }
 
   ngOnInit(): void {
 
   }
 
+  adjustExampleBlockWidth(block: HTMLElement, elementsQuantity: number): void{
+    block.style.width = String(100 / elementsQuantity).concat('%');
+  }
+
   applyGradient(activeRed: number, activeGreen: number, activeBlue: number): void {
     const rgbGradientInterval = 255 / (this.data.rgbColors.length - 2);
     const rgbSet: number[][] = [];
-    for (let i = 0; i < (this.data.rgbColors.length - 1); i++) {
+    for (let i = 0; i < (this.data.rgbColors.length - 2); i++) {
       const block = document.getElementById('gradientExample'.concat(String(i))) as HTMLElement;
       const rgbCode: number[] = [];
       rgbCode.push(((Math.round(rgbGradientInterval) * (i + 1)) - 1) * activeRed);
@@ -41,7 +45,10 @@ export class GradientCustomizationComponent implements AfterViewInit, OnInit {
       rgbSet.push(rgbCode);
     }
     rgbSet.push(this.data.rgbColors[this.data.rgbColors.length - 2]);
+    this.data.rgbColors[this.data.rgbColors.length - 1] = [activeRed, activeGreen, activeBlue];
+    rgbSet.push(this.data.rgbColors[this.data.rgbColors.length - 1]);
     this.data.rgbColors = rgbSet;
+    console.log(this.data.rgbColors);
   }
 
   closeDialogApplyChanges(): void {
@@ -53,10 +60,6 @@ export class GradientCustomizationComponent implements AfterViewInit, OnInit {
 
   closeDialogCancelChanges(): void {
     this.matDialogReference.close();
-  }
-
-  adjustExampleBlockWidth(block: HTMLElement, elementsQuantity: number): void{
-    block.style.width = String(100 / elementsQuantity).concat('%');
   }
 
   adjustExampleBlockColor(block: HTMLElement, rgbCode: any): void {
