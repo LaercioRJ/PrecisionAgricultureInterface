@@ -48,7 +48,6 @@ export class GradientCustomizationComponent implements AfterViewInit, OnInit {
     this.data.rgbColors[this.data.rgbColors.length - 1] = [activeRed, activeGreen, activeBlue];
     rgbSet.push(this.data.rgbColors[this.data.rgbColors.length - 1]);
     this.data.rgbColors = rgbSet;
-    console.log(this.data.rgbColors);
   }
 
   closeDialogApplyChanges(): void {

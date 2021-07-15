@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Contourn } from '../classes/contourn';
+import { ClassesColors } from '../classes/classesColors';
 import { DatasetValue } from '../classes/datasetValue';
 import { Layer } from '../classes/layer';
 import { SamplingLayer } from '../classes/samplingLayer';
@@ -40,6 +41,7 @@ export class LayerStorageService {
       copiedLayer.pixelY = originalLayer.pixelY;
       copiedLayer.radius = originalLayer.radius;
       copiedLayer.range = originalLayer.range;
+      copiedLayer.classesColors = originalLayer.classesColors;
     } else {
       const originalLayer = (this.storedLayers[layerIndex] as ZmLayer);
       copiedLayer = new ZmLayer(originalLayer.name, originalLayer.latitudeHeader, originalLayer.longitudeHeader,
@@ -88,6 +90,10 @@ export class LayerStorageService {
   updateAllLayerDataset(layerIndex: number, newDataset: DatasetValue[]): void {
     this.storedLayers[layerIndex].dataset = newDataset;
     this.storedLayers[layerIndex].datasetLength = newDataset.length;
+  }
+
+  updateClassesColors(newClassesColors: ClassesColors, layerIndex: number): void {
+    this.storedLayers[layerIndex].classesColors = newClassesColors;
   }
 
   updateLayer(layerIndex: number, newLayer: Layer): void {

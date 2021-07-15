@@ -4,6 +4,7 @@ import { NumberInputValidationService } from '../validation/number-input-validat
 import { MessageDeliveryService } from '../message-delivery.service';
 import { LayerStorageService } from '../layer-storage.service';
 
+import { ClassesColors } from '../../classes/classesColors';
 import { DatasetValue } from '../../classes/datasetValue';
 import { SamplingLayer } from '../../classes/samplingLayer';
 import { ZmLayer } from '../../classes/zmLayer';
@@ -142,10 +143,14 @@ export class LayerImportingService {
     let layer;
     if (layerType === 0) {
       layer = new SamplingLayer(this.fileName, this.latitudeHeader,  this.longitudeHeader, this.dataHeader, this.dataset.length);
+      layer.dataset = this.dataset;
+      layer.classesColors = new ClassesColors(2);
     } else {
       layer = new ZmLayer(this.fileName, this.latitudeHeader,  this.longitudeHeader, this.dataHeader, this.dataset.length);
+      layer.dataset = this.dataset;
+      const classesQuantity = layer.discoverHigherClass();
+      layer.classesColors = new ClassesColors(classesQuantity);
     }
-    layer.dataset = this.dataset;
     this.layerStorage.storeLayer(layer);
     this.messageDelivery.showMessage('Layer adicionada com sucesso!', 2200);
   }

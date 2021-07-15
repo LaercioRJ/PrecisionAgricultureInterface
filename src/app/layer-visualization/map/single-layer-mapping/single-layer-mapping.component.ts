@@ -12,7 +12,6 @@ import { GradientCustomizationComponent } from '../map-legend-customization/grad
 import { IndividualColorCustomizationComponent } from '../map-legend-customization/individual-color-customization/individual-color-customization.component';
 import { ZmMappingInfoComponent } from '../layer-info/zm-mapping-info/zm-mapping-info.component';
 
-import { ClassesColors } from '../../../classes/classesColors';
 import { SamplingLayer } from '../../../classes/samplingLayer';
 import { ZmLayer } from '../../../classes/zmLayer';
 import { DatasetValue } from 'src/app/classes/datasetValue';
@@ -51,8 +50,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
               private numberInputValidation: NumberInputValidationService) { }
 
   ngOnInit(): void {
-    const layerIndex = Number(this.activatedRoute.snapshot.paramMap.get('layerIndex'));
-    this.getLayer(layerIndex);
+    this.getLayer();
     this.mapping.renderCompleteMap(this.layer.dataset, 'fullMap', this.layer.classesColors, this.layerType);
     this.renderLegend();
     this.verifyContourn();
@@ -64,16 +62,17 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
     }
   }
 
-  getLayer(layerIndex: number): void {
-    const selectedlayer = this.layerStorage.getLayer(layerIndex);
+  getLayerIndex(): number {
+    return Number(this.activatedRoute.snapshot.paramMap.get('layerIndex'));
+  }
+
+  getLayer(): void {
+    const selectedlayer = this.layerStorage.getLayer(this.getLayerIndex());
     if (selectedlayer instanceof ZmLayer) {
       this.layerType = 'Zona de Manejo';
-      const classesQuantity  = (selectedlayer as ZmLayer).discoverHigherClass();
-      selectedlayer.classesColors = new ClassesColors(classesQuantity);
       this.layer = (selectedlayer as ZmLayer);
     } else {
       this.layerType = 'Pontos Amostrais';
-      selectedlayer.classesColors = new ClassesColors(2);
       this.layer = (selectedlayer as SamplingLayer);
     }
   }
@@ -195,7 +194,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
   }
 
   deleteEditingAlterations(): void {
-    const layerIndex = Number(this.activatedRoute.snapshot.paramMap.get('layerIndex'));
+    const layerIndex = this.getLayerIndex();
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.alteredPointsId.length; i++) {
       const pointOldDataset = this.layerStorage.getLayerPoint(layerIndex, this.alteredPointsId[i]);
@@ -230,6 +229,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
           this.changeLegendVisualColor(i);
         }
         this.mapping.changeAllPointsColor(this.layer.classesColors, this.layerType, this.layer.dataset);
+        this.layerStorage.updateClassesColors(this.layer.classesColors, this.getLayerIndex());
       }
     });
   }
@@ -279,6 +279,7 @@ export class SingleLayerMappingComponent implements AfterViewInit, OnInit {
             this.mapping.changePointColor(this.selectedPointId, result.data);
           }
         }
+        this.layerStorage.updateClassesColors(this.layer.classesColors, this.getLayerIndex());
       }
     });
   }
