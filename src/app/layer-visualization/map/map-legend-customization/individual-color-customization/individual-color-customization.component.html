@@ -44,6 +44,30 @@
         <mat-label>Azul</mat-label>
         <input matInput [value] = "blueRgbValue" color = "primary" readonly>
     </mat-form-field>
+    <mat-slider
+        thumbLabel
+        [max] = "255"
+        [min] = "0"
+        [step] = "1"
+        [value] = "redSliderValue"
+        (input) = "changeRgbSlidersValue($event, 0)"
+    ></mat-slider>
+    <mat-slider
+        thumbLabel
+        [max] = "255"
+        [min] = "0"
+        [step] = "1"
+        [value] = "greenSliderValue"
+        (input) = "changeRgbSlidersValue($event, 1)"
+    ></mat-slider>
+    <mat-slider
+        thumbLabel
+        [max] = "255"
+        [min] = "0"
+        [step] = "1"
+        [value] = "blueSliderValue"
+        (input) = "changeRgbSlidersValue($event, 2)"
+    ></mat-slider>
 </div>
 
 <div class="exitButtonsPosition">

@@ -56,4 +56,16 @@ export class IndividualColorCustomizationComponent implements OnInit {
       + this.blueRgbValue + ')';
   }
 
+  changeRgbSlidersValue(event: any, sliderId: number): void {
+    if (sliderId === 0) {
+      this.alterClassColor(event.value, parseInt(this.greenRgbValue, 10), parseInt(this.blueRgbValue, 10));
+    }
+    if (sliderId === 1) {
+      this.alterClassColor(parseInt(this.redRgbValue, 10), event.value, parseInt(this.blueRgbValue, 10));
+    }
+    if (sliderId === 2) {
+      this.alterClassColor(parseInt(this.redRgbValue, 10), parseInt(this.greenRgbValue, 10), event.value);
+    }
+  }
+
 }
