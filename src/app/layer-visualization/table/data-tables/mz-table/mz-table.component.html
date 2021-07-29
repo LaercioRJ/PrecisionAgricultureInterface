@@ -2,6 +2,9 @@
     <mat-tab label="Pontos de Zonas de Manejo">
       <div class="tabContent">
         <div class="tableEditionControls">
+            <button mat-icon-button (click) = "deleteAlterations()" style="margin-right: 30px;" color = "accent">
+                <span class="material-icons">delete</span>
+            </button>
             <mat-slide-toggle [(ngModel)] = "isEditing" class="editingSlide">Editar Classes</mat-slide-toggle>
         </div>
         <mat-divider></mat-divider>

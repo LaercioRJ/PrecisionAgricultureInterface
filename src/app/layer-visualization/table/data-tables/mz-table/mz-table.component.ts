@@ -41,6 +41,46 @@ export class MzTableComponent implements OnInit {
     this.tableNextPage();
   }
 
+  editTableData(event: any, tablePointIndex: number): void {
+    let dirtForm = false;
+    const newInput = Number(event.target.value);
+
+    if (!this.numberValidation.isInteger(newInput)) {
+      this.messageDelivery.showMessage('Por favor, adicione apenas números inteiros !', 2200);
+      dirtForm = true;
+    }
+    if (!this.numberValidation.isWithinBounds(newInput, 1, 10)) {
+      this.messageDelivery.showMessage('Por favor, adicione apenas números maiores do que 0 ou menores que 11 !', 2500);
+      dirtForm = true;
+    }
+
+    if (dirtForm) {
+      event.target.value = this.layer.dataset[tablePointIndex + this.tableLowerIndex].data;
+    } else {
+      this.wasEdited = true;
+      this.layer.dataset[tablePointIndex + this.tableLowerIndex].data = Number(event.target.value);
+      this.alteredpointsId.push(tablePointIndex + this.tableLowerIndex);
+    }
+  }
+
+  deleteAlterations(): void {
+    const layerIndex = Number(this.activatedRoute.snapshot.paramMap.get('layerIndex'));
+
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.alteredpointsId.length; i++) {
+      const pointOldDataset = this.layerStorage.getLayerPoint(layerIndex, this.alteredpointsId[i]);
+      this.layer.dataset[this.alteredpointsId[i]].data = pointOldDataset.data;
+    }
+
+    for (let i = 0; i < this.linesPerPage; i++ ) {
+      this.datasetTableDataSource.data[i].data = this.layer.dataset[i].data;
+    }
+
+    this.wasEdited = false;
+    this.alteredpointsId = [];
+    this.messageDelivery.showMessage('Todas as alterações foram desfeitas com sucesso !', 2200);
+  }
+
   tableNextPage(): void {
     const nextPageData = this.tablePaginator.nextPage(this.layer.datasetLength, this.linesPerPage, this.tableUpperIndex,
       this.layer.dataset);
@@ -81,46 +121,6 @@ export class MzTableComponent implements OnInit {
     this.tableLowerIndex = this.tableLowerIndex - (this.linesPerPage * 10);
     this.actualTablePage = this.tablePaginator.calculateActualTablePage(this.layer.datasetLength, this.linesPerPage,
       this.tableUpperIndex, this.totalTablePages);
-  }
-
-  editTableData(event: any, tablePointIndex: number): void {
-    let dirtForm = false;
-    const newInput = Number(event.target.value);
-
-    if (!this.numberValidation.isInteger(newInput)) {
-      this.messageDelivery.showMessage('Por favor, adicione apenas números inteiros !', 2200);
-      dirtForm = true;
-    }
-    if (!this.numberValidation.isWithinBounds(newInput, 1, 10)) {
-      this.messageDelivery.showMessage('Por favor, adicione apenas números maiores do que 0 ou menores que 11 !', 2500);
-      dirtForm = true;
-    }
-
-    if (dirtForm) {
-      event.target.value = this.layer.dataset[tablePointIndex + this.tableLowerIndex].data;
-    } else {
-      this.wasEdited = true;
-      this.layer.dataset[tablePointIndex + this.tableLowerIndex].data = Number(event.target.value);
-      this.alteredpointsId.push(tablePointIndex + this.tableLowerIndex);
-    }
-  }
-
-  deleteAlterations(): void {
-    const layerIndex = Number(this.activatedRoute.snapshot.paramMap.get('layerIndex'));
-
-    // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < this.alteredpointsId.length; i++) {
-      const pointOldDataset = this.layerStorage.getLayerPoint(layerIndex, this.alteredpointsId[i]);
-      this.layer.dataset[this.alteredpointsId[i]].data = pointOldDataset.data;
-    }
-
-    for (let i = 0; i < this.linesPerPage; i++ ) {
-      this.datasetTableDataSource.data[i].data = this.layer.dataset[i].data;
-    }
-
-    this.wasEdited = false;
-    this.alteredpointsId = [];
-    this.messageDelivery.showMessage('Todas as alterações foram desfeitas com sucesso !', 2200);
   }
 
 }
