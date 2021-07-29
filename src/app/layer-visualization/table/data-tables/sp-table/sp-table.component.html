@@ -1,6 +1,10 @@
 <mat-tab-group backgroundColor="primary" mat-align-tabs = "center" class="mat-elevation-z8">
     <mat-tab label="Pontos Amostrais">
       <div class="tabContent">
+        <div class="tableEditionControls">
+            <mat-slide-toggle [(ngModel)]="isEditing" class="editingSlide">Editar Amostras</mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
         <table mat-table [dataSource] = "datasetTableDataSource">
             <ng-container matColumnDef = Identificador>
                 <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>Identificador</th>
@@ -26,7 +30,12 @@
             <ng-container matColumnDef = {{layer.dataHeader}}>
                 <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>{{layer.dataHeader}}</th>
                 <td mat-cell class = "tableCell" *matCellDef = "let element; let i = index">  
-                  {{element.data}}
+                    <div *ngIf="!isEditing">
+                        {{element.data}}
+                    </div>
+                    <div *ngIf="isEditing">
+                        <input type="number" class="editInput" (change) = "editTableData($event, i)" matInput [value] = "element.data">
+                    </div>
                 </td>
             </ng-container>
 

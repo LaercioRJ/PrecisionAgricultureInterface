@@ -5,6 +5,7 @@ import { DatasetValue } from '../../../../classes/datasetValue';
 import { Layer } from '../../../../classes/layer';
 import { SamplingLayer } from '../../../../classes/samplingLayer';
 
+import { MessageDeliveryService } from '../../../../services/message-delivery.service';
 import { TablePaginatorService } from '../../../../services/table-paginator.service';
 
 @Component({
@@ -36,9 +37,12 @@ export class SpTableComponent implements OnInit {
   datasetTableUpperIndex = 0;
   totalDatasetTablePages = 0;
 
+  alteredPointsId: number[] = [];
   isEditing = false;
+  wasEdited = false;
 
-  constructor(private tablePaginator: TablePaginatorService) { }
+  constructor(private messageDelivery: MessageDeliveryService,
+              private tablePaginator: TablePaginatorService) { }
 
   ngOnInit(): void {
     this.initializeDatasetTable();
@@ -63,6 +67,17 @@ export class SpTableComponent implements OnInit {
     this.totalContournTablePages = this.tablePaginator.calculateTotalTablePages( spLayer.contourn.coordinates.length,
       this.contournPointsPerPage);
     this.contournTableNextPage();
+  }
+
+  editTableData(event: any, tablePointIndex: number): void {
+    if (String(event.target.value) === '') {
+      this.messageDelivery.showMessage('Por favor, preencha o campo', 2300);
+      event.target.value = this.layer.dataset[this.datasetTableLowerIndex + tablePointIndex].data;
+    } else {
+      this.wasEdited = true;
+      this.layer.dataset[this.datasetTableLowerIndex + tablePointIndex].data = event.target.value;
+      this.alteredPointsId.push(this.datasetTableLowerIndex + tablePointIndex);
+    }
   }
 
   datasetTableNextTenPages(): void {

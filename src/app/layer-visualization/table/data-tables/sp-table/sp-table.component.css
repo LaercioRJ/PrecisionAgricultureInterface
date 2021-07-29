@@ -62,3 +62,9 @@ table{
     background-color: white;
     text-align: right;
 }
+.editInput{
+    border: black;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
