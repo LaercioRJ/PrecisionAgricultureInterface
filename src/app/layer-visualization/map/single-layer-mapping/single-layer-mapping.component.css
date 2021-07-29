@@ -45,6 +45,9 @@ table{
     margin-top: 10px;
     width: 110%;
 }
+.legendClassDisplay{
+    font-size: smaller;
+}
 .legendColor{
     margin-left: 10px;
     max-width: 10px;

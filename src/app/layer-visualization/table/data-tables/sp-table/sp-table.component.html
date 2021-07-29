@@ -1,9 +1,6 @@
 <mat-tab-group backgroundColor="primary" mat-align-tabs = "center" class="mat-elevation-z8">
     <mat-tab label="Pontos Amostrais">
       <div class="tabContent">
-        <!--<div class="mat-slide-localization">
-          <mat-slide-toggle>Editar Dados</mat-slide-toggle>
-        </div>-->
         <table mat-table [dataSource] = "datasetTableDataSource">
             <ng-container matColumnDef = Identificador>
                 <th mat-header-cell style="text-align: center;" class="tableHeader" *matHeaderCellDef>Identificador</th>
@@ -37,14 +34,22 @@
             <tr mat-row *matRowDef = "let row; columns: datasetDisplayedColumns"></tr>
         </table>
         <div class="tablePaginator">
-            Página {{actualDatasetTablePage}} de {{totalDatasetTablePages}}
-            <button mat-icon-button color = "primary" (click) = "datasetTablePreviousPage()"
-             [disabled] = "datasetTableUpperIndex <= datasetPointsPerPage">
-                <span class="material-icons">west</span>
+            <button mat-icon-button (click) = "datasetTablePreviousTenPages()" color = "primary" matTooltip="Regressar 10 páginas"
+             [disabled] = "(datasetTableUpperIndex - (9 * datasetPointsPerPage)) <= datasetPointsPerPage">
+                <span class="material-icons">arrow_back_ios</span>
             </button>
-            <button mat-icon-button style="margin-right: 6.5%;" (click) = "datasetTableNextPage()" color = primary
+            <button mat-icon-button color = "primary" (click) = "datasetTablePreviousPage()" matTooltip="Regressar 1 página"
+             [disabled] = "datasetTableUpperIndex <= datasetPointsPerPage">
+                <span class="material-icons">keyboard_arrow_left</span>
+            </button>
+            Página {{actualDatasetTablePage}} de {{totalDatasetTablePages}}
+            <button mat-icon-button (click) = "datasetTableNextPage()" color = primary matTooltip="Avançar 1 página"
              [disabled] = "datasetTableUpperIndex === layer.datasetLength">
-                <span class="material-icons">east</span>
+                <span class="material-icons">keyboard_arrow_right</span>
+            </button>
+            <button mat-icon-button (click) = "datasetTableNextTenPages()" color = "primary" matTooltip="Avançar 10 páginas"
+             [disabled] = "(datasetTableUpperIndex + (9 * datasetPointsPerPage)) > layer.datasetLength">
+                <span class="material-icons">arrow_forward_ios</span>
             </button>
         </div>
       </div>
@@ -77,14 +82,22 @@
           <tr mat-row *matRowDef = "let row; columns: contournDisplayedColumns"></tr>
         </table>
         <div class="tablePaginator">
-            Página {{actualContournTablePage}} de {{totalContournTablePages}}
-            <button mat-icon-button color = "primary" (click) = "contournTablePreviousPage()"
-             [disabled] = "contournTableUpperIndex <= contournPointsPerPage">
-                <span class="material-icons">west</span>
+            <button mat-icon-button color = "primary" matTooltip="Regressar 10 páginas" (click) = "datasetTablePreviousTenPages()"
+             [disabled] = "(contournTableUpperIndex - (9 * contournPointsPerPage)) <= contournPointsPerPage">
+                <span class="material-icons">arrow_back_ios</span>
             </button>
-            <button mat-icon-button style="margin-right: 6.5%;" color = "primary" (click) = "contournTableNextPage()"
+            <button mat-icon-button color = "primary" (click) = "contournTablePreviousPage()" matTooltip="Regressar 1 página"
+             [disabled] = "contournTableUpperIndex <= contournPointsPerPage">
+                <span class="material-icons">keyboard_arrow_left</span>
+            </button>
+            Página {{actualContournTablePage}} de {{totalContournTablePages}}
+            <button mat-icon-button color = "primary" (click) = "contournTableNextPage()" matTooltip="Avançar 1 página"
              [disabled] = "contournTableUpperIndex === contournLength">
-                <span class="material-icons">east</span>
+                <span class="material-icons">keyboard_arrow_right</span>
+            </button>
+            <button mat-icon-button color = "primary" matTooltip="Avançar 10 páginas" (click) = "contournTableNextTenPages()"
+             [disabled] = "(contournTableUpperIndex + (9 * contournPointsPerPage)) > contournPointsPerPage">
+                <span class = "material-icons">arrow_forward_ios</span>
             </button>
         </div>
       </div>

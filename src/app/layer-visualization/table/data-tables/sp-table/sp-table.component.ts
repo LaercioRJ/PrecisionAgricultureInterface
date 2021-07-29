@@ -36,6 +36,8 @@ export class SpTableComponent implements OnInit {
   datasetTableUpperIndex = 0;
   totalDatasetTablePages = 0;
 
+  isEditing = false;
+
   constructor(private tablePaginator: TablePaginatorService) { }
 
   ngOnInit(): void {
@@ -44,8 +46,6 @@ export class SpTableComponent implements OnInit {
       this.initializeContournTable();
     }
   }
-
-  // TODO Colocar limitação de disabled para next page em contorno
 
   initializeDatasetTable(): void {
     this.datasetDisplayedColumns = ['Identificador', this.layer.latitudeHeader, this.layer.longitudeHeader, this.layer.dataHeader];
@@ -63,6 +63,16 @@ export class SpTableComponent implements OnInit {
     this.totalContournTablePages = this.tablePaginator.calculateTotalTablePages( spLayer.contourn.coordinates.length,
       this.contournPointsPerPage);
     this.contournTableNextPage();
+  }
+
+  datasetTableNextTenPages(): void {
+    const nextData = this.tablePaginator.nextTenPages(this.layer.datasetLength, this.datasetPointsPerPage, this.datasetTableUpperIndex,
+      this.layer.dataset);
+    this.datasetTableDataSource.data = nextData;
+    this.datasetTableLowerIndex = this.datasetTableLowerIndex + (this.datasetPointsPerPage * 10);
+    this.datasetTableUpperIndex = nextData.length + this.datasetTableLowerIndex;
+    this.actualDatasetTablePage = this.tablePaginator.calculateActualTablePage(this.layer.datasetLength, this.datasetPointsPerPage,
+      this.datasetTableUpperIndex, this.totalDatasetTablePages);
   }
 
   datasetTableNextPage(): void {
@@ -86,6 +96,17 @@ export class SpTableComponent implements OnInit {
       this.datasetTableUpperIndex, this.totalDatasetTablePages);
   }
 
+  datasetTablePreviousTenPages(): void {
+    const newUpperIndex = this.datasetTableUpperIndex - (this.datasetPointsPerPage * 10);
+    const previousPageData = this.tablePaginator.previousTenPages(this.layer.datasetLength, this.datasetPointsPerPage,
+      this.datasetTableUpperIndex, this.layer.dataset);
+    this.datasetTableDataSource.data = previousPageData;
+    this.datasetTableUpperIndex = newUpperIndex;
+    this.datasetTableLowerIndex = this.datasetTableUpperIndex - this.datasetPointsPerPage;
+    this.actualDatasetTablePage = this.tablePaginator.calculateActualTablePage(this.layer.datasetLength, this.datasetPointsPerPage,
+      this.datasetTableUpperIndex, this.totalDatasetTablePages);
+  }
+
   contournTablePreviousPage(): void {
     const splayer = (this.layer as SamplingLayer);
     const newUpperIndex = this.contournTableUpperIndex - this.contournTableDataSource.data.length;
@@ -98,6 +119,18 @@ export class SpTableComponent implements OnInit {
       this.contournPointsPerPage, this.contournTableUpperIndex, this.totalContournTablePages);
   }
 
+  contournTablePreviousTenPages(): void {
+    const spLayer = (this.layer as SamplingLayer);
+    const newUpperIndex = this.contournTableUpperIndex - (this.contournPointsPerPage * 10);
+    const previousPageData = this.tablePaginator.previousTenPages(spLayer.contourn.coordinates.length, this.contournPointsPerPage,
+      this.contournTableUpperIndex, spLayer.contourn.coordinates);
+    this.contournTableDataSource.data = previousPageData;
+    this.contournTableUpperIndex = newUpperIndex;
+    this.contournTableLowerIndex = this.contournTableLowerIndex - (this.contournPointsPerPage * 10);
+    this.actualContournTablePage = this.tablePaginator.calculateActualTablePage(spLayer.contourn.coordinates.length,
+      this.contournPointsPerPage, this.contournTableUpperIndex, this.totalContournTablePages);
+  }
+
   contournTableNextPage(): void {
     const splayer = (this.layer as SamplingLayer);
     const nextpageData = this.tablePaginator.nextPage(splayer.contourn.coordinates.length, this.contournPointsPerPage,
@@ -106,6 +139,17 @@ export class SpTableComponent implements OnInit {
     this.contournTableLowerIndex = this.contournTableLowerIndex + this.contournPointsPerPage;
     this.contournTableUpperIndex = this.contournTableUpperIndex + nextpageData.length;
     this.actualContournTablePage = this.tablePaginator.calculateActualTablePage(splayer.contourn.coordinates.length,
+      this.contournPointsPerPage, this.contournTableUpperIndex, this.totalContournTablePages);
+  }
+
+  contournTableNextTenPages(): void {
+    const spLayer = (this.layer as SamplingLayer);
+    const nextPageData = this.tablePaginator.nextPage(spLayer.contourn.coordinates.length, this.contournPointsPerPage,
+      this.contournTableUpperIndex, spLayer.contourn.coordinates);
+    this.datasetTableDataSource.data = nextPageData;
+    this.contournTableUpperIndex = this.contournTableUpperIndex + this.contournPointsPerPage;
+    this.contournTableUpperIndex = this.contournTableUpperIndex + nextPageData.length;
+    this.actualContournTablePage = this.tablePaginator.calculateActualTablePage(spLayer.contourn.coordinates.length,
       this.contournPointsPerPage, this.contournTableUpperIndex, this.totalContournTablePages);
   }
 

@@ -100,7 +100,7 @@ export class MzTableComponent implements OnInit {
       event.target.value = this.layer.dataset[tablePointIndex + this.tableLowerIndex].data;
     } else {
       this.wasEdited = true;
-      this.layer.dataset[tablePointIndex + this.tableLowerIndex] = this.datasetTableDataSource.data[tablePointIndex];
+      this.layer.dataset[tablePointIndex + this.tableLowerIndex].data = event.target.value;
       this.alteredpointsId.push(tablePointIndex + this.tableLowerIndex);
     }
   }

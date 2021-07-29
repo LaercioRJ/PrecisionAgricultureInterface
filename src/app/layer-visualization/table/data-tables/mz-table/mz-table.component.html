@@ -1,9 +1,6 @@
 <mat-tab-group backgroundColor="primary" mat-align-tabs = "center" class="mat-elevation-z8">
     <mat-tab label="Pontos de Zonas de Manejo">
       <div class="tabContent">
-        <!--<div class="mat-slide-localization">
-          <mat-slide-toggle>Editar Dados</mat-slide-toggle>
-        </div>-->
         <div class="tableEditionControls">
             <mat-slide-toggle [(ngModel)] = "isEditing" class="editingSlide">Editar Classes</mat-slide-toggle>
         </div>
@@ -45,7 +42,8 @@
             <tr mat-row *matRowDef = "let row; columns: datasetDisplayedColumns"></tr>
         </table>
         <div class="tablePaginator">
-            <button mat-icon-button (click) = "tablePreviousTenPages()" matTooltip="Regressar 10 páginas" color = "primary">
+            <button mat-icon-button (click) = "tablePreviousTenPages()" matTooltip="Regressar 10 páginas" color = "primary"
+             [disabled] = "(tableUpperIndex - (9 * linesPerPage)) <= linesPerPage">
                 <span class="material-icons">arrow_back_ios</span>
             </button>
             <button mat-icon-button matTooltip="Regressar 1 página" (click) = "tablePreviousPage()"
@@ -57,7 +55,8 @@
              (click) = "tableNextPage()" color = "primary">
                 <span class="material-icons">keyboard_arrow_right</span>
             </button>
-            <button mat-icon-button (click) = "tableNextTenPages()" matTooltip="Avançar 10 páginas" color = "primary">
+            <button mat-icon-button (click) = "tableNextTenPages()" matTooltip="Avançar 10 páginas" color = "primary"
+             [disabled] = "(tableUpperIndex + (9 * linesPerPage)) > layer.datasetLength">
                 <span class="material-icons">arrow_forward_ios</span>
             </button>
         </div>
