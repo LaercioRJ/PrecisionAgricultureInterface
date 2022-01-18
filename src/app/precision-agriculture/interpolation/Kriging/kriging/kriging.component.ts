@@ -122,6 +122,19 @@ export class KrigingComponent implements OnInit {
       nuggetEffect: tableData.data.nuggetEffect, range: tableData.data.range, partialSill: tableData.data.partialSill});
   }
 
+  convertCoordinates(): void {
+    let coordinatesArray: number[][] = [];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.selectedLayer.dataset.length; i++) {
+      coordinatesArray[i] = [];
+      coordinatesArray[i][0] = this.selectedLayer.dataset[i].coordinates[0];
+      coordinatesArray[i][1] = this.selectedLayer.dataset[i].coordinates[1];
+    }
+    this.serverConnection.convertCoordinates(coordinatesArray).toPromise().then(result => {
+      console.log(result);
+    });
+  }
+
   executeKrigingInterpolation(): void {
     this.loadBarStateKriging = 'block';
     const sizePixelX = this.krigingForm.get('sizePixelX')?.value;

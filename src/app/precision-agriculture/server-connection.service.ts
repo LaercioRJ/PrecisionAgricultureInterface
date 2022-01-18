@@ -700,6 +700,31 @@ export class ServerConnectionService {
     });
   }
 
+  convertCoordinates(dataset: Array<number[]>): Observable<object> {
+    const url = 'https://adb.md.utfpr.edu.br/api/coordinates/converter';
+
+    this.httpHeaders = new HttpHeaders({
+        'Content-Type' : 'application/json',
+        Accept: 'application/json'
+    });
+
+    return this.httpClient.post(url,
+        {
+            datasetType: 'condensed',
+            epsgInput: "4326",
+            projectionInput: "longlat",
+            epsgOutput: "32721",
+            projectionOutput: "utm",
+            coordinates: dataset
+        },
+        {
+             headers: this.httpHeaders,
+             responseType: 'json',
+             observe: 'response'
+        }
+    )
+  }
+
   // TODO: Generalizar esta função
   consumeKrigingInterpolation(modelk: string, nuggetE: number, methodk: string, rangek: number, partialSillk: number,
                               sPixelX: number, sPixelY: number, layerDataset: DatasetValue[], layerContourn: number[][]

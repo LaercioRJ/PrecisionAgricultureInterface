@@ -29,11 +29,11 @@ export class MappingService {
 
   private map!: Map;
 
-  private contournLayer!: Vector;
+  private contournLayer!: Vector<any>;
   private contournLayerFeatures: any[] = [];
-  private vectorLayer!: Vector;
+  private vectorLayer!: Vector<any>;
   private vectorLayerFeatures: any[] = [];
-  private vectorSource!: VectorSource;
+  private vectorSource!: VectorSource<any>;
 
   constructor() { }
 
